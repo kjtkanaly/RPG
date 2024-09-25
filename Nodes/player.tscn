@@ -10,10 +10,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7ao"]
 size = Vector2(20, 30)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementSM")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementSM", "sprite")]
 script = ExtResource("1_7vceo")
 movementData = ExtResource("2_2gnvc")
 movementSM = NodePath("State-Machine")
+sprite = NodePath("Sprite2D")
 
 [node name="State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("1_iw7k4")]
 startingState = NodePath("Idle")

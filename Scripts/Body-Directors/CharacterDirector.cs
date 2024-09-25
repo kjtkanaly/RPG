@@ -19,6 +19,7 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected AnimationPlayer animationPlayer;
     [Export] protected AudioStreamPlayer audioPlayer;
     [Export] protected StateMachine movementSM;
+    [Export] protected Sprite2D sprite;
     protected PlayerStats playerStats;
 
     // Private
@@ -65,6 +66,11 @@ public partial class CharacterDirector : CharacterBody2D
     public AudioStreamPlayer GetAudioPlayer()
     {
         return audioPlayer;
+    }
+
+    public Sprite2D GetSprite() 
+    {
+        return sprite;
     }
 
     // Protected
