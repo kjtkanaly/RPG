@@ -13,3 +13,30 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Visual Studio cache directory
+.vs/
+
+# Blender Files
+*.blend
+/blender.bin
+/BUILD_NOTES.txt
+*.pyc
+*.blend[1-9]
+__pycache__
+/dist/
+
+# Art assests
+*.png
+
+# Mac
+*.DS_Store
+
+# Models
+*.glb
+
+# Import
+*.import
+
+# Visual Files
+Visuals/
