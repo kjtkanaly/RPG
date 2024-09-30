@@ -13,6 +13,7 @@ public partial class CharacterDirector : CharacterBody2D
     // Game Componenets
     // Public
     [Export] public CharacterType charactertype;
+    public float itemRayLength = 30.0f;
 
     // Protected
     [Export] protected MovementData movementData;
@@ -20,6 +21,7 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected AudioStreamPlayer audioPlayer;
     [Export] protected StateMachine movementSM;
     [Export] protected Sprite2D sprite;
+    [Export] protected RayCast2D itemRay;
     protected PlayerStats playerStats;
 
     // Private
@@ -71,6 +73,11 @@ public partial class CharacterDirector : CharacterBody2D
     public Sprite2D GetSprite() 
     {
         return sprite;
+    }
+
+    public RayCast2D GetItemRay()
+    {
+        return itemRay;
     }
 
     // Protected

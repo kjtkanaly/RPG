@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://sn0c8wmrnp7o"]
+
+[ext_resource type="Texture2D" uid="uid://bp1e7b6y0clm1" path="res://Visuals/Sprites/Items/item_default_001.png" id="1_fgr1c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oy87t"]
+radius = 12.0
+
+[node name="Item" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_oy87t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fgr1c")

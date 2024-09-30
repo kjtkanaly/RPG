@@ -34,6 +34,7 @@ public partial class Run : CharacterBodyState
 
         // Orientate the body
         UpdateCharacterSprite();
+        UpdateItemRayCastDirection();
 
         // Check if the player is now idle
         if (characterDir.Velocity.Length() <= 0.01) {
@@ -94,6 +95,22 @@ public partial class Run : CharacterBodyState
         
         // Update the Sprite Object
         characterDir.GetSprite().Scale = scale;
+    }
+
+    private void UpdateItemRayCastDirection() 
+    {
+        // Get the X component of the Direction vector
+        Vector2 direction = GetDirectionVector().Normalized();
+
+        if (direction.Length() == 0.0f) {
+            return;
+        }
+
+        // Get the Item Ray's Length
+        float rayLength = characterDir.itemRayLength;
+
+        // Update the Ray's Target Position
+        characterDir.GetItemRay().TargetPosition = direction * rayLength;
     }
 
     //-------------------------------------------------------------------------
