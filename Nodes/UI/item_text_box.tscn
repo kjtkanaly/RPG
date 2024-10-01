@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dj2i0djou3f11"]
 
-[ext_resource type="Script" path="res://Scripts/UI/TextBox.cs" id="1_14yqo"]
+[ext_resource type="Script" path="res://Scripts/UI/BoolTextBox.cs" id="1_75o5q"]
 [ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="2_rqkn6"]
 [ext_resource type="ButtonGroup" uid="uid://bvnet7bi65aww" path="res://Resources/Button-Groups/item-text-box-group.tres" id="3_78w2p"]
 
@@ -12,11 +12,11 @@ border_width_right = 10
 border_width_bottom = 10
 border_color = Color(0.988235, 1, 0.992157, 1)
 
-[node name="Item-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("label", "buttonGroup")]
+[node name="Item-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("buttonGroup", "label")]
 process_mode = 3
-script = ExtResource("1_14yqo")
-label = NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Label")
+script = ExtResource("1_75o5q")
 buttonGroup = [NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/No"), NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Yes")]
+label = NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 12

@@ -11,7 +11,7 @@ public partial class Main : Node
     // Protected
 
     // Private
-    [Export] private TextBox itemTextBox;
+    [Export] private BoolTextBox itemTextBox;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -23,10 +23,41 @@ public partial class Main : Node
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public void DisplayItemTextBox(ItemData data) 
+    public async void DisplayItemTextBox(ItemDirector item) 
     {
-        itemTextBox.ShowTextBox(data.textBoxString, null);
+        // Pause the other processes
         GetTree().Paused = true;
+
+        // Display the Text Box
+        Tween textTween = itemTextBox.ShowTextBox(item.GetData().textBoxString, null);
+
+        // Await Text being completed
+        await ToSignal(textTween, "finished");
+
+        // Await User Choice
+        await ToSignal(itemTextBox, "SelectionMade");
+
+        // Get the User Choice
+        bool choice = itemTextBox.GetUserChoice();
+        
+        // Set the item to cool down to avoid user response delay
+        item.coolDown = true;
+
+        // Do something based upon the choice
+        if (choice) {
+            // Keep the Data
+
+            // Destory the Item
+            item.QueueFree();
+        } else {
+            item.StartResponseDelayTime();
+        }
+
+        // Hide the text
+        itemTextBox.HideTextBox();
+
+        // Resume the game
+        GetTree().Paused = false;
     }
 
     // Protected

@@ -56,7 +56,7 @@ public partial class CharacterDirector : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("Interact")) {
+        if (Input.IsActionJustReleased("Interact")) {
             PickupItem();
         }
     }
@@ -102,11 +102,16 @@ public partial class CharacterDirector : CharacterBody2D
             return;
         }
 
-        //
+        // Get the Item Director
         ItemDirector item = (ItemDirector) collider;
 
+        // Check if the item was just interacted with
+        if (item.coolDown) {
+            return;
+        }
+
         // Pickup the item
-        main.DisplayItemTextBox(item.GetData());
+        main.DisplayItemTextBox(item);
     }
 
     //-------------------------------------------------------------------------
