@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dj2i0djou3f11"]
+[gd_scene load_steps=5 format=3 uid="uid://dj2i0djou3f11"]
 
 [ext_resource type="Script" path="res://Scripts/UI/TextBox.cs" id="1_14yqo"]
 [ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="2_rqkn6"]
+[ext_resource type="ButtonGroup" uid="uid://bvnet7bi65aww" path="res://Resources/Button-Groups/item-text-box-group.tres" id="3_78w2p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37abo"]
 bg_color = Color(0.407843, 0.313726, 0.266667, 1)
@@ -11,9 +12,11 @@ border_width_right = 10
 border_width_bottom = 10
 border_color = Color(0.988235, 1, 0.992157, 1)
 
-[node name="Item-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("label")]
+[node name="Item-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("label", "buttonGroup")]
+process_mode = 3
 script = ExtResource("1_14yqo")
-label = NodePath("MarginContainer/MarginContainer/HBoxContainer/Label")
+label = NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Label")
+buttonGroup = [NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/No"), NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Yes")]
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 12
@@ -50,11 +53,40 @@ theme_override_fonts/font = ExtResource("2_rqkn6")
 theme_override_font_sizes/font_size = 72
 text = "*"
 
-[node name="Label" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(1500, 300)
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1500, 225)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("2_rqkn6")
 theme_override_font_sizes/font_size = 72
 autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 100
+
+[node name="No" type="Button" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_rqkn6")
+theme_override_font_sizes/font_size = 64
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("3_78w2p")
+text = "NO"
+
+[node name="Yes" type="Button" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_rqkn6")
+theme_override_font_sizes/font_size = 64
+toggle_mode = true
+button_group = ExtResource("3_78w2p")
+text = "YES"

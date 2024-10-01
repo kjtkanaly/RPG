@@ -10,7 +10,7 @@ public partial class ItemDirector : Area2D
     // Protected
 
     // Private
-    
+    [Export] private ItemData data;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -18,6 +18,10 @@ public partial class ItemDirector : Area2D
     //-------------------------------------------------------------------------
 	// Methods
     // Public
+    public ItemData GetData() 
+    {
+        return data;
+    }
 
     // Protected
 
