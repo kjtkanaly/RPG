@@ -10,10 +10,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7ao"]
 size = Vector2(20, 30)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementSM")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movementSM", "sprite", "itemRay")]
 script = ExtResource("1_7vceo")
 movementData = ExtResource("2_2gnvc")
 movementSM = NodePath("State-Machine")
+sprite = NodePath("Sprite2D")
+itemRay = NodePath("RayCast2D")
 
 [node name="State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("1_iw7k4")]
 startingState = NodePath("Idle")
@@ -29,3 +31,8 @@ texture = ExtResource("6_w7vtq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_2t7ao")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(30, 2.08165e-12)
+collide_with_areas = true
+collide_with_bodies = false

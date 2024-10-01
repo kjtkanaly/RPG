@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cey0gn772dfi2"]
+[gd_scene load_steps=3 format=3 uid="uid://cey0gn772dfi2"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/player.tscn" id="1_7830l"]
+[ext_resource type="PackedScene" uid="uid://sn0c8wmrnp7o" path="res://Nodes/Items/item.tscn" id="2_3wih2"]
 
 [node name="Player-Movement-Test-Scene" type="Node2D"]
 
@@ -8,4 +9,7 @@
 position = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(3, 3)
+
+[node name="Item" parent="." instance=ExtResource("2_3wih2")]
+position = Vector2(118, 0)

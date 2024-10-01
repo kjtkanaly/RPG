@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://Scripts/Globals/PlayerStats.cs" id="1_8dkjk"]
 
 [node name="Player-Stats" type="Node"]
+process_mode = 3
 script = ExtResource("1_8dkjk")

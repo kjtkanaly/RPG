@@ -13,13 +13,17 @@ public partial class CharacterDirector : CharacterBody2D
     // Game Componenets
     // Public
     [Export] public CharacterType charactertype;
+    public float itemRayLength = 30.0f;
 
     // Protected
     [Export] protected MovementData movementData;
     [Export] protected AnimationPlayer animationPlayer;
     [Export] protected AudioStreamPlayer audioPlayer;
     [Export] protected StateMachine movementSM;
+    [Export] protected Sprite2D sprite;
+    [Export] protected RayCast2D itemRay;
     protected PlayerStats playerStats;
+    protected Main main;
 
     // Private
 
@@ -33,6 +37,7 @@ public partial class CharacterDirector : CharacterBody2D
     public void Init() {
         // Get the global player stats object
         playerStats = GetNode<PlayerStats>("/root/PlayerStats");
+        main = GetNode<Main>("/root/Main");
 
         // Initialize the movement State Machine
         movementSM.Init(this);     
@@ -47,6 +52,13 @@ public partial class CharacterDirector : CharacterBody2D
     {   
         // Call the Movement State Machine's Physics Process
         movementSM.PhysicsProcess((float) delta);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustReleased("Interact")) {
+            PickupItem();
+        }
     }
 
     //-------------------------------------------------------------------------
@@ -67,9 +79,40 @@ public partial class CharacterDirector : CharacterBody2D
         return audioPlayer;
     }
 
+    public Sprite2D GetSprite() 
+    {
+        return sprite;
+    }
+
+    public RayCast2D GetItemRay()
+    {
+        return itemRay;
+    }
+
     // Protected
 
     // Private
+    private void PickupItem()
+    {
+        // Get the potential item's Node object
+        Node collider = (Node) itemRay.GetCollider();
+
+        // Check if the colliding object is an item
+        if (!collider.IsInGroup("Item")) {
+            return;
+        }
+
+        // Get the Item Director
+        ItemDirector item = (ItemDirector) collider;
+
+        // Check if the item was just interacted with
+        if (item.coolDown) {
+            return;
+        }
+
+        // Pickup the item
+        main.DisplayItemTextBox(item);
+    }
 
     //-------------------------------------------------------------------------
     // Debug Methods

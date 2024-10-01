@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://cdkmnu4ra4yeg"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ItemData.cs" id="1_p2f2a"]
+
+[resource]
+script = ExtResource("1_p2f2a")
+textBoxString = "This stupid GREEN BALL won't bounce!"
