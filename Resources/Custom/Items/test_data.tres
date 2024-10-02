@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_p2f2a")
-textBoxString = "This stupid GREEN BALL won't bounce!"
+itemName = "item"
+textBoxString = "Text Box String"

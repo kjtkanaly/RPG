@@ -12,16 +12,20 @@ public partial class Main : Node
 
     // Private
     [Export] private BoolTextBox itemTextBox;
+    private Inventory inventory;
 
     //-------------------------------------------------------------------------
 	// Game Events
     public override void _Ready()
     {
         rng = new RandomNumberGenerator();
+
+        InventoryUI inventoryUI = GetNode<InventoryUI>("/root/InventoryUi");
+        inventory = inventoryUI.GetInventory();
     }
 
     //-------------------------------------------------------------------------
-	// Methods
+    // Methods
     // Public
     public async void DisplayItemTextBox(ItemDirector item) 
     {
@@ -46,9 +50,12 @@ public partial class Main : Node
         // Do something based upon the choice
         if (choice) {
             // Keep the Data
+            bool itemAdded = inventory.AddItem(item.GetData());
 
             // Destory the Item
-            item.QueueFree();
+            if (itemAdded) {
+                item.QueueFree();
+            }
         } else {
             item.StartResponseDelayTime();
         }
