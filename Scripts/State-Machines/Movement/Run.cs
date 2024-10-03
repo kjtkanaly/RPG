@@ -110,7 +110,7 @@ public partial class Run : CharacterBodyState
         float rayLength = characterDir.itemRayLength;
 
         // Update the Ray's Target Position
-        characterDir.GetItemRay().TargetPosition = direction * rayLength;
+        characterDir.GetInteractRay().TargetPosition = direction * rayLength;
     }
 
     //-------------------------------------------------------------------------

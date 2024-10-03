@@ -6,12 +6,15 @@ public partial class Main : Node
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
+    [Signal] public delegate void InteractionEventHandler();
+    [Signal] public delegate void DialogueOverEventHandler();
     public RandomNumberGenerator rng;
 
     // Protected
 
     // Private
     [Export] private BoolTextBox itemTextBox;
+    [Export] private TextBox dialogueTextBox;
     private Inventory inventory;
 
     //-------------------------------------------------------------------------
@@ -22,6 +25,13 @@ public partial class Main : Node
 
         InventoryUI inventoryUI = GetNode<InventoryUI>("/root/InventoryUi");
         inventory = inventoryUI.GetInventory();
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustReleased("Interact")) {
+            EmitSignal(SignalName.Interaction);
+        }
     }
 
     //-------------------------------------------------------------------------
@@ -65,6 +75,33 @@ public partial class Main : Node
 
         // Resume the game
         GetTree().Paused = false;
+    }
+
+    public async void DisplayCharacterDialogue(InteractionData data) 
+    {
+        // Pause the other processes
+        GetTree().Paused = true;
+
+        // Display the Text Box
+        foreach (string dialogue in data.currentDialogue) {
+            Tween textTween = dialogueTextBox.ShowTextBox(
+                dialogue, 
+                data.dialogueIcon);
+
+            // Await Text being completed
+            await ToSignal(textTween, "finished");
+
+            await ToSignal(this, SignalName.Interaction);
+        }
+
+        // Hide the text
+        dialogueTextBox.HideTextBox();
+
+        // Resume the game
+        GetTree().Paused = false;
+
+        // Emit Signal that the dialogue is done
+        EmitSignal(SignalName.DialogueOver);
     }
 
     // Protected
