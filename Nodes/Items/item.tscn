@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Body-Directors/ItemDirector.cs" id="1_0rvyh"]
 [ext_resource type="Resource" uid="uid://cdkmnu4ra4yeg" path="res://Resources/Custom/Items/test_data.tres" id="2_drnj1"]
 
-[node name="Item" type="Area2D" node_paths=PackedStringArray("responseDelay") groups=["Item"]]
+[node name="Item" type="StaticBody2D" node_paths=PackedStringArray("responseDelay") groups=["Item"]]
 process_mode = 3
 script = ExtResource("1_0rvyh")
 data = ExtResource("2_drnj1")

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ItemDirector : Area2D
+public partial class ItemDirector : StaticBody2D
 {
     //-------------------------------------------------------------------------
     // Game Componenets

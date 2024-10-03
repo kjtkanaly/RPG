@@ -8,6 +8,7 @@
 radius = 12.0
 
 [node name="Bouncy-Green-Ball" instance=ExtResource("1_grgw1")]
+collision_layer = 8
 data = ExtResource("2_ndmmi")
 
 [node name="CollisionShape2D" parent="." index="0"]
