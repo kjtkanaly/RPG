@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjmrxg28ecmk0"]
+
+[ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
+[ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/player.tres" id="2_2gnvc"]
+[ext_resource type="PackedScene" uid="uid://c5j4mqyi6ntqi" path="res://Nodes/State-Machine/Movement/run.tscn" id="2_uwmi2"]
+[ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Movement/idle.tscn" id="3_m15nd"]
+[ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
+size = Vector2(20, 30)
+
+[node name="Player" instance=ExtResource("1_wj6b2")]
+movementData = ExtResource("2_2gnvc")
+
+[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
+startingState = NodePath("Idle")
+
+[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState") instance=ExtResource("2_uwmi2")]
+idleState = NodePath("../Idle")
+
+[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState") instance=ExtResource("3_m15nd")]
+runState = NodePath("../Run")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("6_w7vtq")
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource("RectangleShape2D_1wx77")
+
+[node name="Item-Ray" parent="." index="3"]
+target_position = Vector2(30, 2.08165e-12)
