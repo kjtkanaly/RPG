@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjdeh7ajvngnn"]
+
+[ext_resource type="Script" path="res://Scripts/Body-Directors/CharacterDirector.cs" id="1_7vceo"]
+[ext_resource type="PackedScene" uid="uid://c1ejon8wetoc3" path="res://Nodes/State-Machine/state_machine.tscn" id="1_iw7k4"]
+
+[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("movementSM", "sprite", "interactRay", "interactionTimer")]
+collision_mask = 9
+script = ExtResource("1_7vceo")
+movementSM = NodePath("State-Machine")
+sprite = NodePath("Sprite2D")
+interactRay = NodePath("Interact-Ray")
+interactionTimer = NodePath("Interaction-Timer")
+
+[node name="State-Machine" parent="." instance=ExtResource("1_iw7k4")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Interact-Ray" type="RayCast2D" parent="."]
+target_position = Vector2(30, 2.08165e-12)
+collision_mask = 9
+
+[node name="Interaction-Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

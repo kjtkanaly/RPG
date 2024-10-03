@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1mpr8vpcf1a8"]
+
+[ext_resource type="PackedScene" uid="uid://sn0c8wmrnp7o" path="res://Nodes/Items/item.tscn" id="1_grgw1"]
+[ext_resource type="Resource" uid="uid://q5ey8x6c1xcl" path="res://Resources/Custom/Items/bouncy_green_ball.tres" id="2_ndmmi"]
+[ext_resource type="Texture2D" uid="uid://bp1e7b6y0clm1" path="res://Visuals/Sprites/Items/item_default_001.png" id="2_ra3fq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8n7ei"]
+radius = 12.0
+
+[node name="Bouncy-Green-Ball" instance=ExtResource("1_grgw1")]
+collision_layer = 8
+data = ExtResource("2_ndmmi")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_8n7ei")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_ra3fq")

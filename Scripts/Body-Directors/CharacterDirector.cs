@@ -14,14 +14,17 @@ public partial class CharacterDirector : CharacterBody2D
     // Public
     [Export] public CharacterType charactertype;
     public float itemRayLength = 30.0f;
+    public bool canInteract = true;
 
     // Protected
     [Export] protected MovementData movementData;
+    [Export] protected InteractionData interactionData;
     [Export] protected AnimationPlayer animationPlayer;
     [Export] protected AudioStreamPlayer audioPlayer;
     [Export] protected StateMachine movementSM;
     [Export] protected Sprite2D sprite;
-    [Export] protected RayCast2D itemRay;
+    [Export] protected RayCast2D interactRay;
+    [Export] protected Timer interactionTimer;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -40,7 +43,12 @@ public partial class CharacterDirector : CharacterBody2D
         main = GetNode<Main>("/root/Main");
 
         // Initialize the movement State Machine
-        movementSM.Init(this);     
+        movementSM.Init(this);    
+
+        // Attach the interaction flag method to the timer
+        if (interactionTimer != null) {
+            interactionTimer.Timeout += SetInteractionTrue; 
+        }
     }
 
     public override void _UnhandledInput(InputEvent inputEvent)
@@ -56,9 +64,19 @@ public partial class CharacterDirector : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustReleased("Interact")) {
-            PickupItem();
+        switch (charactertype) 
+        {
+            case (CharacterType.Player):
+                ProcessPlayer(delta);
+                break;
+            case (CharacterType.Ally):
+                ProcessNPC(delta);
+                break;
+            default:
+                break;
         }
+        
+
     }
 
     //-------------------------------------------------------------------------
@@ -67,6 +85,11 @@ public partial class CharacterDirector : CharacterBody2D
     public MovementData GetMovementData() 
     {
         return movementData;
+    }
+
+    public InteractionData GetInteractionData()
+    {
+        return interactionData;
     }
 
     public AnimationPlayer GetAnimationPlayer() 
@@ -84,24 +107,44 @@ public partial class CharacterDirector : CharacterBody2D
         return sprite;
     }
 
-    public RayCast2D GetItemRay()
+    public RayCast2D GetInteractRay()
     {
-        return itemRay;
+        return interactRay;
     }
 
     // Protected
 
     // Private
-    private void PickupItem()
+    private void ProcessPlayer(double delta)  
+    {
+        if (Input.IsActionJustReleased("Interact") && canInteract) {
+            // Decide Interaction Path
+            ChooseInteractionPath();
+        }
+    }
+
+    private void ProcessNPC(double delta)
+    {
+        
+    }
+
+    private void ChooseInteractionPath() 
     {
         // Get the potential item's Node object
-        Node collider = (Node) itemRay.GetCollider();
+        Node collider = (Node) interactRay.GetCollider();
 
-        // Check if the colliding object is an item
-        if (!collider.IsInGroup("Item")) {
-            return;
+        // If the interaction is an item
+        if (collider.IsInGroup("Item")) {
+            PickupItem(collider);
         }
+        // If an ally interaction
+        else if (collider.IsInGroup("Ally")) {
+            InteractWithAlly(collider);
+        }
+    }
 
+    private void PickupItem(Node collider)
+    {
         // Get the Item Director
         ItemDirector item = (ItemDirector) collider;
 
@@ -112,6 +155,33 @@ public partial class CharacterDirector : CharacterBody2D
 
         // Pickup the item
         main.DisplayItemTextBox(item);
+    }
+
+    private async void InteractWithAlly(Node collider)
+    {
+        // Get the Ally's Character Body
+        CharacterDirector ally = (CharacterDirector) collider;
+
+        // Get Interaction Data
+        InteractionData data = ally.GetInteractionData();
+
+        if (data.currentDialogue != null) {
+            main.DisplayCharacterDialogue(data);
+        }
+        
+        // Wait for the Dialogue to be done
+        await ToSignal(main, Main.SignalName.DialogueOver);
+
+        // Set the player to unable to interact to account for user delay
+        canInteract = false;
+
+        // Start the interaction delay timer
+        interactionTimer.Start();
+    }
+
+    private void SetInteractionTrue()
+    {
+        canInteract = true;
     }
 
     //-------------------------------------------------------------------------
