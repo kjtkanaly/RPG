@@ -12,6 +12,7 @@ dialogueTextBox = NodePath("Dialogue-Box")
 
 [node name="Item-Text-Box" parent="." instance=ExtResource("2_u5jxk")]
 visible = false
+debugMode = true
 
 [node name="Dialogue-Box" parent="." instance=ExtResource("3_x6u8i")]
 visible = false

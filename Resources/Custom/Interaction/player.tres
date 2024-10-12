@@ -7,3 +7,4 @@
 script = ExtResource("1_7sdjc")
 dialogueIcon = ExtResource("1_lakc6")
 currentDialogue = PackedStringArray()
+maxHealth = 100

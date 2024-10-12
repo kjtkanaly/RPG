@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=3 format=3 uid="uid://bv3qwkdgq2pq8"]
+
+[ext_resource type="Texture2D" uid="uid://62dwrkdmelrh" path="res://Visuals/Sprites/Player/Dialogue_Icon.png" id="1_i6tfh"]
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterData.cs" id="1_scd2l"]
+
+[resource]
+script = ExtResource("1_scd2l")
+name = "Joe Mama"
+level = 1
+currentHealth = 100
+currentDex = 100
+currentMana = 100
+maxHealth = 100
+maxDex = 100
+maxMana = 100
+battlePortrait = ExtResource("1_i6tfh")

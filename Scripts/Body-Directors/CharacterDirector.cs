@@ -14,6 +14,7 @@ public partial class CharacterDirector : CharacterBody2D
     // Public
     [Export] public CharacterType charactertype;
     public float itemRayLength = 30.0f;
+    public int currentHealth;
     public bool canInteract = true;
 
     // Protected
@@ -137,9 +138,10 @@ public partial class CharacterDirector : CharacterBody2D
         if (collider.IsInGroup("Item")) {
             PickupItem(collider);
         }
+
         // If an ally interaction
-        else if (collider.IsInGroup("Ally")) {
-            InteractWithAlly(collider);
+        else if (collider.IsInGroup("Ally") || collider.IsInGroup("Enemy")) {
+            InteractWithNPC(collider);
         }
     }
 
@@ -157,7 +159,7 @@ public partial class CharacterDirector : CharacterBody2D
         main.DisplayItemTextBox(item);
     }
 
-    private async void InteractWithAlly(Node collider)
+    private async void InteractWithNPC(Node collider)
     {
         // Get the Ally's Character Body
         CharacterDirector ally = (CharacterDirector) collider;
@@ -177,6 +179,11 @@ public partial class CharacterDirector : CharacterBody2D
 
         // Start the interaction delay timer
         interactionTimer.Start();
+
+        // If Enemy then start battle sequence
+        if (ally.IsInGroup("Enemy")) {
+            GetTree().ChangeSceneToPacked(data.battleScene);
+        }
     }
 
     private void SetInteractionTrue()

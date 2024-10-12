@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="InteractionData" load_steps=4 format=3 uid="uid://cj1fyy421sxjw"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/InteractionData.cs" id="1_50n0e"]
+[ext_resource type="PackedScene" uid="uid://duqk2867wvx3j" path="res://Nodes/Battle-Scenes/battle_scene.tscn" id="1_qhuvg"]
+[ext_resource type="Texture2D" uid="uid://dcx2d6u1k87n3" path="res://Visuals/Sprites/Characters/Enemy_Dummy_Dialogue_Icon.png" id="1_x2tft"]
+
+[resource]
+script = ExtResource("1_50n0e")
+dialogueIcon = ExtResource("1_x2tft")
+currentDialogue = PackedStringArray("It\'s Time to Duel!!!")
+battleScene = ExtResource("1_qhuvg")
+maxHealth = 100
