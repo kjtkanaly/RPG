@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=3 format=3 uid="uid://dhh2ky630hnf4"]
+
+[ext_resource type="Texture2D" uid="uid://bqmnv4rofo0e5" path="res://Visuals/Sprites/Characters/Dummy_Dialogue_Icon.png" id="1_ggwvo"]
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterData.cs" id="1_whatp"]
+
+[resource]
+script = ExtResource("1_whatp")
+name = "Dummy"
+level = 1
+currentHealth = 50
+currentDex = 50
+currentMana = 100
+maxHealth = 50
+maxDex = 50
+maxMana = 100
+battlePortrait = ExtResource("1_ggwvo")
+dialogueIcon = ExtResource("1_ggwvo")
+currentDialogue = PackedStringArray("God I love being so SICK!!!", "Sometimes it does get old")

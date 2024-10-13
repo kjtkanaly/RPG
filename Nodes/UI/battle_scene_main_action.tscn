@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhe0v2375rdtl"]
 
-[ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="1_bv6hr"]
-[ext_resource type="ButtonGroup" uid="uid://bau6gum680847" path="res://Resources/Button-Groups/battle-scene-main-action.tres" id="1_t4sg6"]
+[ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="1_kqpbk"]
+[ext_resource type="ButtonGroup" uid="uid://bau6gum680847" path="res://Resources/Button-Groups/battle-scene-main-action.tres" id="2_fxa87"]
 
 [node name="Battle-Scene-Main-Action" type="CanvasLayer"]
 
@@ -20,36 +20,36 @@ theme_override_constants/separation = 10
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("1_bv6hr")
+theme_override_fonts/font = ExtResource("1_kqpbk")
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
 button_pressed = true
-button_group = ExtResource("1_t4sg6")
+button_group = ExtResource("2_fxa87")
 text = "Fight"
 
 [node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("1_bv6hr")
+theme_override_fonts/font = ExtResource("1_kqpbk")
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
-button_group = ExtResource("1_t4sg6")
+button_group = ExtResource("2_fxa87")
 text = "Action"
 
 [node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("1_bv6hr")
+theme_override_fonts/font = ExtResource("1_kqpbk")
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
-button_group = ExtResource("1_t4sg6")
+button_group = ExtResource("2_fxa87")
 text = "Item"
 
 [node name="Button4" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("1_bv6hr")
+theme_override_fonts/font = ExtResource("1_kqpbk")
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
-button_group = ExtResource("1_t4sg6")
+button_group = ExtResource("2_fxa87")
 text = "Flee"

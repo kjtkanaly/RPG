@@ -19,7 +19,7 @@ public partial class CharacterDirector : CharacterBody2D
 
     // Protected
     [Export] protected MovementData movementData;
-    [Export] protected InteractionData interactionData;
+    [Export] protected CharacterData characterData;
     [Export] protected AnimationPlayer animationPlayer;
     [Export] protected AudioStreamPlayer audioPlayer;
     [Export] protected StateMachine movementSM;
@@ -88,9 +88,9 @@ public partial class CharacterDirector : CharacterBody2D
         return movementData;
     }
 
-    public InteractionData GetInteractionData()
+    public CharacterData GetCharacterData()
     {
-        return interactionData;
+        return characterData;
     }
 
     public AnimationPlayer GetAnimationPlayer() 
@@ -162,13 +162,13 @@ public partial class CharacterDirector : CharacterBody2D
     private async void InteractWithNPC(Node collider)
     {
         // Get the Ally's Character Body
-        CharacterDirector ally = (CharacterDirector) collider;
+        CharacterDirector npc = (CharacterDirector) collider;
 
         // Get Interaction Data
-        InteractionData data = ally.GetInteractionData();
+        CharacterData npcData = npc.GetCharacterData();
 
-        if (data.currentDialogue != null) {
-            main.DisplayCharacterDialogue(data);
+        if (npcData.currentDialogue != null) {
+            main.DisplayCharacterDialogue(npcData);
         }
         
         // Wait for the Dialogue to be done
@@ -181,8 +181,10 @@ public partial class CharacterDirector : CharacterBody2D
         interactionTimer.Start();
 
         // If Enemy then start battle sequence
-        if (ally.IsInGroup("Enemy")) {
-            GetTree().ChangeSceneToPacked(data.battleScene);
+        if (npc.IsInGroup("Enemy")) {
+            // Switch to battle scene
+            main.BeginBattle(npcData.battleScene);
+            
         }
     }
 

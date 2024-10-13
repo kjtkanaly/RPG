@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bcsl1wby0wpxc" path="res://Resources/Custom/Movement/enemy_dummy.tres" id="2_8s2ha"]
 [ext_resource type="Texture2D" uid="uid://dmhu0fy2g5r5i" path="res://Visuals/Sprites/Characters/Enemy_Dummy.png" id="2_gsnhd"]
 [ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Movement/idle.tscn" id="3_emcm8"]
-[ext_resource type="Resource" uid="uid://cj1fyy421sxjw" path="res://Resources/Custom/Interaction/enemy_dummy.tres" id="3_oovo8"]
+[ext_resource type="Resource" uid="uid://det5ih2v0i4qv" path="res://Resources/Custom/Character-Data/big_worm.tres" id="3_gm3cy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rbjad"]
 size = Vector2(17, 26)
@@ -12,7 +12,7 @@ size = Vector2(17, 26)
 [node name="Enemy-Dummy" groups=["Enemy"] instance=ExtResource("1_g1i77")]
 charactertype = 2
 movementData = ExtResource("2_8s2ha")
-interactionData = ExtResource("3_oovo8")
+characterData = ExtResource("3_gm3cy")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Idle")

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=4 format=3 uid="uid://det5ih2v0i4qv"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterData.cs" id="1_5hl3p"]
+[ext_resource type="Texture2D" uid="uid://dcx2d6u1k87n3" path="res://Visuals/Sprites/Characters/Enemy_Dummy_Dialogue_Icon.png" id="1_cy3f7"]
+[ext_resource type="PackedScene" uid="uid://b3xmwpywfmj0m" path="res://Scenes/Battle-Scenes/big_worm_battle_scene.tscn" id="2_o0frd"]
+
+[resource]
+script = ExtResource("1_5hl3p")
+name = "Big Ass Worm"
+level = 10
+currentHealth = 150
+currentDex = 85
+currentMana = 100
+maxHealth = 150
+maxDex = 85
+maxMana = 100
+battlePortrait = ExtResource("1_cy3f7")
+dialogueIcon = ExtResource("1_cy3f7")
+currentDialogue = PackedStringArray("It\'s Time to Duel!!!")
+battleScene = ExtResource("2_o0frd")

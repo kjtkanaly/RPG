@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://duqk2867wvx3j"]
+
+[ext_resource type="PackedScene" uid="uid://5662c83p2qwi" path="res://Nodes/UI/battle_scene_character.tscn" id="1_46ghp"]
+[ext_resource type="Script" path="res://Scripts/Globals/BattleScene.cs" id="1_jfa81"]
+
+[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("characterInfo", "sceneImageRect")]
+script = ExtResource("1_jfa81")
+characterInfo = NodePath("CanvasLayer/Battle-Scene-Character")
+sceneImageRect = NodePath("CanvasLayer/Battle-Back-Ground")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Battle-Back-Ground" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Battle-Scene-Character" parent="CanvasLayer" instance=ExtResource("1_46ghp")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -875.0
+offset_top = 69.0
+offset_right = -76.0
+offset_bottom = 487.0
+grow_horizontal = 0

@@ -13,6 +13,7 @@ public partial class Main : Node
     // Protected
 
     // Private
+    [Export] private CharacterData[] teamData;
     [Export] private BoolTextBox itemTextBox;
     [Export] private TextBox dialogueTextBox;
     private Inventory inventory;
@@ -77,7 +78,7 @@ public partial class Main : Node
         GetTree().Paused = false;
     }
 
-    public async void DisplayCharacterDialogue(InteractionData data) 
+    public async void DisplayCharacterDialogue(CharacterData data) 
     {
         // Pause the other processes
         GetTree().Paused = true;
@@ -102,6 +103,17 @@ public partial class Main : Node
 
         // Emit Signal that the dialogue is done
         EmitSignal(SignalName.DialogueOver);
+    }
+
+    public void BeginBattle(PackedScene battleScene) 
+    {
+        // Begin the battle scene
+        GetTree().ChangeSceneToPacked(battleScene);
+    }
+
+    public CharacterData GetIndexCharacterData(int index)
+    {
+        return teamData[index];
     }
 
     // Protected

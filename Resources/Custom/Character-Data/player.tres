@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Resources/CharacterData.cs" id="1_scd2l"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_scd2l")
 name = "Joe Mama"
 level = 1
@@ -14,3 +15,5 @@ maxHealth = 100
 maxDex = 100
 maxMana = 100
 battlePortrait = ExtResource("1_i6tfh")
+dialogueIcon = ExtResource("1_i6tfh")
+currentDialogue = PackedStringArray()

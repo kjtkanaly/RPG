@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://qbd8ibl8xu8w"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_sfmcb"]
-[ext_resource type="Resource" uid="uid://cnhrre7siejav" path="res://Resources/Custom/Interaction/dummy.tres" id="2_e34pf"]
+[ext_resource type="Resource" uid="uid://dhh2ky630hnf4" path="res://Resources/Custom/Character-Data/dummy.tres" id="2_3qaa2"]
 [ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Movement/idle.tscn" id="2_pcu38"]
 [ext_resource type="Texture2D" uid="uid://danxv6kwf0wnu" path="res://Visuals/Sprites/Characters/Dummy.png" id="3_g51il"]
 
@@ -10,7 +10,7 @@ size = Vector2(21, 28)
 
 [node name="Dummy" groups=["Ally"] instance=ExtResource("1_sfmcb")]
 charactertype = 1
-interactionData = ExtResource("2_e34pf")
+characterData = ExtResource("2_3qaa2")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Idle")

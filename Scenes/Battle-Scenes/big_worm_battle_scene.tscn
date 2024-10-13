@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3xmwpywfmj0m"]
+
+[ext_resource type="PackedScene" uid="uid://duqk2867wvx3j" path="res://Scenes/Battle-Scenes/battle_scene.tscn" id="1_c7yoa"]
+[ext_resource type="Texture2D" uid="uid://houqebuywlm2" path="res://Visuals/Battle-Scenes/Big-Worm.png" id="2_bx230"]
+
+[node name="Big-Worm-Battle-Scene" instance=ExtResource("1_c7yoa")]
+
+[node name="Battle-Back-Ground" parent="CanvasLayer" index="0"]
+texture = ExtResource("2_bx230")

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CharacterBattleSceneInfo : CanvasLayer
+public partial class CharacterBattleSceneInfo : Control
 {
     public enum UI_Type
     {
