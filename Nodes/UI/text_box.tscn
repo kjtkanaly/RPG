@@ -1,15 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://oya8nes740vs"]
 
 [ext_resource type="Script" path="res://Scripts/UI/TextBox.cs" id="1_4fcu2"]
+[ext_resource type="StyleBox" uid="uid://blgqats3os0s0" path="res://Resources/Panel-Styles/text_box.tres" id="2_fbg0f"]
 [ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="2_ua8kx"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3j6ms"]
-bg_color = Color(0.407843, 0.313726, 0.266667, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.988235, 1, 0.992157, 1)
 
 [node name="Text-Box" type="CanvasLayer" node_paths=PackedStringArray("label", "textRect")]
 script = ExtResource("1_4fcu2")
@@ -31,7 +24,7 @@ theme_override_constants/margin_bottom = 40
 
 [node name="Panel" type="Panel" parent="MarginContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_3j6ms")
+theme_override_styles/panel = ExtResource("2_fbg0f")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2

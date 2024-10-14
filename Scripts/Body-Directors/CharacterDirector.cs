@@ -178,7 +178,10 @@ public partial class CharacterDirector : CharacterBody2D
         // Await User Choice
         await ToSignal(main, Main.SignalName.SelectionMade);
 
+        // Pickup the item
         main.PickupItemSequence(item, inventory);
+
+        // TODO: If not enough space then display text saying no room
     }
 
     private async void InteractWithNPC(Node collider)
