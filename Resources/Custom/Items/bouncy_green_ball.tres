@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_xafey")
-itemName = "Bouncy Green Ball"
-textBoxString = "This stupid GREEN BALL won't bounce!"
+name = "BOUNCY GREEN BALL"
+textBoxDescription = PackedStringArray("This stupid green ball won\'t bounce!")

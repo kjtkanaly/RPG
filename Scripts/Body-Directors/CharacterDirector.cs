@@ -26,6 +26,7 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected Sprite2D sprite;
     [Export] protected RayCast2D interactRay;
     [Export] protected Timer interactionTimer;
+    [Export] protected Inventory inventory;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -50,6 +51,9 @@ public partial class CharacterDirector : CharacterBody2D
         if (interactionTimer != null) {
             interactionTimer.Timeout += SetInteractionTrue; 
         }
+
+        // Init the inventory
+        inventory.Init(characterData.inventorySize);
     }
 
     public override void _UnhandledInput(InputEvent inputEvent)
@@ -145,7 +149,7 @@ public partial class CharacterDirector : CharacterBody2D
         }
     }
 
-    private void PickupItem(Node collider)
+    private async void PickupItem(Node collider)
     {
         // Get the Item Director
         ItemDirector item = (ItemDirector) collider;
@@ -155,8 +159,26 @@ public partial class CharacterDirector : CharacterBody2D
             return;
         }
 
-        // Pickup the item
-        main.DisplayItemTextBox(item);
+        // Create the Text Box Data Object
+        TextBox.TextBoxData data = new TextBox.TextBoxData(
+            TextBox.TEXT_BOX_TYPE.item,
+            item.GetData().textBoxDescription,
+            null);
+
+        // Dispaly the item's text box
+        main.DispalyTextBox(data);
+
+        // Wait for the item description to be done
+        await ToSignal(main, Main.SignalName.DialogueOver);
+
+        // Display the Bool Selection Box
+        string booleanString = $"Pickup {item.GetData().name}?";
+        main.DisplayBooleanBox(booleanString);
+
+        // Await User Choice
+        await ToSignal(main, Main.SignalName.SelectionMade);
+
+        main.PickupItemSequence(item, inventory);
     }
 
     private async void InteractWithNPC(Node collider)
@@ -164,12 +186,13 @@ public partial class CharacterDirector : CharacterBody2D
         // Get the Ally's Character Body
         CharacterDirector npc = (CharacterDirector) collider;
 
-        // Get Interaction Data
-        CharacterData npcData = npc.GetCharacterData();
+        // Create the Text Box Data Object
+        TextBox.TextBoxData data = new TextBox.TextBoxData(
+            TextBox.TEXT_BOX_TYPE.item,
+            npc.GetCharacterData().currentDialogue,
+            npc.GetCharacterData().dialogueIcon);
 
-        if (npcData.currentDialogue != null) {
-            main.DisplayCharacterDialogue(npcData);
-        }
+        main.DispalyTextBox(data);
         
         // Wait for the Dialogue to be done
         await ToSignal(main, Main.SignalName.DialogueOver);
@@ -183,7 +206,7 @@ public partial class CharacterDirector : CharacterBody2D
         // If Enemy then start battle sequence
         if (npc.IsInGroup("Enemy")) {
             // Switch to battle scene
-            main.BeginBattle(npcData.battleScene);
+            main.BeginBattle(npc.GetCharacterData().battleScene);
             
         }
     }

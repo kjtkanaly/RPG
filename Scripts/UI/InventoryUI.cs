@@ -1,18 +1,16 @@
 using Godot;
 using System;
 
-public partial class InventoryUI : CanvasLayer
+public partial class InventoryUI : ButtonGroupUI
 {
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
-    public int maxInventoryCount;
-    public int currentButtonIndex = 0;
+    public int inventorySize;
 
     // Protected
 
     // Private
-    [Export] private Button[] itemButtons;
     [Export] private Inventory inventory;
 
     //-------------------------------------------------------------------------
@@ -29,35 +27,36 @@ public partial class InventoryUI : CanvasLayer
 
         // 
         if (Input.IsActionJustPressed("Down")) {
-            CycleSelectedButton(1);
+            IncrementSelectedButton(1);
         }
         if (Input.IsActionJustPressed("Up")) {
-            CycleSelectedButton(-1);
+            IncrementSelectedButton(-1);
         }
         if (Input.IsActionJustPressed("Left")) {
-            CycleSelectedButton(-5);
+            IncrementSelectedButton(-5);
         }
         if (Input.IsActionJustPressed("Right")) {
-            CycleSelectedButton(5);
+            IncrementSelectedButton(5);
         }
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public void Init()
+    public void Init(int inventorySizeValue)
     {
-        maxInventoryCount = itemButtons.Length;
+        // Log the max 
+        inventorySize = inventorySizeValue;
+
+        // Attach the UI's refresh method to the inveotry's Added Item Signal
+        inventory.AddedItem += Refresh;
     }
 
-    public void AddItemToIndex(int index, ItemData data) 
+    public void Refresh()
     {
-        itemButtons[index].Text = data.itemName;
-    }
-
-    public Inventory GetInventory()
-    {
-        return inventory;
+        for (int i = 0; i < inventorySize; i++) {
+            buttons[i].Text = inventory.GetItem(i).name;
+        }
     }
 
     // Protected
@@ -67,20 +66,6 @@ public partial class InventoryUI : CanvasLayer
     {
         Visible = !Visible;
         GetTree().Paused = !GetTree().Paused;
-    }
-
-    protected void CycleSelectedButton(int step)
-    {
-        int newButtonIndex = currentButtonIndex + step;
-
-        // Bounds Check
-        if ((newButtonIndex < 0) || (newButtonIndex >= itemButtons.Length)) 
-        {
-            return;
-        }
-
-        currentButtonIndex = newButtonIndex;
-        itemButtons[currentButtonIndex].ButtonPressed = true;
     }
 
     //-------------------------------------------------------------------------

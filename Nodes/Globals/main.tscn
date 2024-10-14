@@ -2,19 +2,19 @@
 
 [ext_resource type="Script" path="res://Scripts/Globals/Main.cs" id="1_jr0nc"]
 [ext_resource type="Resource" uid="uid://bv3qwkdgq2pq8" path="res://Resources/Custom/Character-Data/player.tres" id="2_chowg"]
-[ext_resource type="PackedScene" uid="uid://dj2i0djou3f11" path="res://Nodes/UI/item_text_box.tscn" id="2_u5jxk"]
-[ext_resource type="PackedScene" uid="uid://oya8nes740vs" path="res://Nodes/UI/dialogue_text_box.tscn" id="3_x6u8i"]
+[ext_resource type="PackedScene" uid="uid://dj2i0djou3f11" path="res://Nodes/UI/bool_text_box.tscn" id="2_u5jxk"]
+[ext_resource type="PackedScene" uid="uid://oya8nes740vs" path="res://Nodes/UI/text_box.tscn" id="3_x6u8i"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("itemTextBox", "dialogueTextBox")]
+[node name="Main" type="Node" node_paths=PackedStringArray("boolTextBox", "textBox")]
 process_mode = 3
 script = ExtResource("1_jr0nc")
 teamData = Array[Object]([ExtResource("2_chowg")])
-itemTextBox = NodePath("Item-Text-Box")
-dialogueTextBox = NodePath("Dialogue-Box")
+boolTextBox = NodePath("Bool-Text-Box")
+textBox = NodePath("Text-Box")
 
-[node name="Item-Text-Box" parent="." instance=ExtResource("2_u5jxk")]
+[node name="Bool-Text-Box" parent="." instance=ExtResource("2_u5jxk")]
 visible = false
 debugMode = true
 
-[node name="Dialogue-Box" parent="." instance=ExtResource("3_x6u8i")]
+[node name="Text-Box" parent="." instance=ExtResource("3_x6u8i")]
 visible = false

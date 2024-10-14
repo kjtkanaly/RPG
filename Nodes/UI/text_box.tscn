@@ -11,7 +11,7 @@ border_width_right = 10
 border_width_bottom = 10
 border_color = Color(0.988235, 1, 0.992157, 1)
 
-[node name="Dialogue-Box" type="CanvasLayer" node_paths=PackedStringArray("label", "textRect")]
+[node name="Text-Box" type="CanvasLayer" node_paths=PackedStringArray("label", "textRect")]
 script = ExtResource("1_4fcu2")
 label = NodePath("MarginContainer/MarginContainer/HBoxContainer/Label")
 textRect = NodePath("MarginContainer/MarginContainer/HBoxContainer/TextureRect")

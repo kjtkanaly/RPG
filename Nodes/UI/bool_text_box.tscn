@@ -12,7 +12,7 @@ border_width_right = 10
 border_width_bottom = 10
 border_color = Color(0.988235, 1, 0.992157, 1)
 
-[node name="Item-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("buttonGroup", "label")]
+[node name="Bool-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("buttonGroup", "label")]
 process_mode = 3
 script = ExtResource("1_75o5q")
 buttonGroup = [NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/No"), NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Yes")]

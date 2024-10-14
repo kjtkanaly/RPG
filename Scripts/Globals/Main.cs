@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 
 public partial class Main : Node
 {
@@ -8,24 +9,21 @@ public partial class Main : Node
     // Public
     [Signal] public delegate void InteractionEventHandler();
     [Signal] public delegate void DialogueOverEventHandler();
+    [Signal] public delegate void SelectionMadeEventHandler();
     public RandomNumberGenerator rng;
 
     // Protected
 
     // Private
     [Export] private CharacterData[] teamData;
-    [Export] private BoolTextBox itemTextBox;
-    [Export] private TextBox dialogueTextBox;
-    private Inventory inventory;
+    [Export] private BoolTextBox boolTextBox;
+    [Export] private TextBox textBox;
 
     //-------------------------------------------------------------------------
 	// Game Events
     public override void _Ready()
     {
         rng = new RandomNumberGenerator();
-
-        InventoryUI inventoryUI = GetNode<InventoryUI>("/root/InventoryUi");
-        inventory = inventoryUI.GetInventory();
     }
 
     public override void _Process(double delta)
@@ -38,56 +36,16 @@ public partial class Main : Node
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public async void DisplayItemTextBox(ItemDirector item) 
+    public async void DispalyTextBox(TextBox.TextBoxData data)
     {
         // Pause the other processes
         GetTree().Paused = true;
 
         // Display the Text Box
-        Tween textTween = itemTextBox.ShowTextBox(item.GetData().textBoxString, null);
-
-        // Await Text being completed
-        await ToSignal(textTween, "finished");
-
-        // Await User Choice
-        await ToSignal(itemTextBox, "SelectionMade");
-
-        // Get the User Choice
-        bool choice = itemTextBox.GetUserChoice();
-        
-        // Set the item to cool down to avoid user response delay
-        item.coolDown = true;
-
-        // Do something based upon the choice
-        if (choice) {
-            // Keep the Data
-            bool itemAdded = inventory.AddItem(item.GetData());
-
-            // Destory the Item
-            if (itemAdded) {
-                item.QueueFree();
-            }
-        } else {
-            item.StartResponseDelayTime();
-        }
-
-        // Hide the text
-        itemTextBox.HideTextBox();
-
-        // Resume the game
-        GetTree().Paused = false;
-    }
-
-    public async void DisplayCharacterDialogue(CharacterData data) 
-    {
-        // Pause the other processes
-        GetTree().Paused = true;
-
-        // Display the Text Box
-        foreach (string dialogue in data.currentDialogue) {
-            Tween textTween = dialogueTextBox.ShowTextBox(
-                dialogue, 
-                data.dialogueIcon);
+        foreach (string text in data.text) {
+            Tween textTween = textBox.ShowTextBox(
+                text, 
+                data.icon);
 
             // Await Text being completed
             await ToSignal(textTween, "finished");
@@ -96,13 +54,62 @@ public partial class Main : Node
         }
 
         // Hide the text
-        dialogueTextBox.HideTextBox();
+        textBox.HideTextBox();
 
         // Resume the game
         GetTree().Paused = false;
 
         // Emit Signal that the dialogue is done
         EmitSignal(SignalName.DialogueOver);
+    }
+
+    public async void DisplayBooleanBox(string text) 
+    {
+        // Pause the other processes
+        GetTree().Paused = true;
+
+        Tween textTween = boolTextBox.ShowTextBox(text, null);
+
+        // Await Text being completed
+        await ToSignal(textTween, "finished");
+
+        // Await the user selection
+        await ToSignal(boolTextBox, "SelectionMade");
+
+        // Emit signal that signifes the selection is made
+        EmitSignal(SignalName.SelectionMade);
+    }
+
+    public void PickupItemSequence(ItemDirector item, Inventory inventory) 
+    {  
+        // Set the item to cool down to avoid user response delay
+        item.coolDown = true;
+
+        // Get the User Choice
+        bool choice = boolTextBox.GetUserChoice();
+
+        // Do something based upon the choice
+        if (choice) {
+            // Keep the Data
+            bool itemAdded = inventory.AddItem(item.GetData());
+
+            GD.Print($"Choice: {choice} | Item Added: {itemAdded}");
+
+            // Destory the Item
+            if (itemAdded) {
+                item.QueueFree();
+            }
+        } 
+        else {
+            item.StartResponseDelayTime();
+        }
+
+        // Hide the text
+        boolTextBox.HideTextBox();
+
+        // Resume the game
+        GetTree().Paused = false;
+
     }
 
     public void BeginBattle(PackedScene battleScene) 

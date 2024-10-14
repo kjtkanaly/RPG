@@ -3,6 +3,28 @@ using System;
 
 public partial class TextBox : CanvasLayer
 {
+    public enum TEXT_BOX_TYPE 
+    {
+        item,
+        dialogue
+    }
+
+    public struct TextBoxData
+    {
+        public TEXT_BOX_TYPE type;
+        public string[] text;
+        public Texture2D icon;
+        public TextBoxData(
+            TEXT_BOX_TYPE typeValue,
+            string[] textValue,
+            Texture2D iconValue) 
+        {
+            type = typeValue;
+            text = textValue;
+            icon = iconValue;
+        }
+    }
+
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public

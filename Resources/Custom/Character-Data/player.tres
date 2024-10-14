@@ -17,3 +17,4 @@ maxMana = 100
 battlePortrait = ExtResource("1_i6tfh")
 dialogueIcon = ExtResource("1_i6tfh")
 currentDialogue = PackedStringArray()
+inventorySize = 10

@@ -1,13 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhe0v2375rdtl"]
+[gd_scene load_steps=6 format=3 uid="uid://bhe0v2375rdtl"]
 
 [ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="1_kqpbk"]
+[ext_resource type="StyleBox" uid="uid://yibmqpy71x40" path="res://Resources/Panel-Styles/battle_scene_panel_01.tres" id="1_ls2v8"]
 [ext_resource type="ButtonGroup" uid="uid://bau6gum680847" path="res://Resources/Button-Groups/battle-scene-main-action.tres" id="2_fxa87"]
+[ext_resource type="Script" path="res://Scripts/UI/BattleSceneMainAction.cs" id="2_j074n"]
 
-[node name="Battle-Scene-Main-Action" type="CanvasLayer"]
+[sub_resource type="Theme" id="Theme_70tlc"]
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Battle-Scene-Main-Action" type="Panel" node_paths=PackedStringArray("buttons")]
 offset_right = 264.0
 offset_bottom = 375.0
+theme_override_styles/panel = ExtResource("1_ls2v8")
+script = ExtResource("2_j074n")
+buttons = [NodePath("MarginContainer/VBoxContainer/Flight"), NodePath("MarginContainer/VBoxContainer/Action"), NodePath("MarginContainer/VBoxContainer/Item"), NodePath("MarginContainer/VBoxContainer/Flee")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -17,9 +30,10 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Flight" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme = SubResource("Theme_70tlc")
 theme_override_fonts/font = ExtResource("1_kqpbk")
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
@@ -27,7 +41,7 @@ button_pressed = true
 button_group = ExtResource("2_fxa87")
 text = "Fight"
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Action" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("1_kqpbk")
@@ -36,7 +50,7 @@ toggle_mode = true
 button_group = ExtResource("2_fxa87")
 text = "Action"
 
-[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Item" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("1_kqpbk")
@@ -45,7 +59,7 @@ toggle_mode = true
 button_group = ExtResource("2_fxa87")
 text = "Item"
 
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Flee" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("1_kqpbk")

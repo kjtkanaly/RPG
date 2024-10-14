@@ -7,25 +7,24 @@ public partial class Inventory : Node
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
+    [Signal] public delegate void AddedItemEventHandler();
 
     // Protected
 
     // Private
-    [Export] private InventoryUI ui;
     private ItemData[] items;
 
     //-------------------------------------------------------------------------
     // Game Events
-    public override void _Ready()
-    {
-        ui.Init();
-
-        items = new ItemData[ui.maxInventoryCount];
-    }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
+    public void Init(int inventorySize)
+    {
+        items = new ItemData[inventorySize];
+    }
+
     public bool AddItem(ItemData data)
     {
         // Check if there is room in the list
@@ -39,10 +38,15 @@ public partial class Inventory : Node
         // Set the data in the free index
         items[freeIndex] = data;
 
-        // Update the UI
-        ui.AddItemToIndex(freeIndex, data);
+        // Emit the "Added Item" signal
+        EmitSignal(SignalName.AddedItem);
 
         return true;
+    }
+
+    public ItemData GetItem(int index) 
+    {
+        return items[index];
     }
 
     // Protected
