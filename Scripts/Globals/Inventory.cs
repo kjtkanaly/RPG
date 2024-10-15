@@ -49,6 +49,11 @@ public partial class Inventory : Node
         return items[index];
     }
 
+    public int GetInventorySize()
+    {
+        return items.Length;
+    }
+
     // Protected
 
     // Private

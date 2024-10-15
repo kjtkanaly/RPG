@@ -6,21 +6,15 @@ public partial class InventoryUI : ButtonGroupUI
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
-    public int inventorySize;
 
     // Protected
 
     // Private
-    [Export] private Inventory inventory;
 
     //-------------------------------------------------------------------------
     // Game Events
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustReleased("Inventory")) {
-            Toggle();
-        }
-
         if (!Visible) {
             return;
         }
@@ -43,18 +37,26 @@ public partial class InventoryUI : ButtonGroupUI
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public void Init(int inventorySizeValue)
+    public void Toggle(Inventory inventory) 
     {
-        // Log the max 
-        inventorySize = inventorySizeValue;
+        if (!Visible) {
+            RefreshUI(inventory);
+        }
 
-        // Attach the UI's refresh method to the inveotry's Added Item Signal
-        inventory.AddedItem += Refresh;
+        Visible = !Visible;
+        GetTree().Paused = !GetTree().Paused;
+
+        GD.Print($"UI is visible: {Visible}");
     }
 
-    public void Refresh()
-    {
-        for (int i = 0; i < inventorySize; i++) {
+    public void RefreshUI(Inventory inventory) {
+        for (int i = 0; i < inventory.GetInventorySize(); i++) {
+            ItemData data = inventory.GetItem(i);
+
+            if (data == null) {
+                continue;
+            }
+
             buttons[i].Text = inventory.GetItem(i).name;
         }
     }
@@ -62,11 +64,7 @@ public partial class InventoryUI : ButtonGroupUI
     // Protected
 
     // Private
-    private void Toggle() 
-    {
-        Visible = !Visible;
-        GetTree().Paused = !GetTree().Paused;
-    }
+    
 
     //-------------------------------------------------------------------------
     // Debug Methods

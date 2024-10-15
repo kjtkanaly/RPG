@@ -1,20 +1,25 @@
 [gd_scene load_steps=5 format=3 uid="uid://is6jq4n5825p"]
 
 [ext_resource type="Script" path="res://Scripts/Globals/Main.cs" id="1_jr0nc"]
-[ext_resource type="Resource" uid="uid://bv3qwkdgq2pq8" path="res://Resources/Custom/Character-Data/player.tres" id="2_chowg"]
 [ext_resource type="PackedScene" uid="uid://dj2i0djou3f11" path="res://Nodes/UI/bool_text_box.tscn" id="2_u5jxk"]
 [ext_resource type="PackedScene" uid="uid://oya8nes740vs" path="res://Nodes/UI/text_box.tscn" id="3_x6u8i"]
+[ext_resource type="PackedScene" uid="uid://dqfvwmao44duc" path="res://Nodes/UI/inventory_ui.tscn" id="5_t57g0"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("boolTextBox", "textBox")]
+[node name="Main" type="Node" node_paths=PackedStringArray("boolTextBox", "textBox", "inventoryUI")]
 process_mode = 3
 script = ExtResource("1_jr0nc")
-teamData = Array[Object]([ExtResource("2_chowg")])
-boolTextBox = NodePath("Bool-Text-Box")
-textBox = NodePath("Text-Box")
+boolTextBox = NodePath("CanvasLayer/Bool-Text-Box")
+textBox = NodePath("CanvasLayer/Text-Box")
+inventoryUI = NodePath("CanvasLayer/Inventory-UI")
 
-[node name="Bool-Text-Box" parent="." instance=ExtResource("2_u5jxk")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Inventory-UI" parent="CanvasLayer" instance=ExtResource("5_t57g0")]
+visible = false
+
+[node name="Bool-Text-Box" parent="CanvasLayer" instance=ExtResource("2_u5jxk")]
 visible = false
 debugMode = true
 
-[node name="Text-Box" parent="." instance=ExtResource("3_x6u8i")]
+[node name="Text-Box" parent="CanvasLayer" instance=ExtResource("3_x6u8i")]
 visible = false

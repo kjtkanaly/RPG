@@ -117,6 +117,11 @@ public partial class CharacterDirector : CharacterBody2D
         return interactRay;
     }
 
+    public Inventory GetInventory()
+    {
+        return inventory;
+    }
+
     // Protected
 
     // Private
@@ -137,6 +142,11 @@ public partial class CharacterDirector : CharacterBody2D
     {
         // Get the potential item's Node object
         Node collider = (Node) interactRay.GetCollider();
+
+        // Check if we actually collided with something
+        if (collider == null) {
+            return;
+        }
 
         // If the interaction is an item
         if (collider.IsInGroup("Item")) {

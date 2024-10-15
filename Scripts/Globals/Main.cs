@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public partial class Main : Node
 {
@@ -15,15 +16,24 @@ public partial class Main : Node
     // Protected
 
     // Private
-    [Export] private CharacterData[] teamData;
     [Export] private BoolTextBox boolTextBox;
     [Export] private TextBox textBox;
+    [Export] private InventoryUI inventoryUI;
+    private List<CharacterDirector> teamDirectors;
+    private PackedScene previousScene;
+    private int currentCharacterIndex = 0;
 
     //-------------------------------------------------------------------------
 	// Game Events
     public override void _Ready()
     {
         rng = new RandomNumberGenerator();
+        
+        // Get the team character directors
+        teamDirectors = new List<CharacterDirector>();
+        foreach (CharacterDirector character in GetTree().GetNodesInGroup("Team")) {
+            teamDirectors.Add(character);
+        }
     }
 
     public override void _Process(double delta)
@@ -31,11 +41,35 @@ public partial class Main : Node
         if (Input.IsActionJustReleased("Interact")) {
             EmitSignal(SignalName.Interaction);
         }
+
+        if (Input.IsActionJustReleased("Inventory")) {
+            DisplayInventory();
+        }
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
+    public void DisplayInventory()
+    {
+        Inventory inventory = GetCharacterInventory();
+
+        if (inventory == null) {
+            return;
+        }
+
+        inventoryUI.Toggle(inventory);
+    }
+
+    public Inventory GetCharacterInventory()
+    {
+        if (teamDirectors.Count == 0) {
+            return null;
+        }
+
+        return teamDirectors[currentCharacterIndex].GetInventory();
+    }
+
     public async void DispalyTextBox(TextBox.TextBoxData data)
     {
         // Pause the other processes
@@ -114,13 +148,22 @@ public partial class Main : Node
 
     public void BeginBattle(PackedScene battleScene) 
     {
+        // Log current scene
+        previousScene = new PackedScene();
+        previousScene.Pack(GetTree().CurrentScene);
+
         // Begin the battle scene
         GetTree().ChangeSceneToPacked(battleScene);
     }
 
+    public void ExitBattle()
+    {
+        GetTree().ChangeSceneToPacked(previousScene);
+    }
+
     public CharacterData GetIndexCharacterData(int index)
     {
-        return teamData[index];
+        return teamDirectors[index].GetCharacterData();
     }
 
     // Protected

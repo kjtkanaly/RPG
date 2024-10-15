@@ -6,7 +6,6 @@
 
 [node name="Inventory-UI" type="HBoxContainer" node_paths=PackedStringArray("buttons")]
 process_mode = 3
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
