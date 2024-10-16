@@ -19,9 +19,7 @@ public partial class ButtonGroupUI : Control
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-
-    // Protected
-    protected void IncrementSelectedButton(int step) 
+    public void IncrementSelectedButton(int step) 
     {
         // Get the new button index
         int newButtonIndex = currentButtonIndex + step;
@@ -35,6 +33,8 @@ public partial class ButtonGroupUI : Control
         currentButtonIndex = newButtonIndex;
         buttons[currentButtonIndex].ButtonPressed = true;
     }
+
+    // Protected
 
     // Private
 

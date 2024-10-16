@@ -11,8 +11,9 @@ public partial class BattleScene : Node2D
 
     // Private
     private Main main;
-    [Export] private CharacterBattleSceneInfo characterInfo;
-    [Export] private TextureRect sceneImageRect;
+    [Export] private BattleSceneUI battleUI;
+    [Export] private CharacterData[] enemies;
+    [Export] private BattleStateMachine stateMachine;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -24,7 +25,19 @@ public partial class BattleScene : Node2D
         CharacterData characteData = main.GetIndexCharacterData(0);
 
         // Set the character info
-        characterInfo.SetCharacterInfo(characteData);
+        battleUI.SetCharacterInfo(characteData);
+
+        stateMachine.Init(this);
+    }
+
+    public override void _Process(double delta)
+    {
+        stateMachine.ProcessPhysics((float) delta);
+    }
+
+    public void FleeBattle() 
+    {
+        GetTree().ChangeSceneToPacked(main.GetPreviousScene());
     }
 
     //-------------------------------------------------------------------------
@@ -36,5 +49,5 @@ public partial class BattleScene : Node2D
     // Private
 
     //-------------------------------------------------------------------------
-	// Debug Methods
+    // Debug Methods
 }

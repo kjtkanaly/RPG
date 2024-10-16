@@ -156,14 +156,14 @@ public partial class Main : Node
         GetTree().ChangeSceneToPacked(battleScene);
     }
 
-    public void ExitBattle()
-    {
-        GetTree().ChangeSceneToPacked(previousScene);
-    }
-
     public CharacterData GetIndexCharacterData(int index)
     {
         return teamDirectors[index].GetCharacterData();
+    }
+
+    public PackedScene GetPreviousScene()
+    {
+        return previousScene;
     }
 
     // Protected

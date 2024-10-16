@@ -1,14 +1,8 @@
 using Godot;
 using System;
 
-public partial class BattleSceneMainAction : ButtonGroupUI
+public partial class FleeBattle : BattleState
 {
-    public enum Choice
-    {
-        Flee,
-        Null
-    }
-
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
@@ -16,7 +10,6 @@ public partial class BattleSceneMainAction : ButtonGroupUI
     // Protected
 
     // Private
-    [Export] private Button fleeButton;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -24,13 +17,9 @@ public partial class BattleSceneMainAction : ButtonGroupUI
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public Choice GetActiveChoice()
+    public override void Enter()
     {
-        // If the User Selected "Flee"
-        if (buttons[currentButtonIndex] == fleeButton) {
-            return Choice.Flee;
-        }
-        return Choice.Null;
+        battleScene.FleeBattle();
     }
 
     // Protected

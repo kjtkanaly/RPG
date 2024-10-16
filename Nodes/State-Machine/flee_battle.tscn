@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqsveenfoilcs"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/FleeBattle.cs" id="1_8k0ke"]
+
+[node name="Flee-Battle" type="Node"]
+script = ExtResource("1_8k0ke")

@@ -1,14 +1,8 @@
 using Godot;
 using System;
 
-public partial class BattleSceneMainAction : ButtonGroupUI
+public partial class BattleSceneUI : CanvasLayer
 {
-    public enum Choice
-    {
-        Flee,
-        Null
-    }
-
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
@@ -16,21 +10,18 @@ public partial class BattleSceneMainAction : ButtonGroupUI
     // Protected
 
     // Private
-    [Export] private Button fleeButton;
+    [Export] private CharacterBattleSceneInfo characterInfo;
+    [Export] private BattleSceneMainAction mainAction;
 
     //-------------------------------------------------------------------------
-    // Game Events
+	// Game Events
 
     //-------------------------------------------------------------------------
-    // Methods
+	// Methods
     // Public
-    public Choice GetActiveChoice()
+    public void SetCharacterInfo(CharacterData data) 
     {
-        // If the User Selected "Flee"
-        if (buttons[currentButtonIndex] == fleeButton) {
-            return Choice.Flee;
-        }
-        return Choice.Null;
+        characterInfo.SetCharacterInfo(data);
     }
 
     // Protected
@@ -38,5 +29,5 @@ public partial class BattleSceneMainAction : ButtonGroupUI
     // Private
 
     //-------------------------------------------------------------------------
-    // Debug Methods
+	// Debug Methods
 }
