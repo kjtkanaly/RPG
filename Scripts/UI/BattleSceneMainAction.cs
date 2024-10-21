@@ -3,12 +3,6 @@ using System;
 
 public partial class BattleSceneMainAction : ButtonGroupUI
 {
-    public enum Choice
-    {
-        Flee,
-        Null
-    }
-
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
@@ -16,6 +10,7 @@ public partial class BattleSceneMainAction : ButtonGroupUI
     // Protected
 
     // Private
+    [Export] private Button attackButton;
     [Export] private Button fleeButton;
 
     //-------------------------------------------------------------------------
@@ -24,13 +19,18 @@ public partial class BattleSceneMainAction : ButtonGroupUI
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public Choice GetActiveChoice()
+    public BattleScene.Choice GetActiveChoice()
     {
         // If the User Selected "Flee"
         if (buttons[currentButtonIndex] == fleeButton) {
-            return Choice.Flee;
+            return BattleScene.Choice.Flee;
         }
-        return Choice.Null;
+        // If the User Selected "Attack"
+        else if (buttons[currentButtonIndex] == attackButton) {
+            return BattleScene.Choice.Attack;
+        }
+        
+        return BattleScene.Choice.Null;
     }
 
     // Protected

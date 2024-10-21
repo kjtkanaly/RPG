@@ -219,7 +219,7 @@ public partial class CharacterDirector : CharacterBody2D
         // If Enemy then start battle sequence
         if (npc.IsInGroup("Enemy")) {
             // Switch to battle scene
-            main.BeginBattle(npc.GetCharacterData().battleScene);
+            main.BeginBattle(npc.GetCharacterData().battleSceneFilePath);
             
         }
     }

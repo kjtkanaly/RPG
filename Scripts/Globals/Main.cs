@@ -146,18 +146,23 @@ public partial class Main : Node
 
     }
 
-    public void BeginBattle(PackedScene battleScene) 
+    public void BeginBattle(string battleSceneFilePath) 
     {
         // Log current scene
         previousScene = new PackedScene();
         previousScene.Pack(GetTree().CurrentScene);
 
         // Begin the battle scene
-        GetTree().ChangeSceneToPacked(battleScene);
+        GetTree().ChangeSceneToFile(battleSceneFilePath);
     }
 
-    public CharacterData GetIndexCharacterData(int index)
+    public CharacterData GetCharacterDataAtIndex(int index)
     {
+        // Default
+        if (teamDirectors.Count <= index) {
+            return null;
+        }
+
         return teamDirectors[index].GetCharacterData();
     }
 

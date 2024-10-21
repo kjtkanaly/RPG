@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://n6ped3imq1ac"]
+
+[ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="1_1ha4g"]
+[ext_resource type="Script" path="res://Scripts/UI/DamageLabel.cs" id="2_u2tkk"]
+
+[node name="Damage-Label" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 0, 0.25098, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_1ha4g")
+theme_override_font_sizes/font_size = 160
+text = "000"
+script = ExtResource("2_u2tkk")

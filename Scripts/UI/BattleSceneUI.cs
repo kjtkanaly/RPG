@@ -24,6 +24,26 @@ public partial class BattleSceneUI : CanvasLayer
         characterInfo.SetCharacterInfo(data);
     }
 
+    public BattleSceneMainAction GetMainAction()
+    {
+        return mainAction;
+    }
+
+    public CharacterBattleSceneInfo GetCharacterInfo()
+    {
+        return characterInfo;
+    }
+
+    public void HideUI() {
+        mainAction.Visible = false;
+        characterInfo.Visible = false;
+    }
+
+    public void ShowUI() {
+        mainAction.Visible = true;
+        characterInfo.Visible = true;
+    }
+
     // Protected
 
     // Private

@@ -17,4 +17,6 @@ maxMana = 100
 battlePortrait = ExtResource("1_i6tfh")
 dialogueIcon = ExtResource("1_i6tfh")
 currentDialogue = PackedStringArray()
+battleSceneFilePath = ""
 inventorySize = 10
+damageRange = Vector2i(10, 15)

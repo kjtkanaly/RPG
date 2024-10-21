@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class FleeBattle : BattleState
+public partial class PlayerAttackSequence : AttackSequence
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -10,6 +10,7 @@ public partial class FleeBattle : BattleState
     // Protected
 
     // Private
+    [Export] private BattleState victoryState;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -17,12 +18,26 @@ public partial class FleeBattle : BattleState
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public override void Enter()
+    public override CharacterData GetAttackerData()
     {
-        battleScene.LeaveBattle();
+        return battleScene.GetPlayerData();
+    }
+
+    public override CharacterData GetDefenderData()
+    {
+        return battleScene.GetEnemyData();
+    }
+
+    public override Control GetDefenderPos()
+    {
+        return battleScene.GetEnemyPositon();
     }
 
     // Protected
+    protected override BattleState DefenderDead() 
+    {
+        return victoryState;
+    }
 
     // Private
 

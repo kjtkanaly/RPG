@@ -35,6 +35,11 @@ public partial class CharacterBattleSceneInfo : Control
     // Public
     public void SetCharacterInfo(CharacterData data)
     {
+        // Defautl
+        if (data == null) {
+            return;
+        }
+
         UpdateName(data.name);
         UpdateLevel(data.level);
         UpdateValueAndProgressBar(

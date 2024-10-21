@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://duqk2867wvx3j"]
+[gd_scene load_steps=10 format=3 uid="uid://duqk2867wvx3j"]
 
 [ext_resource type="Script" path="res://Scripts/Globals/BattleScene.cs" id="1_rt48m"]
 [ext_resource type="Script" path="res://Scripts/UI/BattleSceneUI.cs" id="2_5o8ub"]
@@ -7,20 +7,30 @@
 [ext_resource type="PackedScene" uid="uid://bhe0v2375rdtl" path="res://Nodes/UI/battle_scene_main_action.tscn" id="3_1tswa"]
 [ext_resource type="PackedScene" uid="uid://b2tsod01peupp" path="res://Nodes/State-Machine/player_turn.tscn" id="3_4otpn"]
 [ext_resource type="PackedScene" uid="uid://bqsveenfoilcs" path="res://Nodes/State-Machine/flee_battle.tscn" id="4_up8t5"]
+[ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="5_febhu"]
+[ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="6_y2u7w"]
 
-[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine")]
+[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine", "playerPosition", "enemyPosition")]
 script = ExtResource("1_rt48m")
 battleUI = NodePath("CanvasLayer")
 stateMachine = NodePath("Battle-State-Machine")
+playerPosition = NodePath("CanvasLayer/Player-Pos")
+enemyPosition = NodePath("CanvasLayer/Enemy-Pos")
 
 [node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
 startingState = NodePath("Player-Turn")
 
-[node name="Player-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("mainAction", "fleeBattle") instance=ExtResource("3_4otpn")]
-mainAction = NodePath("../../CanvasLayer/Battle-Scene-Main-Action")
+[node name="Player-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("fleeBattle", "playerAttackSequence") instance=ExtResource("3_4otpn")]
 fleeBattle = NodePath("../Flee-Battle")
+playerAttackSequence = NodePath("../Player-Attack-Sequence")
 
 [node name="Flee-Battle" parent="Battle-State-Machine" instance=ExtResource("4_up8t5")]
+
+[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "playerTurn") instance=ExtResource("5_febhu")]
+victoryState = NodePath("../Victory-State")
+playerTurn = NodePath("../Player-Turn")
+
+[node name="Victory-State" parent="Battle-State-Machine" instance=ExtResource("6_y2u7w")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("characterInfo", "mainAction")]
 script = ExtResource("2_5o8ub")
@@ -49,3 +59,15 @@ offset_left = 68.0
 offset_top = 1009.0
 offset_right = 332.0
 offset_bottom = 1384.0
+
+[node name="Player-Pos" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Enemy-Pos" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

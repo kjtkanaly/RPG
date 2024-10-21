@@ -3,17 +3,29 @@ using System;
 
 public partial class BattleScene : Node2D
 {
+    public enum Choice
+    {
+        Flee,
+        Attack,
+        Null
+    }
+
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
+    public Main main;
+    public int currentAllyIndex = 0;
+    public int currentEnemyIndex = 0;
 
     // Protected
 
     // Private
-    private Main main;
     [Export] private BattleSceneUI battleUI;
-    [Export] private CharacterData[] enemies;
+    [Export] private CharacterData player;
+    [Export] private CharacterData enemy;
     [Export] private BattleStateMachine stateMachine;
+    [Export] private Control playerPosition;
+    [Export] private Control enemyPosition;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -22,10 +34,10 @@ public partial class BattleScene : Node2D
         main = GetNode<Main>("/root/Main");
 
         // Get the character data
-        CharacterData characteData = main.GetIndexCharacterData(0);
+        player = main.GetCharacterDataAtIndex(0);
 
         // Set the character info
-        battleUI.SetCharacterInfo(characteData);
+        battleUI.SetCharacterInfo(player);
 
         stateMachine.Init(this);
     }
@@ -35,14 +47,52 @@ public partial class BattleScene : Node2D
         stateMachine.ProcessPhysics((float) delta);
     }
 
-    public void FleeBattle() 
-    {
-        GetTree().ChangeSceneToPacked(main.GetPreviousScene());
-    }
-
     //-------------------------------------------------------------------------
     // Methods
     // Public
+    public void LeaveBattle() 
+    {
+        if (main.GetPreviousScene() == null) {
+            GetTree().UnloadCurrentScene();
+        }
+
+        GetTree().ChangeSceneToPacked(main.GetPreviousScene());
+    }
+
+    public CharacterData GetPlayerData() 
+    {
+        return player;
+    }
+
+    public CharacterData GetEnemyData()
+    {
+        return enemy;
+    }
+
+    public BattleSceneUI GetUI() 
+    {
+        return battleUI;
+    }
+
+    public Control GetPlayerPosition()
+    {
+        return playerPosition;
+    }
+
+    public Control GetEnemyPositon()
+    {
+        return enemyPosition;
+    }
+
+    public void HideUI() 
+    {
+        battleUI.HideUI();
+    }
+
+    public void ShowUI() 
+    {
+        battleUI.ShowUI();
+    }
 
     // Protected
 

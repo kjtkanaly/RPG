@@ -16,3 +16,5 @@ maxMana = 100
 battlePortrait = ExtResource("1_ggwvo")
 dialogueIcon = ExtResource("1_ggwvo")
 currentDialogue = PackedStringArray("God I love being so SICK!!!", "Sometimes it does get old")
+inventorySize = 0
+damageRange = Vector2i(0, 0)
