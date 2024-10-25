@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dqfvwmao44duc" path="res://Nodes/UI/inventory_ui.tscn" id="1_qbhdn"]
 [ext_resource type="Script" path="res://Scripts/UI/MainUI.cs" id="1_xvyuh"]
-[ext_resource type="PackedScene" uid="uid://oya8nes740vs" path="res://Nodes/UI/text_box.tscn" id="2_i0e02"]
-[ext_resource type="PackedScene" uid="uid://dj2i0djou3f11" path="res://Nodes/UI/bool_text_box.tscn" id="3_tjqpr"]
+[ext_resource type="PackedScene" uid="uid://cdkyaw3bhxiue" path="res://Nodes/UI/text_box.tscn" id="2_i0e02"]
+[ext_resource type="PackedScene" uid="uid://bfiifukcxcnup" path="res://Nodes/UI/bool_text_box.tscn" id="3_tjqpr"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_kvtce"]
 
@@ -19,6 +19,7 @@ group = SubResource("ButtonGroup_kvtce")
 
 [node name="Text-Box" parent="." instance=ExtResource("2_i0e02")]
 visible = false
+debugMode = false
 
 [node name="Bool-Text-Box" parent="." instance=ExtResource("3_tjqpr")]
 visible = false

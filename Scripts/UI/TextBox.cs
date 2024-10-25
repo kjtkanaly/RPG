@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class TextBox : CanvasLayer
+public partial class TextBox : Control
 {
     public enum TEXT_BOX_TYPE 
     {
@@ -95,7 +95,7 @@ public partial class TextBox : CanvasLayer
 
     // Protected
     protected void SetIcon(Texture2D icon) {
-        if (textRect == null) {
+        if (textRect == null || icon == null) {
             return;
         }
 

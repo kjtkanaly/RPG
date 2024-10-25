@@ -1,92 +1,76 @@
-[gd_scene load_steps=5 format=3 uid="uid://dj2i0djou3f11"]
+[gd_scene load_steps=5 format=3 uid="uid://bfiifukcxcnup"]
 
 [ext_resource type="Script" path="res://Scripts/UI/BoolTextBox.cs" id="1_75o5q"]
-[ext_resource type="FontFile" uid="uid://0ogclkmy24k4" path="res://Visuals/Fonts/Born2bSportyV2.ttf" id="2_rqkn6"]
-[ext_resource type="ButtonGroup" uid="uid://bvnet7bi65aww" path="res://Resources/Button-Groups/item-text-box-group.tres" id="3_78w2p"]
+[ext_resource type="Theme" uid="uid://b2thovx8kjaph" path="res://Resources/Themes/General.tres" id="1_k3q7p"]
+[ext_resource type="Script" path="res://Scripts/UI/ButtonGroupUI.cs" id="3_o3533"]
+[ext_resource type="ButtonGroup" uid="uid://casfrwaqdavco" path="res://Resources/Button-Groups/bool-text-box.tres" id="4_1rbr3"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37abo"]
-bg_color = Color(0.407843, 0.313726, 0.266667, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.988235, 1, 0.992157, 1)
-
-[node name="Bool-Text-Box" type="CanvasLayer" node_paths=PackedStringArray("buttonGroup", "label")]
-process_mode = 3
-script = ExtResource("1_75o5q")
-buttonGroup = [NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/No"), NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Yes")]
-label = NodePath("MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Label")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Bool-Text-Box" type="MarginContainer" node_paths=PackedStringArray("boolButtons", "label")]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -500.0
+offset_top = -212.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 300
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 300
-theme_override_constants/margin_bottom = 60
+theme = ExtResource("1_k3q7p")
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 80
+script = ExtResource("1_75o5q")
+boolButtons = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer")
+debugMode = true
+label = NodePath("Panel/MarginContainer/VBoxContainer/Text")
 
-[node name="Panel" type="Panel" parent="MarginContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_37abo")
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 50
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="Label2" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(32, 300)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rqkn6")
-theme_override_font_sizes/font_size = 72
-text = "*"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1500, 225)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_rqkn6")
-theme_override_font_sizes/font_size = 72
-autowrap_mode = 3
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(600, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 100
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+autowrap_mode = 2
 
-[node name="No" type="Button" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_rqkn6")
-theme_override_font_sizes/font_size = 64
+theme_override_constants/separation = 40
+script = ExtResource("3_o3533")
+group = ExtResource("4_1rbr3")
+
+[node name="No" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
 toggle_mode = true
 button_pressed = true
-button_group = ExtResource("3_78w2p")
+button_group = ExtResource("4_1rbr3")
 text = "NO"
+metadata/value = false
 
-[node name="Yes" type="Button" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
+[node name="Yes" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 36)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_rqkn6")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 24
 toggle_mode = true
-button_group = ExtResource("3_78w2p")
+button_group = ExtResource("4_1rbr3")
 text = "YES"
+metadata/value = true

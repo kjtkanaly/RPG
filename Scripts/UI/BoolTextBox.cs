@@ -9,10 +9,9 @@ public partial class BoolTextBox : TextBox
     [Signal] public delegate void SelectionMadeEventHandler();
 
     // Protected
-    [Export] protected Button[] buttonGroup;
-    protected int currentButtonIndex = 0;
 
     // Private
+    [Export] private ButtonGroupUI boolButtons;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -32,10 +31,10 @@ public partial class BoolTextBox : TextBox
 
         // ButtonInteractionStuff
         if (Input.IsActionJustPressed("Left")) {
-            CycleSelectedButton(-1);
+            boolButtons.IncrementSelectedButton(-1);
         }
         else if (Input.IsActionJustPressed("Right")) {
-            CycleSelectedButton(1);
+            boolButtons.IncrementSelectedButton(1);
         }
 
         // Check if a selection has been made
@@ -48,24 +47,11 @@ public partial class BoolTextBox : TextBox
     // Methods
     // Public
     public bool GetUserChoice() 
-    {
-        return currentButtonIndex == 1;
+    {   
+        return boolButtons.GetSelectedBoolButtonValue();
     }
 
     // Protected
-    protected void CycleSelectedButton(int step)
-    {
-        int newButtonIndex = currentButtonIndex + step;
-
-        // Bounds Check
-        if ((newButtonIndex < 0) || (newButtonIndex >= buttonGroup.Length)) 
-        {
-            return;
-        }
-
-        currentButtonIndex = newButtonIndex;
-        buttonGroup[currentButtonIndex].ButtonPressed = true;
-    }
 
     // Private
 
