@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://o0w5yevss7s3"]
+
+[ext_resource type="Script" path="res://Scripts/UI/BattleSceneUI.cs" id="1_hin22"]
+
+[node name="Battle-Scene-UI" type="CanvasLayer"]
+script = ExtResource("1_hin22")

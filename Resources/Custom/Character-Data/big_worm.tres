@@ -17,6 +17,5 @@ maxMana = 10
 battlePortrait = ExtResource("1_hyodi")
 dialogueIcon = ExtResource("1_cy3f7")
 currentDialogue = PackedStringArray("It\'s time to duel!!!")
-battleSceneFilePath = "res://Scenes/Battle-Scenes/big_worm_battle_scene.tscn"
 inventorySize = 5
 damageRange = Vector2i(10, 20)

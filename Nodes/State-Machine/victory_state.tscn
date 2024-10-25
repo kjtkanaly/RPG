@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://8verm6wooeqs"]
 
-[ext_resource type="Script" path="res://Scripts/State-Machines/VictoryState.cs" id="1_emaeh"]
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/VictoryState.cs" id="1_emaeh"]
 
 [node name="Victory-State" type="Node"]
 script = ExtResource("1_emaeh")

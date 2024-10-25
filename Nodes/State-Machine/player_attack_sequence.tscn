@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dlc3dhngpk2nf"]
 
-[ext_resource type="Script" path="res://Scripts/State-Machines/PlayerAttackSequence.cs" id="1_l3kku"]
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/PlayerAttackSequence.cs" id="1_l3kku"]
 [ext_resource type="PackedScene" uid="uid://n6ped3imq1ac" path="res://Nodes/UI/damage_label.tscn" id="2_wgrwo"]
 
 [node name="Player-Attack-Sequence" type="Node"]

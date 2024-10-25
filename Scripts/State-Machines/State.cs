@@ -50,6 +50,10 @@ public partial class State : Node
         return null;
     }
 
+    virtual public State ProcessGeneral(float delta) {
+        return null;
+    }
+
     virtual public State ProcessPhysics(float delta) {
         return null;
     }

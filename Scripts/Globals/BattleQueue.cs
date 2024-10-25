@@ -15,10 +15,15 @@ public partial class BattleQueue : Node
     private List<CharacterData> enemyTeam;
 
     //-------------------------------------------------------------------------
-	// Game Events
+    // Game Events
+    public override void _Ready()
+    {
+        playerTeam = new List<CharacterData>();
+        enemyTeam = new List<CharacterData>();
+    }
 
     //-------------------------------------------------------------------------
-	// Methods
+    // Methods
     // Public
     public void QueueBattle(
         CharacterData[] inPlayerTeam,

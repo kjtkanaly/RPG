@@ -23,17 +23,17 @@ public partial class Idle : CharacterBodyState
     {
         base.Enter();
 
-        characterDir.Velocity = Vector2.Zero;
+        characterDirector.Velocity = Vector2.Zero;
     }
 
-    override public State ProcessInput(InputEvent inputEvent) {
+    override public State ProcessGeneral(float delta) {
         // Check if the run state is triggered
         if (IsMoving()) {
             return runState;
         }
 
-        if (CanInteract()) {
-            // Decide Interaction Path
+        // Check if the character is trying to interact
+        if (IsInteracting() && characterDirector.CanInteract()) {
             return interactState;
         }
 

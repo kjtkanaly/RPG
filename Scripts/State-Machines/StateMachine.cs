@@ -56,6 +56,14 @@ public partial class StateMachine : Node
         }
     }
 
+    public void ProcessGeneral(float delta)
+    {
+        State newState = currentState.ProcessGeneral(delta);
+        if (newState != null) {
+            ChangeState(newState);
+        }
+    }
+
     // Protected
 
     // Private

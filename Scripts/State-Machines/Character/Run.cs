@@ -16,13 +16,17 @@ public partial class Run : CharacterBodyState
     private Vector2 direction;
 
     //-------------------------------------------------------------------------
-	// Game Events
+    // Game Events
 
     //-------------------------------------------------------------------------
-	// Methods
+    // Methods
     // Public
-    override public State ProcessInput(InputEvent inputEvent) {
-        // Trigger Jump Logic here
+    override public State ProcessGeneral(float delta) {      
+        // Check if the character is trying to interact
+        if (IsInteracting() && characterDirector.CanInteract()) {
+            return interactState;
+        }
+
         return null;
     }
 
@@ -31,14 +35,14 @@ public partial class Run : CharacterBodyState
         UpdateVelocity(delta);
 
         // Move the character body around
-        characterDir.MoveAndSlide();
+        characterDirector.MoveAndSlide();
 
         // Orientate the body
         UpdateCharacterSprite();
         UpdateItemRayCastDirection();
 
         // Check if the player is now idle
-        if (characterDir.Velocity.Length() <= 0.01) {
+        if (characterDirector.Velocity.Length() <= 0.01) {
             return idleState;
         }
         
@@ -51,12 +55,12 @@ public partial class Run : CharacterBodyState
     private void UpdateVelocity(float delta) 
     {
         // Get the current velocity snapshot
-        Vector2 velocity = characterDir.Velocity;
+        Vector2 velocity = characterDirector.Velocity;
 
         // Set the goal speed for the lateral movement
         float goalSpeed = 0;
         if (IsMoving()) {
-            goalSpeed = characterDir.GetMovementData().speed * speedModifier;
+            goalSpeed = characterDirector.GetMovementData().speed * speedModifier;
         }
 
         // Get the update speed by moving the current speed towards the goal
@@ -64,7 +68,7 @@ public partial class Run : CharacterBodyState
         float updateSpeed = Mathf.MoveToward(
                 currentSpeed, 
                 goalSpeed, 
-                characterDir.GetMovementData().acceleration * delta);
+                characterDirector.GetMovementData().acceleration * delta);
 
         // Set the latVelocity to have magntiude of the update speed times speedmodifier
         velocity = GetDirectionVector() * updateSpeed * speedModifier;
@@ -72,7 +76,7 @@ public partial class Run : CharacterBodyState
         
 
         // Update the Character Body's Velocity
-        characterDir.Velocity = velocity;
+        characterDirector.Velocity = velocity;
     }
 
     private void UpdateCharacterSprite() 
@@ -86,7 +90,7 @@ public partial class Run : CharacterBodyState
         }
 
         // If the direction is non-zero set accordingly
-        Vector2 scale = characterDir.GetSprite().Scale;
+        Vector2 scale = characterDirector.GetSprite().Scale;
         if (direction > 0 ) {
             scale.X = 1;
         }
@@ -95,7 +99,7 @@ public partial class Run : CharacterBodyState
         }
         
         // Update the Sprite Object
-        characterDir.GetSprite().Scale = scale;
+        characterDirector.GetSprite().Scale = scale;
     }
 
     private void UpdateItemRayCastDirection() 
@@ -108,10 +112,10 @@ public partial class Run : CharacterBodyState
         }
 
         // Get the Item Ray's Length
-        float rayLength = characterDir.GetInteractRay().TargetPosition.Length();
+        float rayLength = characterDirector.GetInteractRay().TargetPosition.Length();
 
         // Update the Ray's Target Position
-        characterDir.GetInteractRay().TargetPosition = direction * rayLength;
+        characterDirector.GetInteractRay().TargetPosition = direction * rayLength;
     }
 
     //-------------------------------------------------------------------------

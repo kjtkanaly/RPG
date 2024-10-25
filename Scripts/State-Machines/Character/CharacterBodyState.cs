@@ -9,7 +9,6 @@ public partial class CharacterBodyState : State
     public float moveSpeed;
 
     // Protected
-    protected CharacterDirector characterDir;
 
     // Private
 
@@ -22,7 +21,6 @@ public partial class CharacterBodyState : State
     override public void Init(CharacterDirector bodyDirectorRef) 
     {
         base.Init(bodyDirectorRef);
-        characterDir = bodyDirectorRef;
     }
 
     // Protected
@@ -43,10 +41,21 @@ public partial class CharacterBodyState : State
         return direction;
     }
 
-    protected bool CanInteract()
+    protected bool IsInteracting()
     {
-        return Input.IsActionJustReleased("Interact") 
-               && characterDirector.CanInteract();
+        if (!Input.IsActionJustPressed("Interact")) {
+            return false;
+        }
+        
+        // Get the potential item's Node object
+        Node collider = (Node) characterDirector.GetInteractRay().GetCollider();
+
+        // Check if we actually collided with something
+        if (collider == null) {
+            return false;
+        }
+
+        return true;
     }
 
     // Private

@@ -22,8 +22,8 @@ public partial class BattleScene : Node2D
     // Private
     [Export] private BattleSceneUI battleUI;
     [Export] private BattleStateMachine stateMachine;
-    private CharacterData player;
-    private CharacterData enemy;
+    private CharacterData[] playerTeam;
+    private CharacterData[] enemyTeam;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -34,7 +34,7 @@ public partial class BattleScene : Node2D
 
     public override void _Process(double delta)
     {
-        stateMachine.ProcessPhysics((float) delta);
+        stateMachine.ProcessGeneral((float) delta);
     }
 
     //-------------------------------------------------------------------------
@@ -44,12 +44,14 @@ public partial class BattleScene : Node2D
     {
         main = GetNode<Main>("/root/Main");
 
-        // Get the character data
-        player = main.GetCharacterDataAtIndex(0);
+        // Get the Battle Info
+        BattleQueue battleQueue = main.GetBattleQueue();
 
-        // Set the character info
-        battleUI.SetCharacterInfo(player);
+        // Set the Player Team Info
 
+        // Set the Enemy Team Info
+
+        // Init the Battle Scene State Machine
         stateMachine.Init(this);
     }
 
@@ -62,14 +64,14 @@ public partial class BattleScene : Node2D
         GetTree().ChangeSceneToPacked(main.GetPreviousScene());
     }
 
-    public CharacterData GetPlayerData() 
+    public CharacterData GetPlayerTeamDataAtIndex(int index) 
     {
-        return player;
+        return playerTeam[index];
     }
 
-    public CharacterData GetEnemyData()
+    public CharacterData GetEnemyTeamDataAtIndex(int index)
     {
-        return enemy;
+        return enemyTeam[index];
     }
 
     public BattleSceneUI GetBattleUI() 

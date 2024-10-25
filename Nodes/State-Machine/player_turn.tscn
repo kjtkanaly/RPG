@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b2tsod01peupp"]
 
-[ext_resource type="Script" path="res://Scripts/State-Machines/PlayerTurn.cs" id="1_y5doq"]
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/PlayerTurn.cs" id="1_y5doq"]
 
 [node name="Player-Turn" type="Node"]
 script = ExtResource("1_y5doq")

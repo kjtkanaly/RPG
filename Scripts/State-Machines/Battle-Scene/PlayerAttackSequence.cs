@@ -20,12 +20,12 @@ public partial class PlayerAttackSequence : AttackSequence
     // Public
     public override CharacterData GetAttackerData()
     {
-        return battleScene.GetPlayerData();
+        return battleScene.GetPlayerTeamDataAtIndex(0);
     }
 
     public override CharacterData GetDefenderData()
     {
-        return battleScene.GetEnemyData();
+        return battleScene.GetEnemyTeamDataAtIndex(0);
     }
 
     public override Control GetDefenderPos()

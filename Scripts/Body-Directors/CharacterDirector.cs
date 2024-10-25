@@ -59,6 +59,11 @@ public partial class CharacterDirector : CharacterBody2D
         movementSM.PhysicsProcess((float) delta);
     }
 
+    public override void _Process(double delta)
+    {
+        movementSM.ProcessGeneral((float) delta);
+    }
+
     //-------------------------------------------------------------------------
     // Methods
     // Public

@@ -94,7 +94,7 @@ public partial class Interact : CharacterBodyState
         isInteracting = false;
 
         // Start the interaction timer
-        characterDir.StartInteractionDelayTimer();
+        characterDirector.StartInteractionDelayTimer();
 
         // TODO: If not enough space then display text saying no room
     }
@@ -119,12 +119,14 @@ public partial class Interact : CharacterBodyState
         isInteracting = false;
 
         // Start the character's interaction delay timer
-        characterDir.StartInteractionDelayTimer();
+        characterDirector.StartInteractionDelayTimer();
 
         // If Enemy then start battle sequence
         if (npc.IsInGroup("Enemy")) {
             // Switch to battle scene
-            // main.BeginBattle(npc.GetCharacterData().battleSceneFilePath);
+            main.BeginBattle(
+                new CharacterData[] {characterDirector.GetCharacterData()}, 
+                new CharacterData[] {npc.GetCharacterData()});
             
         }
     }

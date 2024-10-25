@@ -17,6 +17,7 @@ public partial class Main : Node
     // Private
     [Export] private MainUI mainUI;
     [Export] private BattleQueue battleQueue;
+    [Export] private PackedScene battleScene;
     private List<CharacterDirector> teamDirectors;
     private PackedScene previousScene;
 
@@ -92,14 +93,31 @@ public partial class Main : Node
 
     }
 
-    public void BeginBattle(string battleSceneFilePath) 
+    public void BeginBattle(
+        CharacterData[] inPlayerTeam, 
+        CharacterData[] inEnemyTeam) 
     {
         // Log current scene
         previousScene = new PackedScene();
         previousScene.Pack(GetTree().CurrentScene);
 
+        // Queue the battle info
+        SetBattleQueue(inPlayerTeam, inEnemyTeam);
+
         // Begin the battle scene
-        GetTree().ChangeSceneToFile(battleSceneFilePath);
+        GetTree().ChangeSceneToPacked(battleScene);
+    }
+
+    public void SetBattleQueue(
+        CharacterData[] inPlayerTeam,
+        CharacterData[] inEnemyTeam) 
+    {
+        battleQueue.QueueBattle(inPlayerTeam, inEnemyTeam);
+    }
+
+    public BattleQueue GetBattleQueue()
+    {
+        return battleQueue;
     }
 
     public CharacterData GetCharacterDataAtIndex(int index)
@@ -120,18 +138,6 @@ public partial class Main : Node
     public MainUI GetMainUI()
     {
         return mainUI;
-    }
-
-    public void SetBattleQueue(
-        CharacterData[] inPlayerTeam,
-        CharacterData[] inEnemyTeam) 
-    {
-        battleQueue.QueueBattle(inPlayerTeam, inEnemyTeam);
-    }
-
-    public BattleQueue GetBattleQueue()
-    {
-        return battleQueue;
     }
 
     // Protected
