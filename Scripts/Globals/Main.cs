@@ -9,31 +9,29 @@ public partial class Main : Node
     // Game Componenets
     // Public
     [Signal] public delegate void InteractionEventHandler();
-    [Signal] public delegate void DialogueOverEventHandler();
     [Signal] public delegate void SelectionMadeEventHandler();
     public RandomNumberGenerator rng;
 
     // Protected
 
     // Private
-    [Export] private BoolTextBox boolTextBox;
-    [Export] private TextBox textBox;
-    [Export] private InventoryUI inventoryUI;
+    [Export] private MainUI mainUI;
+    [Export] private BattleQueue battleQueue;
     private List<CharacterDirector> teamDirectors;
     private PackedScene previousScene;
-    private int currentCharacterIndex = 0;
 
     //-------------------------------------------------------------------------
 	// Game Events
     public override void _Ready()
     {
         rng = new RandomNumberGenerator();
+
+        // Init the Main UI
+        mainUI.Init(this);
         
         // Get the team character directors
         teamDirectors = new List<CharacterDirector>();
-        foreach (CharacterDirector character in GetTree().GetNodesInGroup("Team")) {
-            teamDirectors.Add(character);
-        }
+        UpdatePlayerTeam();
     }
 
     public override void _Process(double delta)
@@ -41,77 +39,25 @@ public partial class Main : Node
         if (Input.IsActionJustReleased("Interact")) {
             EmitSignal(SignalName.Interaction);
         }
-
-        if (Input.IsActionJustReleased("Inventory")) {
-            DisplayInventory();
-        }
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public void DisplayInventory()
+    public void UpdatePlayerTeam() 
     {
-        Inventory inventory = GetCharacterInventory();
-
-        if (inventory == null) {
-            return;
+        foreach (CharacterDirector character in GetTree().GetNodesInGroup("Team")) {
+            teamDirectors.Add(character);
         }
-
-        inventoryUI.Toggle(inventory);
     }
 
-    public Inventory GetCharacterInventory()
+    public Inventory GetCharacterInventoryAtIndex(int index)
     {
         if (teamDirectors.Count == 0) {
             return null;
         }
 
-        return teamDirectors[currentCharacterIndex].GetInventory();
-    }
-
-    public async void DispalyTextBox(TextBox.TextBoxData data)
-    {
-        // Pause the other processes
-        GetTree().Paused = true;
-
-        // Display the Text Box
-        foreach (string text in data.text) {
-            Tween textTween = textBox.ShowTextBox(
-                text, 
-                data.icon);
-
-            // Await Text being completed
-            await ToSignal(textTween, "finished");
-
-            await ToSignal(this, SignalName.Interaction);
-        }
-
-        // Hide the text
-        textBox.HideTextBox();
-
-        // Resume the game
-        GetTree().Paused = false;
-
-        // Emit Signal that the dialogue is done
-        EmitSignal(SignalName.DialogueOver);
-    }
-
-    public async void DisplayBooleanBox(string text) 
-    {
-        // Pause the other processes
-        GetTree().Paused = true;
-
-        Tween textTween = boolTextBox.ShowTextBox(text, null);
-
-        // Await Text being completed
-        await ToSignal(textTween, "finished");
-
-        // Await the user selection
-        await ToSignal(boolTextBox, "SelectionMade");
-
-        // Emit signal that signifes the selection is made
-        EmitSignal(SignalName.SelectionMade);
+        return teamDirectors[index].GetInventory();
     }
 
     public void PickupItemSequence(ItemDirector item, Inventory inventory) 
@@ -120,7 +66,7 @@ public partial class Main : Node
         item.coolDown = true;
 
         // Get the User Choice
-        bool choice = boolTextBox.GetUserChoice();
+        bool choice = mainUI.GetBoolTextBox().GetUserChoice();
 
         // Do something based upon the choice
         if (choice) {
@@ -139,7 +85,7 @@ public partial class Main : Node
         }
 
         // Hide the text
-        boolTextBox.HideTextBox();
+        mainUI.GetBoolTextBox().HideTextBox();
 
         // Resume the game
         GetTree().Paused = false;
@@ -169,6 +115,23 @@ public partial class Main : Node
     public PackedScene GetPreviousScene()
     {
         return previousScene;
+    }
+
+    public MainUI GetMainUI()
+    {
+        return mainUI;
+    }
+
+    public void SetBattleQueue(
+        CharacterData[] inPlayerTeam,
+        CharacterData[] inEnemyTeam) 
+    {
+        battleQueue.QueueBattle(inPlayerTeam, inEnemyTeam);
+    }
+
+    public BattleQueue GetBattleQueue()
+    {
+        return battleQueue;
     }
 
     // Protected

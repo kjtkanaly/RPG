@@ -21,15 +21,26 @@ public partial class BattleScene : Node2D
 
     // Private
     [Export] private BattleSceneUI battleUI;
-    [Export] private CharacterData player;
-    [Export] private CharacterData enemy;
     [Export] private BattleStateMachine stateMachine;
-    [Export] private Control playerPosition;
-    [Export] private Control enemyPosition;
+    private CharacterData player;
+    private CharacterData enemy;
 
     //-------------------------------------------------------------------------
     // Game Events
     public override void _Ready()
+    {
+        Init();
+    }
+
+    public override void _Process(double delta)
+    {
+        stateMachine.ProcessPhysics((float) delta);
+    }
+
+    //-------------------------------------------------------------------------
+    // Methods
+    // Public
+    public void Init() 
     {
         main = GetNode<Main>("/root/Main");
 
@@ -42,14 +53,6 @@ public partial class BattleScene : Node2D
         stateMachine.Init(this);
     }
 
-    public override void _Process(double delta)
-    {
-        stateMachine.ProcessPhysics((float) delta);
-    }
-
-    //-------------------------------------------------------------------------
-    // Methods
-    // Public
     public void LeaveBattle() 
     {
         if (main.GetPreviousScene() == null) {
@@ -69,19 +72,9 @@ public partial class BattleScene : Node2D
         return enemy;
     }
 
-    public BattleSceneUI GetUI() 
+    public BattleSceneUI GetBattleUI() 
     {
         return battleUI;
-    }
-
-    public Control GetPlayerPosition()
-    {
-        return playerPosition;
-    }
-
-    public Control GetEnemyPositon()
-    {
-        return enemyPosition;
     }
 
     public void HideUI() 

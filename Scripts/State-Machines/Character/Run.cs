@@ -12,6 +12,7 @@ public partial class Run : CharacterBodyState
 
     // Private
     [Export] private State idleState;
+    [Export] private State interactState;
     private Vector2 direction;
 
     //-------------------------------------------------------------------------
@@ -107,7 +108,7 @@ public partial class Run : CharacterBodyState
         }
 
         // Get the Item Ray's Length
-        float rayLength = characterDir.itemRayLength;
+        float rayLength = characterDir.GetInteractRay().TargetPosition.Length();
 
         // Update the Ray's Target Position
         characterDir.GetInteractRay().TargetPosition = direction * rayLength;

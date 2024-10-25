@@ -30,7 +30,8 @@ public partial class PlayerAttackSequence : AttackSequence
 
     public override Control GetDefenderPos()
     {
-        return battleScene.GetEnemyPositon();
+        return battleScene.GetBattleUI().GetDamagePos(
+            BattleSceneUI.CHARACTER_TYPE.Enemy);
     }
 
     // Protected

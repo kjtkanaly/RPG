@@ -11,6 +11,7 @@ public partial class Idle : CharacterBodyState
 
     // Private
     [Export] private State runState;
+    [Export] private State interactState;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -29,6 +30,11 @@ public partial class Idle : CharacterBodyState
         // Check if the run state is triggered
         if (IsMoving()) {
             return runState;
+        }
+
+        if (CanInteract()) {
+            // Decide Interaction Path
+            return interactState;
         }
 
         return null;

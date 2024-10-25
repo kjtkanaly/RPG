@@ -26,7 +26,8 @@ public partial class CharacterBodyState : State
     }
 
     // Protected
-    protected bool IsMoving() {
+    protected bool IsMoving() 
+    {
         if (Input.IsActionPressed("Left") 
             || Input.IsActionPressed("Right")
             || Input.IsActionPressed("Down")
@@ -36,9 +37,16 @@ public partial class CharacterBodyState : State
         return false;        
     }
 
-    protected Vector2 GetDirectionVector() {
+    protected Vector2 GetDirectionVector() 
+    {
         Vector2 direction = Input.GetVector("Left", "Right", "Up", "Down");
         return direction;
+    }
+
+    protected bool CanInteract()
+    {
+        return Input.IsActionJustReleased("Interact") 
+               && characterDirector.CanInteract();
     }
 
     // Private

@@ -11,13 +11,13 @@ public partial class State : Node
     protected CharacterDirector characterDirector;
     protected string animationPath;
     protected AudioStream soundEffectStream;
-    protected Main global;
+    protected Main main;
 
     //-------------------------------------------------------------------------
     // Game Events
     public override void _Ready()
     {
-        global = GetNode<Main>("/root/Main");
+        main = GetNode<Main>("/root/Main");
     }
 
     //-------------------------------------------------------------------------

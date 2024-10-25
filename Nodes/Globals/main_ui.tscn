@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6lfqmyffcmtu"]
+
+[ext_resource type="PackedScene" uid="uid://dqfvwmao44duc" path="res://Nodes/UI/inventory_ui.tscn" id="1_qbhdn"]
+[ext_resource type="Script" path="res://Scripts/UI/MainUI.cs" id="1_xvyuh"]
+[ext_resource type="PackedScene" uid="uid://oya8nes740vs" path="res://Nodes/UI/text_box.tscn" id="2_i0e02"]
+[ext_resource type="PackedScene" uid="uid://dj2i0djou3f11" path="res://Nodes/UI/bool_text_box.tscn" id="3_tjqpr"]
+
+[node name="Main-UI" type="CanvasLayer" node_paths=PackedStringArray("boolTextBox", "textBox", "inventoryUI")]
+script = ExtResource("1_xvyuh")
+boolTextBox = NodePath("Bool-Text-Box")
+textBox = NodePath("Text-Box")
+inventoryUI = NodePath("Inventory-UI")
+
+[node name="Inventory-UI" parent="." instance=ExtResource("1_qbhdn")]
+visible = false
+
+[node name="Text-Box" parent="." instance=ExtResource("2_i0e02")]
+visible = false
+
+[node name="Bool-Text-Box" parent="." instance=ExtResource("3_tjqpr")]
+visible = false

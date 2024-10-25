@@ -26,9 +26,9 @@ public partial class VictoryState : BattleState
             message,
             null);
 
-        battleScene.main.DispalyTextBox(data);
+        battleScene.main.GetMainUI().DispalyTextBox(data);
 
-        await ToSignal(battleScene.main, Main.SignalName.DialogueOver);
+        await ToSignal(battleScene.main.GetMainUI(), MainUI.SignalName.DialogueOver);
 
         battleScene.LeaveBattle();
     }

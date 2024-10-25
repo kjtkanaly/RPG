@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjmrxg28ecmk0"]
+[gd_scene load_steps=9 format=3 uid="uid://cjmrxg28ecmk0"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
 [ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_2gnvc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bv3qwkdgq2pq8" path="res://Resources/Custom/Character-Data/player.tres" id="3_anm3c"]
 [ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Movement/idle.tscn" id="3_m15nd"]
 [ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
+[ext_resource type="PackedScene" uid="uid://d3rcof83jkmqw" path="res://Nodes/State-Machine/Character/interact.tscn" id="6_x1tnx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
@@ -17,11 +18,16 @@ characterData = ExtResource("3_anm3c")
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Idle")
 
-[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState") instance=ExtResource("2_uwmi2")]
+[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState", "interactState") instance=ExtResource("2_uwmi2")]
 idleState = NodePath("../Idle")
+interactState = NodePath("../Interact")
 
-[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState") instance=ExtResource("3_m15nd")]
+[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState", "interactState") instance=ExtResource("3_m15nd")]
 runState = NodePath("../Run")
+interactState = NodePath("../Interact")
+
+[node name="Interact" parent="State-Machine" index="2" node_paths=PackedStringArray("idleState") instance=ExtResource("6_x1tnx")]
+idleState = NodePath("../Idle")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("6_w7vtq")

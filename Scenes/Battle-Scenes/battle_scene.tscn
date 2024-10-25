@@ -10,12 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="5_febhu"]
 [ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="6_y2u7w"]
 
-[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine", "playerPosition", "enemyPosition")]
+[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine")]
 script = ExtResource("1_rt48m")
 battleUI = NodePath("CanvasLayer")
 stateMachine = NodePath("Battle-State-Machine")
-playerPosition = NodePath("CanvasLayer/Player-Pos")
-enemyPosition = NodePath("CanvasLayer/Enemy-Pos")
 
 [node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
 startingState = NodePath("Player-Turn")
@@ -32,10 +30,12 @@ playerTurn = NodePath("../Player-Turn")
 
 [node name="Victory-State" parent="Battle-State-Machine" instance=ExtResource("6_y2u7w")]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("characterInfo", "mainAction")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("characterInfo", "mainAction", "damagePosPlayer", "damagePosEnemy")]
 script = ExtResource("2_5o8ub")
 characterInfo = NodePath("Battle-Scene-Character")
 mainAction = NodePath("Battle-Scene-Main-Action")
+damagePosPlayer = NodePath("Player-Pos")
+damagePosEnemy = NodePath("Enemy-Pos")
 
 [node name="Battle-Back-Ground" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 15
