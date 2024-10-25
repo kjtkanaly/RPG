@@ -30,3 +30,6 @@ victoryState = NodePath("../Victory-State")
 playerTurn = NodePath("../Player-Turn")
 
 [node name="Victory-State" parent="Battle-State-Machine" instance=ExtResource("6_y2u7w")]
+
+[node name="Battle-Scene-Enemy" type="Node2D" parent="."]
+position = Vector2(1226, 479)

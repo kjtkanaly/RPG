@@ -57,7 +57,7 @@ public partial class InventoryUI : ButtonGroupUI
                 continue;
             }
 
-            buttons[i].Text = inventory.GetItem(i).name;
+            // buttons[i].Text = inventory.GetItem(i).name;
         }
     }
 

@@ -28,18 +28,18 @@ public partial class PlayerTurn : BattleState
     {
         // Shuffle through user selection
         if (Input.IsActionJustPressed("Down")) {
-            battleScene.GetBattleUI().GetMainAction().IncrementSelectedButton(1);
+            // battleScene.GetBattleUI().GetMainAction().IncrementSelectedButton(1);
         }
         else if (Input.IsActionJustReleased("Up")) {
-            battleScene.GetBattleUI().GetMainAction().IncrementSelectedButton(-1);
+            // battleScene.GetBattleUI().GetMainAction().IncrementSelectedButton(-1);
         }
 
         // Check if the Player has made a selection
         if (Input.IsActionJustPressed("Interact")) {
-            BattleScene.Choice choice = 
-                battleScene.GetBattleUI().GetMainAction().GetActiveChoice();
+            // BattleScene.Choice choice = 
+            //    battleScene.GetBattleUI().GetMainAction().GetActiveChoice();
 
-            return ProcessChoice(choice);
+            // return ProcessChoice(choice);
         }
 
         return null;

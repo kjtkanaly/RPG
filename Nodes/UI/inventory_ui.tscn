@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/InventoryUI.cs" id="1_06s8j"]
 [ext_resource type="ButtonGroup" uid="uid://byoph156b26ox" path="res://Resources/Button-Groups/inventory-box-group.tres" id="3_5wv4p"]
 
-[node name="Inventory-UI" type="HBoxContainer" node_paths=PackedStringArray("buttons")]
+[node name="Inventory-UI" type="HBoxContainer"]
 process_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -20,7 +20,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 15
 script = ExtResource("1_06s8j")
-buttons = [NodePath("Panel/MarginContainer/VBoxContainer/Button"), NodePath("Panel/MarginContainer/VBoxContainer/Button2"), NodePath("Panel/MarginContainer/VBoxContainer/Button3"), NodePath("Panel/MarginContainer/VBoxContainer/Button4"), NodePath("Panel/MarginContainer/VBoxContainer/Button5"), NodePath("Panel2/MarginContainer/VBoxContainer2/Button6"), NodePath("Panel2/MarginContainer/VBoxContainer2/Button7"), NodePath("Panel2/MarginContainer/VBoxContainer2/Button8"), NodePath("Panel2/MarginContainer/VBoxContainer2/Button9"), NodePath("Panel2/MarginContainer/VBoxContainer2/Button10")]
+group = ExtResource("3_5wv4p")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2

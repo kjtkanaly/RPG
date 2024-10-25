@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PlayerAttackSequence : AttackSequence
+public partial class MainAction : ButtonGroupUI
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -10,34 +10,24 @@ public partial class PlayerAttackSequence : AttackSequence
     // Protected
 
     // Private
-    [Export] private BattleState victoryState;
 
     //-------------------------------------------------------------------------
     // Game Events
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("Down")) {
+            IncrementSelectedButton(1);
+        }
+        else if (Input.IsActionJustPressed("Up")) {
+            IncrementSelectedButton(-1);
+        }
+    }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public override CharacterData GetAttackerData()
-    {
-        return battleScene.GetPlayerTeamDataAtIndex(0);
-    }
-
-    public override CharacterData GetDefenderData()
-    {
-        return battleScene.GetEnemyTeamDataAtIndex(0);
-    }
-
-    public override Control GetDefenderPos()
-    {
-        return null;
-    }
 
     // Protected
-    protected override BattleState DefenderDead() 
-    {
-        return victoryState;
-    }
 
     // Private
 

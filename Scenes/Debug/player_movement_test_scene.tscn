@@ -26,14 +26,14 @@ damageRange = Vector2i(10, 15)
 
 [node name="Player-Movement-Test-Scene" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
-
 [node name="Bouncy-Green-Ball" parent="." instance=ExtResource("2_7awty")]
 position = Vector2(125, 2.08165e-12)
 
 [node name="Player" parent="." instance=ExtResource("1_7830l")]
 characterData = SubResource("Resource_qakmm")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(3, 3)
 
 [node name="Dummy" parent="." instance=ExtResource("3_he4t0")]
 position = Vector2(-125, 2.08165e-12)

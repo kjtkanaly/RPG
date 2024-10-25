@@ -8,24 +8,46 @@ public partial class ButtonGroupUI : Control
     // Public
 
     // Protected
-    protected int currentButtonIndex;
-    [Export] protected Button[] buttons;
+    [Export] protected ButtonGroup group;
+    protected Godot.Collections.Array<Godot.BaseButton> buttons;
+    protected int currentButtonIndex = 0;
 
     // Private
 
     //-------------------------------------------------------------------------
-	// Game Events
+    // Game Events
+    public override void _Ready()
+    {
+        // Get the buttons in the group
+        buttons = group.GetButtons();
+
+        // Get the current index
+        currentButtonIndex = GetPressedButtonIndex();
+    }
 
     //-------------------------------------------------------------------------
-	// Methods
+    // Methods
     // Public
+    public int GetPressedButtonIndex() 
+    {   
+        BaseButton pressedButton = group.GetPressedButton();
+
+        for(int i = 0; i < buttons.Count; i++) {
+            if (buttons[i] == pressedButton) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public void IncrementSelectedButton(int step) 
     {
         // Get the new button index
         int newButtonIndex = currentButtonIndex + step;
 
         // Check if the button index can increment
-        if ((newButtonIndex < 0) || (newButtonIndex >= buttons.Length)) 
+        if ((newButtonIndex < 0) || (newButtonIndex >= buttons.Count)) 
         {
             return;
         }
