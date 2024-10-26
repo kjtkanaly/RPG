@@ -58,7 +58,7 @@ public partial class BattleStateMachine : Node
 
     public void ProcessGeneral(float delta)
     {
-        BattleState newState = currentState.ProcessPhysics(delta);
+        BattleState newState = currentState.ProcessGeneral(delta);
         if (newState != null) {
             ChangeState(newState);
         }

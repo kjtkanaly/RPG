@@ -21,25 +21,21 @@ public partial class PlayerTurn : BattleState
     // Public
     public override void Enter()
     {
-        battleScene.ShowUI();
+        battleScene.GetBattleUI().ShowMainAction();
     }
 
-    public override BattleState ProcessPhysics(float delta) 
+    public override void Exit()
     {
-        // Shuffle through user selection
-        if (Input.IsActionJustPressed("Down")) {
-            // battleScene.GetBattleUI().GetMainAction().IncrementSelectedButton(1);
-        }
-        else if (Input.IsActionJustReleased("Up")) {
-            // battleScene.GetBattleUI().GetMainAction().IncrementSelectedButton(-1);
-        }
+        // Toggle the UI
+        battleScene.GetBattleUI().HideMainAction();
+    }
 
+    public override BattleState ProcessGeneral(float delta) 
+    {
         // Check if the Player has made a selection
         if (Input.IsActionJustPressed("Interact")) {
-            // BattleScene.Choice choice = 
-            //    battleScene.GetBattleUI().GetMainAction().GetActiveChoice();
-
-            // return ProcessChoice(choice);
+            return ProcessChoice(
+                battleScene.GetBattleUI().GetMainAction().GetSelectedButtonIntValue());
         }
 
         return null;
@@ -48,13 +44,17 @@ public partial class PlayerTurn : BattleState
     // Protected
 
     // Private
-    private BattleState ProcessChoice(BattleScene.Choice choice) 
+    private BattleState ProcessChoice(int choice) 
     {
         switch (choice) {
-            case(BattleScene.Choice.Flee):
-                return fleeBattle;
-            case(BattleScene.Choice.Attack):
+            case(0):
                 return playerAttackSequence;
+            case(1):
+                return null;
+            case(2):
+                return null;
+            case(3):
+                return fleeBattle;
             default:
                 return null;
         }

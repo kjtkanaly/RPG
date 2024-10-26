@@ -3,12 +3,6 @@ using System;
 
 public partial class BattleSceneUI : CanvasLayer
 {
-    public enum CHARACTER_TYPE
-    {
-        Player,
-        Enemy
-    }
-
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
@@ -16,6 +10,7 @@ public partial class BattleSceneUI : CanvasLayer
     // Protected
 
     // Private
+    [Export] private MainAction mainAction;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -23,6 +18,20 @@ public partial class BattleSceneUI : CanvasLayer
     //-------------------------------------------------------------------------
 	// Methods
     // Public
+    public void ShowMainAction() 
+    {
+        mainAction.Visible = true;
+    }
+
+    public void HideMainAction()
+    {
+        mainAction.Visible = false;
+    }
+
+    public MainAction GetMainAction()
+    {
+        return mainAction;
+    }
 
     public void HideUI() {
         

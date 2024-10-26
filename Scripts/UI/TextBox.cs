@@ -90,7 +90,10 @@ public partial class TextBox : Control
     {
         Visible = false;
         label.Text = "";
-        SetIcon(null);
+        
+        if (textRect != null) {
+            textRect.Texture = null;
+        }
     }
 
     // Protected

@@ -8,13 +8,13 @@ public partial class AttackSequence : BattleState
     // Public
 
     // Protected
+    [Export] protected PackedScene damageLabel;
+    protected bool attackSequencnDone = false;
 
     // Private
-    [Export] private PackedScene damageLabel;
     [Export] private BattleState playerTurn;
     private CharacterData attackerData;
     private CharacterData defenderData;
-    private bool attackSequencnDone = false;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -26,9 +26,6 @@ public partial class AttackSequence : BattleState
     {
         // Log that the attack sequence is beggning
         attackSequencnDone = false;
-
-        // Toggle the UI
-        battleScene.HideUI();
 
         // Get the Source of the Attack's Character Data
         attackerData = GetAttackerData();
@@ -45,27 +42,27 @@ public partial class AttackSequence : BattleState
         // Update the UI (Utilize the tween)
 
         // Begin Animation that implies damage
-        SceneTreeTimer timer = DisplayDamage(damage);
+        DisplayDamage(damage);
 
         // Set the attack sequence to exit once the damage label is done
-        timer.Timeout += SetAnimationDone;
+        
     }
 
-    public override BattleState ProcessPhysics(float delta)
+    public override BattleState ProcessGeneral(float delta)
     {
         // Check if the attack is done
         if (!attackSequencnDone) {
             return null;
-            
         }
 
         // If the defender is dead
         if (defenderData.currentHealth < 0) {
             return DefenderDead();
         }
+
         // If attack is done but the defender isn't dead
         else {
-            return playerTurn;
+            return GetNextTeamTurn();
         }
     }
 
@@ -75,11 +72,20 @@ public partial class AttackSequence : BattleState
     public virtual CharacterData GetDefenderData() 
     {return null;} 
 
-    public virtual Node GetDefenderPos()
+    public virtual Node2D GetDefenderPos()
     {return null;}
 
     // Protected
     protected virtual BattleState DefenderDead() {return null;}
+
+    protected virtual void DisplayDamage(int value) {}   
+
+    protected virtual BattleState GetNextTeamTurn() {return null;}
+
+    protected void SetAnimationDone()
+    {
+        attackSequencnDone = true;
+    }
 
     // Private
     private int GetDamage() 
@@ -98,23 +104,6 @@ public partial class AttackSequence : BattleState
         defenderData.currentHealth -= damage;
 
         GD.Print($"Dealt Damage: {damage} | Remaining Damage: {defenderData.currentHealth}");
-    }
-
-    private SceneTreeTimer DisplayDamage(int value) 
-    {
-        // Instantiate the damage label
-        DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
-
-        // Add the label to the scene
-        GetDefenderPos().AddChild(damageLabelInst);
-
-        // Set the value
-        return damageLabelInst.Init(value, battleScene.main.rng);
-    }   
-
-    private void SetAnimationDone()
-    {
-        attackSequencnDone = true;
     }
 
     //-------------------------------------------------------------------------

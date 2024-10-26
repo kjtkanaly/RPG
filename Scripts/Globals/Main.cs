@@ -18,7 +18,6 @@ public partial class Main : Node
     [Export] private MainUI mainUI;
     [Export] private BattleQueue battleQueue;
     [Export] private PackedScene battleScene;
-    private List<CharacterDirector> teamDirectors;
     private PackedScene previousScene;
 
     //-------------------------------------------------------------------------
@@ -31,8 +30,6 @@ public partial class Main : Node
         mainUI.Init(this);
         
         // Get the team character directors
-        teamDirectors = new List<CharacterDirector>();
-        UpdatePlayerTeam();
     }
 
     public override void _Process(double delta)
@@ -45,22 +42,6 @@ public partial class Main : Node
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public void UpdatePlayerTeam() 
-    {
-        foreach (CharacterDirector character in GetTree().GetNodesInGroup("Team")) {
-            teamDirectors.Add(character);
-        }
-    }
-
-    public Inventory GetCharacterInventoryAtIndex(int index)
-    {
-        if (teamDirectors.Count == 0) {
-            return null;
-        }
-
-        return teamDirectors[index].GetInventory();
-    }
-
     public void PickupItemSequence(ItemDirector item, Inventory inventory) 
     {  
         // Set the item to cool down to avoid user response delay
@@ -95,39 +76,58 @@ public partial class Main : Node
 
     public void BeginBattle(
         CharacterData[] inPlayerTeam, 
-        CharacterData[] inEnemyTeam) 
+        CharacterData[] inEnemyTeam,
+        CharacterDirector inEnemyDirector) 
     {
+        // Set the enemy instance invisible
+        Color colour = inEnemyDirector.Modulate;
+        colour.A = 0;
+        inEnemyDirector.Modulate = colour;
+
         // Log current scene
         previousScene = new PackedScene();
         previousScene.Pack(GetTree().CurrentScene);
 
         // Queue the battle info
-        SetBattleQueue(inPlayerTeam, inEnemyTeam);
+        battleQueue.QueueBattle(
+            inPlayerTeam, 
+            inEnemyTeam, 
+            inEnemyDirector.GetPath());
 
         // Begin the battle scene
         GetTree().ChangeSceneToPacked(battleScene);
     }
 
-    public void SetBattleQueue(
-        CharacterData[] inPlayerTeam,
-        CharacterData[] inEnemyTeam) 
+    public async void EndBattle (
+        List<CharacterData> inPlayerTeam, 
+        List<CharacterData> inEnemyTeam
+    )
     {
-        battleQueue.QueueBattle(inPlayerTeam, inEnemyTeam);
+        if (previousScene == null) {
+            GetTree().UnloadCurrentScene();
+        }
+
+        GetTree().ChangeSceneToPacked(previousScene);
+
+        await ToSignal(GetTree().Root, SignalName.ChildEnteredTree);
+
+        Node2D enemyNode = (Node2D) GetNode(battleQueue.GetEnemyInstanceNodePath());
+
+        // If the player won, then get rid of the enemy instance
+        if (inEnemyTeam[0].currentHealth <= 0) {
+            enemyNode.QueueFree();
+        }
+        // Set the enemy instance invisible
+        else {
+            Color colour = enemyNode.Modulate;
+            colour.A = 0;
+            enemyNode.Modulate = colour;
+        }
     }
 
     public BattleQueue GetBattleQueue()
     {
         return battleQueue;
-    }
-
-    public CharacterData GetCharacterDataAtIndex(int index)
-    {
-        // Default
-        if (teamDirectors.Count <= index) {
-            return null;
-        }
-
-        return teamDirectors[index].GetCharacterData();
     }
 
     public PackedScene GetPreviousScene()

@@ -126,7 +126,8 @@ public partial class Interact : CharacterBodyState
             // Switch to battle scene
             main.BeginBattle(
                 new CharacterData[] {characterDirector.GetCharacterData()}, 
-                new CharacterData[] {npc.GetCharacterData()});
+                new CharacterData[] {npc.GetCharacterData()},
+                npc);
             
         }
     }

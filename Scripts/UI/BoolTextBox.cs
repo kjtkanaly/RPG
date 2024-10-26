@@ -48,7 +48,7 @@ public partial class BoolTextBox : TextBox
     // Public
     public bool GetUserChoice() 
     {   
-        return boolButtons.GetSelectedBoolButtonValue();
+        return boolButtons.GetSelectedButtonBoolValue();
     }
 
     // Protected

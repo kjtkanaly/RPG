@@ -38,6 +38,11 @@ public partial class BattleState : Node
         return null;
     }
 
+    public virtual BattleState ProcessGeneral(float delta)
+    {
+        return null;
+    }
+
     public virtual BattleState ProcessPhysics(float delta)
     {
         return null;

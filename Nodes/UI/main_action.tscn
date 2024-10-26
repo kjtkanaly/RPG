@@ -39,6 +39,7 @@ button_pressed = true
 button_group = ExtResource("3_12r5i")
 icon_alignment = 1
 expand_icon = true
+metadata/value = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Fight"]
 layout_mode = 1
@@ -63,6 +64,7 @@ toggle_mode = true
 button_group = ExtResource("3_12r5i")
 icon_alignment = 1
 expand_icon = true
+metadata/value = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Inspect"]
 layout_mode = 1
@@ -87,6 +89,7 @@ toggle_mode = true
 button_group = ExtResource("3_12r5i")
 icon_alignment = 1
 expand_icon = true
+metadata/value = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Item"]
 layout_mode = 1
@@ -111,6 +114,7 @@ toggle_mode = true
 button_group = ExtResource("3_12r5i")
 icon_alignment = 1
 expand_icon = true
+metadata/value = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Flee"]
 layout_mode = 1

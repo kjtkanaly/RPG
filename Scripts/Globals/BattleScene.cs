@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class BattleScene : Node2D
 {
@@ -22,8 +23,10 @@ public partial class BattleScene : Node2D
     // Private
     [Export] private BattleSceneUI battleUI;
     [Export] private BattleStateMachine stateMachine;
-    private CharacterData[] playerTeam;
-    private CharacterData[] enemyTeam;
+    [Export] private Node2D[] playerTeamPos;
+    [Export] private Node2D[] enemyTeamPos;
+    private List<CharacterData> playerTeam = new List<CharacterData>();
+    private List<CharacterData> enemyTeam = new List<CharacterData>();
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -48,8 +51,10 @@ public partial class BattleScene : Node2D
         BattleQueue battleQueue = main.GetBattleQueue();
 
         // Set the Player Team Info
+        SetTeamInfo(playerTeam, battleQueue.GetPlayerTeam());
 
         // Set the Enemy Team Info
+        SetTeamInfo(enemyTeam, battleQueue.GetEnemyTeam());
 
         // Init the Battle Scene State Machine
         stateMachine.Init(this);
@@ -57,11 +62,9 @@ public partial class BattleScene : Node2D
 
     public void LeaveBattle() 
     {
-        if (main.GetPreviousScene() == null) {
-            GetTree().UnloadCurrentScene();
-        }
-
-        GetTree().ChangeSceneToPacked(main.GetPreviousScene());
+        //TODO: Setup a system to make sure the character data has all been updated
+        //      Likely need to first just verify if this done via reference
+        main.EndBattle(playerTeam, enemyTeam);
     }
 
     public CharacterData GetPlayerTeamDataAtIndex(int index) 
@@ -89,9 +92,31 @@ public partial class BattleScene : Node2D
         battleUI.ShowUI();
     }
 
+    public Node2D GetPlayerPosAtIndex(int index)
+    {
+        return playerTeamPos[index];
+    }
+
+    public Node2D GetEnemyPosAtIndex(int index) 
+    {
+        return enemyTeamPos[index];
+    }
+
     // Protected
 
     // Private
+    private void SetTeamInfo(
+        List<CharacterData> teamInfo,
+        List<CharacterData> inTeamInfo) 
+    {
+        // Clear the old teamInfo
+        teamInfo.Clear();
+
+        // Copy over the data
+        foreach (CharacterData data in inTeamInfo) {
+            teamInfo.Add(data);
+        }
+    }
 
     //-------------------------------------------------------------------------
     // Debug Methods

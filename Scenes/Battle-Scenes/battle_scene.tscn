@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://duqk2867wvx3j"]
+[gd_scene load_steps=10 format=3 uid="uid://duqk2867wvx3j"]
 
 [ext_resource type="Script" path="res://Scripts/Globals/BattleScene.cs" id="1_rt48m"]
 [ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_sgfx0"]
@@ -7,29 +7,39 @@
 [ext_resource type="PackedScene" uid="uid://bqsveenfoilcs" path="res://Nodes/State-Machine/flee_battle.tscn" id="4_up8t5"]
 [ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="5_febhu"]
 [ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="6_y2u7w"]
+[ext_resource type="PackedScene" uid="uid://cvvw5b4bvc1qe" path="res://Nodes/State-Machine/Battle-Scene/enemy_attack_sequence.tscn" id="7_k2g15"]
+[ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="8_hn318"]
 
-[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine")]
+[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine", "playerTeamPos", "enemyTeamPos")]
 script = ExtResource("1_rt48m")
 battleUI = NodePath("Battle-Scene-UI")
 stateMachine = NodePath("Battle-State-Machine")
+playerTeamPos = []
+enemyTeamPos = [NodePath("Battle-Scene-Enemy")]
 
 [node name="Battle-Scene-UI" parent="." instance=ExtResource("2_xg13y")]
-visible = false
 
 [node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
-startingState = NodePath("Player-Turn")
+startingState = NodePath("Battle-Intro")
+
+[node name="Battle-Intro" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTurnState") instance=ExtResource("8_hn318")]
+playerTurnState = NodePath("../Player-Turn")
 
 [node name="Player-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("fleeBattle", "playerAttackSequence") instance=ExtResource("3_4otpn")]
 fleeBattle = NodePath("../Flee-Battle")
 playerAttackSequence = NodePath("../Player-Attack-Sequence")
 
-[node name="Flee-Battle" parent="Battle-State-Machine" instance=ExtResource("4_up8t5")]
-
-[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "playerTurn") instance=ExtResource("5_febhu")]
+[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "enemyAttackSequence", "playerTurn") instance=ExtResource("5_febhu")]
 victoryState = NodePath("../Victory-State")
+enemyAttackSequence = NodePath("../Enemy-Attack-Sequence")
 playerTurn = NodePath("../Player-Turn")
+
+[node name="Enemy-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTurnState") instance=ExtResource("7_k2g15")]
+playerTurnState = NodePath("../Player-Turn")
+
+[node name="Flee-Battle" parent="Battle-State-Machine" instance=ExtResource("4_up8t5")]
 
 [node name="Victory-State" parent="Battle-State-Machine" instance=ExtResource("6_y2u7w")]
 
 [node name="Battle-Scene-Enemy" type="Node2D" parent="."]
-position = Vector2(1226, 479)
+position = Vector2(512, 272)

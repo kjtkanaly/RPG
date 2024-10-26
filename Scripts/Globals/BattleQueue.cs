@@ -13,6 +13,7 @@ public partial class BattleQueue : Node
     // Private
     private List<CharacterData> playerTeam;
     private List<CharacterData> enemyTeam;
+    private String enemyInstanceNodePath;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -27,7 +28,8 @@ public partial class BattleQueue : Node
     // Public
     public void QueueBattle(
         CharacterData[] inPlayerTeam,
-        CharacterData[] inEnemyTeam) 
+        CharacterData[] inEnemyTeam,
+        String inEnemyInstanceNodePath) 
     {
         // Clear out the old teams worth of data
         playerTeam.Clear();
@@ -40,6 +42,24 @@ public partial class BattleQueue : Node
         foreach (CharacterData data in inEnemyTeam) {
             enemyTeam.Add(data);
         }
+
+        enemyInstanceNodePath = inEnemyInstanceNodePath;
+        GD.Print(enemyInstanceNodePath);
+    }
+
+    public List<CharacterData> GetPlayerTeam()
+    {
+        return playerTeam;
+    }
+
+    public List<CharacterData> GetEnemyTeam()
+    {
+        return enemyTeam;
+    }
+
+    public String GetEnemyInstanceNodePath()
+    {
+        return enemyInstanceNodePath;
     }
 
     // Protected

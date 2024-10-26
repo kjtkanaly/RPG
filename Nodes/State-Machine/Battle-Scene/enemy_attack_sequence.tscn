@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvvw5b4bvc1qe"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/EnemyAttackSequence.cs" id="1_cnqu7"]
+
+[node name="Enemy-Attack-Sequence" type="Node"]
+script = ExtResource("1_cnqu7")

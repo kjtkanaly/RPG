@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyq8pi3shwerr"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/BattleIntro.cs" id="1_u43lr"]
+
+[node name="Battle-Intro" type="Node"]
+script = ExtResource("1_u43lr")

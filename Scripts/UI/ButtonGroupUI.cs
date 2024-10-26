@@ -56,11 +56,18 @@ public partial class ButtonGroupUI : Control
         buttons[currentButtonIndex].ButtonPressed = true;
     }
 
-    public bool GetSelectedBoolButtonValue()
+    public bool GetSelectedButtonBoolValue()
     {
         BaseButton pressedButton = group.GetPressedButton();
 
         return (bool) pressedButton.GetMeta("value");
+    }
+
+    public int GetSelectedButtonIntValue()
+    {
+        BaseButton pressedButton = group.GetPressedButton();
+
+        return (int) pressedButton.GetMeta("value");
     }
 
     // Protected

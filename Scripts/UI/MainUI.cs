@@ -97,7 +97,8 @@ public partial class MainUI : CanvasLayer
     // Private
     private void DisplayInventory()
     {
-        Inventory inventory = main.GetCharacterInventoryAtIndex(0);
+        // TODO: comeback and fix this shit
+        Inventory inventory = null;
 
         if (inventory == null) {
             return;

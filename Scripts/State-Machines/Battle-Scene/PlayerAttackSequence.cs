@@ -11,6 +11,7 @@ public partial class PlayerAttackSequence : AttackSequence
 
     // Private
     [Export] private BattleState victoryState;
+    [Export] private BattleState enemyAttackSequence;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -28,9 +29,9 @@ public partial class PlayerAttackSequence : AttackSequence
         return battleScene.GetEnemyTeamDataAtIndex(0);
     }
 
-    public override Control GetDefenderPos()
+    public override Node2D GetDefenderPos()
     {
-        return null;
+        return battleScene.GetEnemyPosAtIndex(0);
     }
 
     // Protected
@@ -38,6 +39,24 @@ public partial class PlayerAttackSequence : AttackSequence
     {
         return victoryState;
     }
+
+    protected override BattleState GetNextTeamTurn() 
+    {
+        return enemyAttackSequence;
+    }
+
+    protected override void DisplayDamage(int value) 
+    {
+        // Instantiate the damage label
+        DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
+
+        // Add the label to the scene
+        GetDefenderPos().AddChild(damageLabelInst);
+
+        SceneTreeTimer timer = damageLabelInst.Init(value, battleScene.main.rng);
+
+        timer.Timeout += SetAnimationDone;
+    }   
 
     // Private
 
