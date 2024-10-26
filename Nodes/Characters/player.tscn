@@ -2,27 +2,27 @@
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
 [ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_2gnvc"]
-[ext_resource type="PackedScene" uid="uid://c5j4mqyi6ntqi" path="res://Nodes/State-Machine/Movement/run.tscn" id="2_uwmi2"]
 [ext_resource type="Resource" uid="uid://bv3qwkdgq2pq8" path="res://Resources/Custom/Character-Data/player.tres" id="3_anm3c"]
-[ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Movement/idle.tscn" id="3_m15nd"]
+[ext_resource type="PackedScene" uid="uid://c5j4mqyi6ntqi" path="res://Nodes/State-Machine/Character/run.tscn" id="4_8ci10"]
+[ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Character/idle.tscn" id="5_5m0yb"]
 [ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
 [ext_resource type="PackedScene" uid="uid://d3rcof83jkmqw" path="res://Nodes/State-Machine/Character/interact.tscn" id="6_x1tnx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
 
-[node name="Player" groups=["Team"] instance=ExtResource("1_wj6b2")]
+[node name="Player" groups=["Player", "Team"] instance=ExtResource("1_wj6b2")]
 movementData = ExtResource("2_2gnvc")
 characterData = ExtResource("3_anm3c")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Idle")
 
-[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState", "interactState") instance=ExtResource("2_uwmi2")]
+[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState", "interactState") instance=ExtResource("4_8ci10")]
 idleState = NodePath("../Idle")
 interactState = NodePath("../Interact")
 
-[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState", "interactState") instance=ExtResource("3_m15nd")]
+[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState", "interactState") instance=ExtResource("5_5m0yb")]
 runState = NodePath("../Run")
 interactState = NodePath("../Interact")
 

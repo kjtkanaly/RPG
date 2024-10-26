@@ -6,15 +6,16 @@ public partial class CharacterData : Resource
 {
     [Export] public string name;
     [Export] public int level;
-    [Export] public int currentHealth;
-    [Export] public int currentDex;
-    [Export] public int currentMana;
-    [Export] public int maxHealth;
-    [Export] public int maxDex;
-    [Export] public int maxMana;
-    [Export] public Texture2D battlePortrait;
-    [Export] public Texture2D dialogueIcon;
+    [Export] public Texture2D portrait;
     [Export] public string[] currentDialogue;
     [Export] public int inventorySize;
     [Export] public Vector2I damageRange;
+    [Export] public int currentHealth;
+    [Export] public int maxHealth;
+    [Export] public int dexterity;
+    [Export] public int strength;
+    [Export] public int constitution;
+    [Export] public int inteligence;
+    [Export] public int wisdom;
+    [Export] public int charisma;
 }

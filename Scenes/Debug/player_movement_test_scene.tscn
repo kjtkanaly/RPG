@@ -1,28 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://cey0gn772dfi2"]
+[gd_scene load_steps=7 format=3 uid="uid://cey0gn772dfi2"]
 
 [ext_resource type="PackedScene" uid="uid://cjmrxg28ecmk0" path="res://Nodes/Characters/player.tscn" id="1_7830l"]
 [ext_resource type="PackedScene" uid="uid://d1mpr8vpcf1a8" path="res://Nodes/Items/bouncy_green_ball.tscn" id="2_7awty"]
-[ext_resource type="Texture2D" uid="uid://62dwrkdmelrh" path="res://Visuals/Sprites/Player/Dialogue_Icon.png" id="3_1cbo3"]
 [ext_resource type="PackedScene" uid="uid://qbd8ibl8xu8w" path="res://Nodes/Characters/dummy.tscn" id="3_he4t0"]
 [ext_resource type="Script" path="res://Scripts/Resources/CharacterData.cs" id="4_6uhas"]
-[ext_resource type="PackedScene" uid="uid://dxfas3avpx3fj" path="res://Nodes/Characters/enemy_dummy.tscn" id="4_gqvwq"]
+[ext_resource type="PackedScene" uid="uid://dyj2cjowbhbcb" path="res://Nodes/Characters/Basic-Enemies/red_guy.tscn" id="5_vsppj"]
 
 [sub_resource type="Resource" id="Resource_qakmm"]
 resource_local_to_scene = true
 script = ExtResource("4_6uhas")
 name = "Joe Mama"
 level = 1
-currentHealth = 100
-currentDex = 100
-currentMana = 100
-maxHealth = 100
-maxDex = 100
-maxMana = 100
-battlePortrait = ExtResource("3_1cbo3")
-dialogueIcon = ExtResource("3_1cbo3")
 currentDialogue = PackedStringArray()
 inventorySize = 10
 damageRange = Vector2i(10, 15)
+currentHealth = 100
+maxHealth = 100
+dexterity = 0
+strength = 0
+constitution = 0
+inteligence = 0
+wisdom = 0
+charisma = 0
 
 [node name="Player-Movement-Test-Scene" type="Node2D"]
 
@@ -38,5 +37,5 @@ zoom = Vector2(3, 3)
 [node name="Dummy" parent="." instance=ExtResource("3_he4t0")]
 position = Vector2(-125, 2.08165e-12)
 
-[node name="Enemy-Dummy" parent="." instance=ExtResource("4_gqvwq")]
-position = Vector2(2.08165e-12, -125)
+[node name="Red-Guy" parent="." instance=ExtResource("5_vsppj")]
+position = Vector2(2.08165e-12, -130)

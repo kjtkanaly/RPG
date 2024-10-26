@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=3 format=3 uid="uid://ckrolg017srjp"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterData.cs" id="1_5lqir"]
+[ext_resource type="Texture2D" uid="uid://dcx2d6u1k87n3" path="res://Visuals/Sprites/Characters/Enemy_Dummy_Dialogue_Icon.png" id="1_485on"]
+
+[resource]
+script = ExtResource("1_5lqir")
+name = "Red Guy"
+level = 5
+portrait = ExtResource("1_485on")
+currentDialogue = PackedStringArray()
+inventorySize = 0
+damageRange = Vector2i(10, 15)
+currentHealth = 15
+maxHealth = 15
+dexterity = 0
+strength = 0
+constitution = 0
+inteligence = 0
+wisdom = 0
+charisma = 0

@@ -40,21 +40,21 @@ public partial class CharacterBattleSceneInfo : Control
             return;
         }
 
-        UpdateName(data.name);
-        UpdateLevel(data.level);
-        UpdateValueAndProgressBar(
-            UI_Type.health, 
-            data.currentHealth, 
-            data.maxHealth);
-        UpdateValueAndProgressBar(
-            UI_Type.dex, 
-            data.currentDex, 
-            data.maxDex);
-        UpdateValueAndProgressBar(
-            UI_Type.mana, 
-            data.currentMana, 
-            data.maxMana);
-        UpdateImage(data.battlePortrait);
+        // UpdateName(data.name);
+        // UpdateLevel(data.level);
+        // UpdateValueAndProgressBar(
+        //     UI_Type.health, 
+        //     data.currentHealth, 
+        //     data.maxHealth);
+        // UpdateValueAndProgressBar(
+        //     UI_Type.dex, 
+        //     data.currentDex, 
+        //     data.maxDex);
+        // UpdateValueAndProgressBar(
+        //     UI_Type.mana, 
+        //     data.currentMana, 
+        //     data.maxMana);
+        // UpdateImage(data.portrait);
     }
 
     // Protected

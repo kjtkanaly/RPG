@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0f8hnmpva1fp"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Character/Search.cs" id="1_wlgsx"]
+
+[node name="Search" type="Node"]
+script = ExtResource("1_wlgsx")

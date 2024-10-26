@@ -108,7 +108,7 @@ public partial class Interact : CharacterBodyState
         TextBox.TextBoxData data = new TextBox.TextBoxData(
             TextBox.TEXT_BOX_TYPE.item,
             npc.GetCharacterData().currentDialogue,
-            npc.GetCharacterData().dialogueIcon);
+            npc.GetCharacterData().portrait);
 
         main.GetMainUI().DispalyTextBox(data);
         
@@ -128,7 +128,6 @@ public partial class Interact : CharacterBodyState
                 new CharacterData[] {characterDirector.GetCharacterData()}, 
                 new CharacterData[] {npc.GetCharacterData()},
                 npc);
-            
         }
     }
 

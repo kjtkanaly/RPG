@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyj2cjowbhbcb"]
+
+[ext_resource type="PackedScene" uid="uid://co588ibgypwgp" path="res://Nodes/Characters/basic_enemy.tscn" id="1_7m0ax"]
+[ext_resource type="Resource" uid="uid://b5dyfe1r6xo2o" path="res://Resources/Custom/Movement/Basic-Enemies/red_guy.tres" id="2_u1dtl"]
+[ext_resource type="Resource" uid="uid://ckrolg017srjp" path="res://Resources/Custom/Character-Data/Basic-Enemies/red_guy.tres" id="3_6otjr"]
+[ext_resource type="Texture2D" uid="uid://dmhu0fy2g5r5i" path="res://Visuals/Sprites/Characters/Enemy_Dummy.png" id="4_mhbcd"]
+
+[node name="Red-Guy" instance=ExtResource("1_7m0ax")]
+rotation = 6.68874e-05
+movementData = ExtResource("2_u1dtl")
+characterData = ExtResource("3_6otjr")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("4_mhbcd")

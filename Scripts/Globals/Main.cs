@@ -120,7 +120,7 @@ public partial class Main : Node
         // Set the enemy instance invisible
         else {
             Color colour = enemyNode.Modulate;
-            colour.A = 0;
+            colour.A = 1;
             enemyNode.Modulate = colour;
         }
     }

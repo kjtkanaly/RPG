@@ -3,16 +3,9 @@ using System;
 
 public partial class CharacterDirector : CharacterBody2D
 {
-    public enum CharacterType {
-        Player = 0,
-        Ally = 1,
-        Enemy = 2
-    }
-
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
-    [Export] public CharacterType charactertype;
 
     // Protected
     [Export] protected MovementData movementData;
@@ -24,6 +17,8 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected RayCast2D interactRay;
     [Export] protected Timer interactionDelayTimer;
     [Export] protected Inventory inventory;
+    [Export] protected Area2D agroArea;
+    [Export] protected Area2D fightArea;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -87,6 +82,11 @@ public partial class CharacterDirector : CharacterBody2D
         return audioPlayer;
     }
 
+    public Main GetMain()
+    {
+        return main;
+    }
+
     public Sprite2D GetSprite() 
     {
         return sprite;
@@ -100,6 +100,16 @@ public partial class CharacterDirector : CharacterBody2D
     public Inventory GetInventory()
     {
         return inventory;
+    }
+
+    public Area2D GetAgroArea() 
+    {
+        return agroArea;    
+    }
+
+    public Area2D GetFightArea() 
+    {
+        return fightArea;
     }
 
     public void StartInteractionDelayTimer()
