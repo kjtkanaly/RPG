@@ -44,7 +44,6 @@ public partial class BattleQueue : Node
         }
 
         enemyInstanceNodePath = inEnemyInstanceNodePath;
-        GD.Print(enemyInstanceNodePath);
     }
 
     public List<CharacterData> GetPlayerTeam()

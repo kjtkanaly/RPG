@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://co588ibgypwgp"]
+[gd_scene load_steps=7 format=3 uid="uid://co588ibgypwgp"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_n7ywj"]
 [ext_resource type="PackedScene" uid="uid://d0f8hnmpva1fp" path="res://Nodes/State-Machine/Character/search.tscn" id="2_fwt0y"]
 [ext_resource type="PackedScene" uid="uid://cpqqyx1xmiw0c" path="res://Nodes/State-Machine/Character/agro.tscn" id="3_hqgbs"]
+[ext_resource type="PackedScene" uid="uid://ln0hkl43kjgb" path="res://Nodes/State-Machine/Character/cool_down.tscn" id="4_3qy37"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srxlb"]
 radius = 100.0
@@ -10,9 +11,10 @@ radius = 100.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_wehss"]
 radius = 25.0
 
-[node name="Basic-Enemy" node_paths=PackedStringArray("agroArea", "fightArea") instance=ExtResource("1_n7ywj")]
+[node name="Basic-Enemy" node_paths=PackedStringArray("agroArea", "fightArea", "coolDownState") instance=ExtResource("1_n7ywj")]
 agroArea = NodePath("Agro-Area")
 fightArea = NodePath("Fight-Area")
+coolDownState = NodePath("State-Machine/Cool-Down")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Search")
@@ -21,6 +23,9 @@ startingState = NodePath("Search")
 agroState = NodePath("../Agro")
 
 [node name="Agro" parent="State-Machine" index="1" node_paths=PackedStringArray("searchState") instance=ExtResource("3_hqgbs")]
+searchState = NodePath("../Search")
+
+[node name="Cool-Down" parent="State-Machine" index="2" node_paths=PackedStringArray("searchState") instance=ExtResource("4_3qy37")]
 searchState = NodePath("../Search")
 
 [node name="Agro-Area" type="Area2D" parent="." index="6"]

@@ -64,6 +64,17 @@ public partial class StateMachine : Node
         }
     }
 
+    public void SetCurrentState(State inState) 
+    {
+        // currentState = inState;
+        ChangeState(inState);
+    }
+
+    public State GetCurrentState() 
+    {
+        return currentState;
+    }
+
     // Protected
 
     // Private

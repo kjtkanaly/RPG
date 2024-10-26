@@ -12,6 +12,7 @@ public partial class Agro : CharacterBodyState
     // Private
     [Export] private State searchState;
     private CharacterDirector player;
+    private bool battleBegins = false;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -31,11 +32,20 @@ public partial class Agro : CharacterBodyState
     public override State ProcessPhysics(float delta)
     {
         if (IsPlayerInFightRange()) {
+            // Switch the Enemy's Current State to Cool Down
+            characterDirector.SwitchCurrentStateToCoolDown();
+
+            // 
+            GD.Print($"Enemy State @Agro: {characterDirector.GetCurrentState().Name}");
+
             // Begin fight
             EnemyBeginsBattle();
-
-            return null;
         }
+
+        // TODO: If the player has escaped
+        // if () {
+
+        // }
 
         UpdateVelocityTowardsPlayer();
         characterDirector.MoveAndSlide();
@@ -60,6 +70,15 @@ public partial class Agro : CharacterBodyState
         return false;
     }
 
+    private void UpdateVelocityTowardsPlayer()
+    {
+        Vector2 direction = (player.Position - characterDirector.Position).Normalized();
+
+        characterDirector.Velocity = 
+            direction 
+            * characterDirector.GetMovementData().speed;
+    }
+
     private async void EnemyBeginsBattle() 
     {
         // Create the Text Box Data Object
@@ -73,20 +92,13 @@ public partial class Agro : CharacterBodyState
         // Wait for the Dialogue to be done
         await ToSignal(characterDirector.GetMain().GetMainUI(), MainUI.SignalName.DialogueOver);
 
+        GD.Print("Begin battle");
+
         // Switch to battle scene
         main.BeginBattle(
             new CharacterData[] {player.GetCharacterData()}, 
             new CharacterData[] {characterDirector.GetCharacterData()},
             characterDirector);
-    }
-
-    private void UpdateVelocityTowardsPlayer()
-    {
-        Vector2 direction = (player.Position - characterDirector.Position).Normalized();
-
-        characterDirector.Velocity = 
-            direction 
-            * characterDirector.GetMovementData().speed;
     }
 
     //-------------------------------------------------------------------------

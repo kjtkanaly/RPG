@@ -19,6 +19,7 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected Inventory inventory;
     [Export] protected Area2D agroArea;
     [Export] protected Area2D fightArea;
+    [Export] protected CharacterBodyState coolDownState;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -115,7 +116,6 @@ public partial class CharacterDirector : CharacterBody2D
     public void StartInteractionDelayTimer()
     {
         interactionDelayTimer.Start();
-        GD.Print("Start Timer");
     }
 
     public bool CanInteract()
@@ -126,6 +126,16 @@ public partial class CharacterDirector : CharacterBody2D
         else {
             return true;
         }
+    }
+
+    public void SwitchCurrentStateToCoolDown() 
+    {
+        movementSM.SetCurrentState(coolDownState);
+    }
+
+    public State GetCurrentState() 
+    {
+        return movementSM.GetCurrentState();
     }
 
     // Protected

@@ -10,6 +10,7 @@ public partial class Main : Node
     // Public
     [Signal] public delegate void InteractionEventHandler();
     [Signal] public delegate void SelectionMadeEventHandler();
+    [Signal] public delegate void BattleOverEventHandler();
     public RandomNumberGenerator rng;
 
     // Protected
@@ -84,6 +85,8 @@ public partial class Main : Node
         colour.A = 0;
         inEnemyDirector.Modulate = colour;
 
+        GD.Print($"Enemy State @Main Battle Begin: {inEnemyDirector.GetCurrentState().Name}");
+
         // Log current scene
         previousScene = new PackedScene();
         previousScene.Pack(GetTree().CurrentScene);
@@ -111,13 +114,19 @@ public partial class Main : Node
 
         await ToSignal(GetTree().Root, SignalName.ChildEnteredTree);
 
-        Node2D enemyNode = (Node2D) GetNode(battleQueue.GetEnemyInstanceNodePath());
+        CharacterDirector enemyNode = 
+            (CharacterDirector) GetNode(battleQueue.GetEnemyInstanceNodePath());
+
+        // Wait for the enemy to fully load in
+        await ToSignal(enemyNode, SignalName.Ready);
+
+        enemyNode.SwitchCurrentStateToCoolDown();
 
         // If the player won, then get rid of the enemy instance
         if (inEnemyTeam[0].currentHealth <= 0) {
             enemyNode.QueueFree();
         }
-        // Set the enemy instance invisible
+        // Set the enemy instance visible and set to cooldown
         else {
             Color colour = enemyNode.Modulate;
             colour.A = 1;
