@@ -56,7 +56,7 @@ public partial class AttackSequence : BattleState
         }
 
         // If the defender is dead
-        if (defenderData.currentHealth < 0) {
+        if (defenderData.currentHealth <= 0) {
             return DefenderDead();
         }
 

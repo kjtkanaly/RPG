@@ -56,8 +56,6 @@ public partial class Main : Node
             // Keep the Data
             bool itemAdded = inventory.AddItem(item.GetData());
 
-            GD.Print($"Choice: {choice} | Item Added: {itemAdded}");
-
             // Destory the Item
             if (itemAdded) {
                 item.QueueFree();
@@ -85,8 +83,6 @@ public partial class Main : Node
         colour.A = 0;
         inEnemyDirector.Modulate = colour;
 
-        GD.Print($"Enemy State @Main Battle Begin: {inEnemyDirector.GetCurrentState().Name}");
-
         // Log current scene
         previousScene = new PackedScene();
         previousScene.Pack(GetTree().CurrentScene);
@@ -110,16 +106,18 @@ public partial class Main : Node
             GetTree().UnloadCurrentScene();
         }
 
+        // Swap back to scene prior to the battle
         GetTree().ChangeSceneToPacked(previousScene);
 
-        await ToSignal(GetTree().Root, SignalName.ChildEnteredTree);
+        // Wait for the Scene root to be loaded and then wait for it be ready
+        await ToSignal(GetTree(), SceneTree.SignalName.NodeAdded);
+        await ToSignal(GetTree().CurrentScene, Node.SignalName.Ready);
 
+        // Get the Enemy Node
         CharacterDirector enemyNode = 
             (CharacterDirector) GetNode(battleQueue.GetEnemyInstanceNodePath());
 
-        // Wait for the enemy to fully load in
-        await ToSignal(enemyNode, SignalName.Ready);
-
+        // Switch the enemy to a cool down state
         enemyNode.SwitchCurrentStateToCoolDown();
 
         // If the player won, then get rid of the enemy instance

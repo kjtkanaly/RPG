@@ -27,8 +27,6 @@ public partial class CoolDown : CharacterBodyState
 
         // Start the cool off timer
         timer = GetTree().CreateTimer(coolDownTime);
-
-        GD.Print("Cool down");
     }
 
     public override State ProcessPhysics(float delta)

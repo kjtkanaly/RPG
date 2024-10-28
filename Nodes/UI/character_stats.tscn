@@ -1,0 +1,279 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwih33n4im4e2"]
+
+[ext_resource type="Theme" uid="uid://b2thovx8kjaph" path="res://Resources/Themes/General.tres" id="1_5l8ol"]
+[ext_resource type="Texture2D" uid="uid://bqmnv4rofo0e5" path="res://Visuals/Sprites/Characters/Dummy_Dialogue_Icon.png" id="2_isx81"]
+[ext_resource type="Script" path="res://Scripts/UI/CharacterStats.cs" id="2_xe3v1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5osq"]
+bg_color = Color(0.486275, 0.411765, 0.32549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nigto"]
+bg_color = Color(0.329412, 0.27451, 0.211765, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_stg5u"]
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 4
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8vndk"]
+bg_color = Color(0.486275, 0.411765, 0.32549, 1)
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3j3lk"]
+bg_color = Color(0.313726, 0.262745, 0.203922, 1)
+
+[node name="Character-Stats" type="HBoxContainer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_5l8ol")
+theme_override_constants/separation = 0
+script = ExtResource("2_xe3v1")
+
+[node name="Basic-Character" type="Panel" parent="."]
+custom_minimum_size = Vector2(268, 168)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i5osq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Basic-Character"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Basic-Character/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Basic-Character/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nigto")
+
+[node name="TextureRect" type="TextureRect" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_isx81")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "HP: 10 / 10"
+
+[node name="Label2" type="Label" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "PP: 12 / 12
+"
+
+[node name="Control2" type="Control" parent="Basic-Character/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Basic-Character/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+text = "Character"
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -1
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxLine_stg5u")
+
+[node name="Perk-Stats" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8vndk")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Perk-Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Perk-Stats/MarginContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(129, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
+
+[node name="Dex Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "DEX: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(129, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
+
+[node name="Str Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "STR: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(129, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
+
+[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "CON: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control3" type="Control" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(129, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
+
+[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "INT: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control4" type="Control" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(129, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
+
+[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "WIS: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control5" type="Control" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(129, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
+
+[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "CHA: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control6" type="Control" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3

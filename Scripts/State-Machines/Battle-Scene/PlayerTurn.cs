@@ -22,12 +22,14 @@ public partial class PlayerTurn : BattleState
     public override void Enter()
     {
         battleScene.GetBattleUI().ShowMainAction();
+        battleScene.GetBattleUI().ShowCharacterStats();
     }
 
     public override void Exit()
     {
         // Toggle the UI
         battleScene.GetBattleUI().HideMainAction();
+        battleScene.GetBattleUI().HideCharacterStats();
     }
 
     public override BattleState ProcessGeneral(float delta) 

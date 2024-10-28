@@ -11,6 +11,7 @@ public partial class BattleSceneUI : CanvasLayer
 
     // Private
     [Export] private MainAction mainAction;
+    [Export] private CharacterStats characterStats;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -31,6 +32,21 @@ public partial class BattleSceneUI : CanvasLayer
     public MainAction GetMainAction()
     {
         return mainAction;
+    }
+
+    public void ShowCharacterStats() 
+    {
+        characterStats.Visible = true;
+    }
+
+    public void HideCharacterStats() 
+    {
+        characterStats.Visible = false;
+    }
+
+    public CharacterStats GetCharacterStats() 
+    {
+        return characterStats;
     }
 
     public void HideUI() {
