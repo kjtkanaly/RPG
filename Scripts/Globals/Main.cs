@@ -121,7 +121,7 @@ public partial class Main : Node
         enemyNode.SwitchCurrentStateToCoolDown();
 
         // If the player won, then get rid of the enemy instance
-        if (inEnemyTeam[0].currentHealth <= 0) {
+        if (inEnemyTeam[0].GetCurrentHealth() <= 0) {
             enemyNode.QueueFree();
         }
         // Set the enemy instance visible and set to cooldown

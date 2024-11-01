@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjdeh7ajvngnn"]
+[gd_scene load_steps=5 format=3 uid="uid://bjdeh7ajvngnn"]
 
 [ext_resource type="Script" path="res://Scripts/Body-Directors/CharacterDirector.cs" id="1_7vceo"]
 [ext_resource type="PackedScene" uid="uid://c1ejon8wetoc3" path="res://Nodes/State-Machine/state_machine.tscn" id="1_iw7k4"]
 [ext_resource type="PackedScene" uid="uid://beqky2t1h6ihw" path="res://Nodes/Globals/inventory.tscn" id="3_mxd27"]
+[ext_resource type="PackedScene" uid="uid://bb31rdxqrawev" path="res://Nodes/Characters/character_data.tscn" id="4_n5ew5"]
 
-[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("movementSM", "sprite", "interactRay", "interactionDelayTimer", "inventory")]
+[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("characterData", "movementSM", "sprite", "interactRay", "interactionDelayTimer", "inventory")]
 collision_mask = 9
 script = ExtResource("1_7vceo")
+characterData = NodePath("Character-Data")
 movementSM = NodePath("State-Machine")
 sprite = NodePath("Sprite2D")
 interactRay = NodePath("Interact-Ray")
@@ -28,3 +30,5 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Inventory" parent="." instance=ExtResource("3_mxd27")]
+
+[node name="Character-Data" parent="." instance=ExtResource("4_n5ew5")]

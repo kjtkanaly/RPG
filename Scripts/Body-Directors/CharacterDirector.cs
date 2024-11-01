@@ -41,7 +41,7 @@ public partial class CharacterDirector : CharacterBody2D
         movementSM.Init(this);    
 
         // Init the inventory
-        inventory.Init(characterData.inventorySize);
+        inventory.Init(characterData.GetInventorySize());
     }
 
     public override void _UnhandledInput(InputEvent inputEvent)

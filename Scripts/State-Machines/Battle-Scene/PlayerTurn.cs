@@ -21,6 +21,10 @@ public partial class PlayerTurn : BattleState
     // Public
     public override void Enter()
     {
+        // Set the character stats
+        battleScene.GetBattleUI().GetCharacterStats().SetData(
+            battleScene.GetPlayerTeamDataAtIndex(0));
+
         battleScene.GetBattleUI().ShowMainAction();
         battleScene.GetBattleUI().ShowCharacterStats();
     }

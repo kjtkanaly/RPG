@@ -40,7 +40,7 @@ public partial class BattleIntro : BattleState
     // Private
     private async void IntroAnimation() 
     {
-        string enemyName = battleScene.GetEnemyTeamDataAtIndex(0).name;
+        string enemyName = battleScene.GetEnemyTeamDataAtIndex(0).GetName();
         string[] message = {
             $"{enemyName} approaches the player!"};
 

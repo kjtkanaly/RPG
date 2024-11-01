@@ -107,8 +107,8 @@ public partial class Interact : CharacterBodyState
         // Create the Text Box Data Object
         TextBox.TextBoxData data = new TextBox.TextBoxData(
             TextBox.TEXT_BOX_TYPE.item,
-            npc.GetCharacterData().currentDialogue,
-            npc.GetCharacterData().portrait);
+            npc.GetCharacterData().GetCurrentDialogue(),
+            npc.GetCharacterData().GetPortrait());
 
         main.GetMainUI().DispalyTextBox(data);
         

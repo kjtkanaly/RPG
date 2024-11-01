@@ -1,16 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://qbd8ibl8xu8w"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_sfmcb"]
-[ext_resource type="Resource" uid="uid://dhh2ky630hnf4" path="res://Resources/Custom/Character-Data/dummy.tres" id="2_3qaa2"]
 [ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Character/idle.tscn" id="2_pcu38"]
 [ext_resource type="Texture2D" uid="uid://danxv6kwf0wnu" path="res://Visuals/Sprites/Characters/Dummy.png" id="3_g51il"]
+[ext_resource type="Texture2D" uid="uid://bqmnv4rofo0e5" path="res://Visuals/Sprites/Characters/Dummy_Dialogue_Icon.png" id="4_8bw20"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2k50j"]
 size = Vector2(21, 28)
 
 [node name="Dummy" groups=["Ally"] instance=ExtResource("1_sfmcb")]
-charactertype = 1
-characterData = ExtResource("2_3qaa2")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Idle")
@@ -24,3 +22,9 @@ texture = ExtResource("3_g51il")
 visible = false
 position = Vector2(-0.5, 1)
 shape = SubResource("RectangleShape2D_2k50j")
+
+[node name="Character-Data" parent="." index="6"]
+name = "Dummy"
+portrait = ExtResource("4_8bw20")
+currentDialogue = PackedStringArray("I love being dumb!", "It makes life more interesting!")
+maxHealth = 10

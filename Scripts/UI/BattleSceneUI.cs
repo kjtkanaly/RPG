@@ -57,6 +57,11 @@ public partial class BattleSceneUI : CanvasLayer
 
     }
 
+    public void SetCharacterStats() 
+    {
+        
+    }
+
     // Protected
 
     // Private

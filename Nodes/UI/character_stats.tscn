@@ -30,17 +30,26 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3j3lk"]
 bg_color = Color(0.313726, 0.262745, 0.203922, 1)
 
-[node name="Character-Stats" type="HBoxContainer"]
+[node name="Character-Stats" type="HBoxContainer" node_paths=PackedStringArray("name")]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -150.0
+offset_top = -168.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_5l8ol")
 theme_override_constants/separation = 0
 script = ExtResource("2_xe3v1")
+stats = {
+"CHA": "VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel6/Cha Label",
+"CON": "VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel3/Con Label",
+"DEX": "VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel/Dex Label",
+"INT": "VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel4/Int Label",
+"STR": "VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel2/Str Label",
+"WIS": "VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel5/Wis Label"
+}
+name = NodePath("Basic-Character/MarginContainer/VBoxContainer/Label")
 
 [node name="Basic-Character" type="Panel" parent="."]
 custom_minimum_size = Vector2(268, 168)
@@ -190,7 +199,7 @@ custom_minimum_size = Vector2(129, 48)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
 
-[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel3"]
+[node name="Con Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel3"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,7 +222,7 @@ custom_minimum_size = Vector2(129, 48)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
 
-[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel4"]
+[node name="Int Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel4"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -236,7 +245,7 @@ custom_minimum_size = Vector2(129, 48)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
 
-[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel5"]
+[node name="Wis Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel5"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -259,7 +268,7 @@ custom_minimum_size = Vector2(129, 48)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3j3lk")
 
-[node name="Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel6"]
+[node name="Cha Label" type="Label" parent="VBoxContainer/Perk-Stats/MarginContainer/HBoxContainer/Panel6"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

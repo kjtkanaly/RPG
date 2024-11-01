@@ -84,8 +84,8 @@ public partial class Agro : CharacterBodyState
         // Create the Text Box Data Object
         TextBox.TextBoxData data = new TextBox.TextBoxData(
             TextBox.TEXT_BOX_TYPE.item,
-            characterDirector.GetCharacterData().currentDialogue,
-            characterDirector.GetCharacterData().portrait);
+            characterDirector.GetCharacterData().GetCurrentDialogue(),
+            characterDirector.GetCharacterData().GetPortrait());
 
         characterDirector.GetMain().GetMainUI().DispalyTextBox(data);
         
