@@ -55,7 +55,7 @@ public partial class CharacterData : Node
 
     public int GetCurrentHealth() {return currentHealth;}
 
-    public void IterateCurrentHealth(int step) {currentHealth -= step;}
+    public void IterateCurrentHealth(int step) {currentHealth += step;}
 
     public Dictionary<string, int> GetStats() {return stats;}
 

@@ -22,9 +22,10 @@ public partial class CharacterStats : Control
     };
 
     [Export] private Label name;
-    [Export] private Label HP;
-    [Export] private Label PP;
-    [Export] private TextureRect profile;
+    [Export] private Label currentHP;
+    [Export] private Label maxHP;
+    [Export] private Label currentLevel;
+    [Export] private TextureRect portraitRect;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -36,6 +37,9 @@ public partial class CharacterStats : Control
     {
         SetName(inData.GetName());
         SetStats(inData.GetStats());
+        SetHP(inData.GetCurrentHealth(), inData.GetMaxHealth());
+        SetLevel(inData.GetLevel());
+        SetPortraitPicture(inData.GetPortrait());
     }
 
     public void SetStat(System.Collections.Generic.KeyValuePair<string, int> stat)
@@ -46,7 +50,6 @@ public partial class CharacterStats : Control
         string[] subString = text.Split(": ");
 
         subString[1] = stat.Value.ToString();
-        GD.Print(stat.Value);
         statLabel.Text = subString[0] + ": " + subString[1];
     }
     
@@ -61,6 +64,22 @@ public partial class CharacterStats : Control
     public void SetName(string inName) 
     {
         name.Text = inName;
+    }
+
+    private void SetHP(int currentHPValue, int maxHPValue)
+    {
+        currentHP.Text = currentHPValue.ToString();
+        maxHP.Text = maxHPValue.ToString();
+    }
+
+    private void SetLevel(int currentLevelValue) 
+    {
+        currentLevel.Text = currentLevelValue.ToString();
+    }
+
+    private void SetPortraitPicture(Texture2D picture) 
+    {
+        portraitRect.Texture = picture;
     }
 
     // Protected
