@@ -14,6 +14,7 @@ public partial class CharacterData : Node
     [Export] private string name = "";
     [Export] private int level = 1;
     [Export] private Texture2D portrait;
+    [Export] private Texture2D battleSprite;
     [Export] private string[] currentDialogue;
     [Export] private int inventorySize = 1;
     [Export] private Vector2I damageRange = new Vector2I(1, 2);
@@ -58,6 +59,8 @@ public partial class CharacterData : Node
     public void IterateCurrentHealth(int step) {currentHealth += step;}
 
     public Dictionary<string, int> GetStats() {return stats;}
+
+    public Texture2D GetBattleSprite() {return battleSprite;}
 
     // Protected
 

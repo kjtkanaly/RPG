@@ -29,9 +29,9 @@ public partial class PlayerAttackSequence : AttackSequence
         return battleScene.GetEnemyTeamDataAtIndex(0);
     }
 
-    public override Node2D GetDefenderPos()
+    public override BattleSceneCharacter GetDefenderNode()
     {
-        return battleScene.GetEnemyPosAtIndex(0);
+        return battleScene.GetEnemyNodeAtIndex(0);
     }
 
     // Protected
@@ -51,7 +51,7 @@ public partial class PlayerAttackSequence : AttackSequence
         DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
 
         // Add the label to the scene
-        GetDefenderPos().AddChild(damageLabelInst);
+        GetDefenderNode().AddChild(damageLabelInst);
 
         SceneTreeTimer timer = damageLabelInst.Init(value, battleScene.main.rng);
 

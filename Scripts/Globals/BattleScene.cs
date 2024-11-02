@@ -23,8 +23,7 @@ public partial class BattleScene : Node2D
     // Private
     [Export] private BattleSceneUI battleUI;
     [Export] private BattleStateMachine stateMachine;
-    [Export] private Node2D[] playerTeamPos;
-    [Export] private Node2D[] enemyTeamPos;
+    [Export] private BattleSceneCharacter[] enemyTeamSceneNodes;
     private List<CharacterData> playerTeam = new List<CharacterData>();
     private List<CharacterData> enemyTeam = new List<CharacterData>();
 
@@ -55,6 +54,9 @@ public partial class BattleScene : Node2D
 
         // Set the Enemy Team Info
         SetTeamInfo(enemyTeam, battleQueue.GetEnemyTeam());
+
+        // Set the Enemy Team Sprties
+        SetTeamSprites(enemyTeam, enemyTeamSceneNodes);
 
         // Init the Battle Scene State Machine
         stateMachine.Init(this);
@@ -92,14 +94,9 @@ public partial class BattleScene : Node2D
         battleUI.ShowUI();
     }
 
-    public Node2D GetPlayerPosAtIndex(int index)
+    public BattleSceneCharacter GetEnemyNodeAtIndex(int index) 
     {
-        return playerTeamPos[index];
-    }
-
-    public Node2D GetEnemyPosAtIndex(int index) 
-    {
-        return enemyTeamPos[index];
+        return enemyTeamSceneNodes[index];
     }
 
     // Protected
@@ -115,6 +112,15 @@ public partial class BattleScene : Node2D
         // Copy over the data
         foreach (CharacterData data in inTeamInfo) {
             teamInfo.Add(data);
+        }
+    }
+
+    private void SetTeamSprites(
+        List<CharacterData> teamData, 
+        BattleSceneCharacter[] teamSprites)
+    {
+        for (int i = 0; i < teamData.Count; i++) {
+            teamSprites[i].GetSprite().Texture = teamData[i].GetBattleSprite();
         }
     }
 

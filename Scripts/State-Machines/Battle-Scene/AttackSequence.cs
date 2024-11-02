@@ -72,7 +72,7 @@ public partial class AttackSequence : BattleState
     public virtual CharacterData GetDefenderData() 
     {return null;} 
 
-    public virtual Node2D GetDefenderPos()
+    public virtual BattleSceneCharacter GetDefenderNode()
     {return null;}
 
     // Protected

@@ -41,7 +41,7 @@ level = 10
 portrait = ExtResource("7_mcxd3")
 inventorySize = 10
 damageRange = Vector2i(10, 15)
-maxHealth = 20
+maxHealth = 100
 stats = {
 "CHA": 11,
 "CON": 8,

@@ -16,10 +16,11 @@ texture = ExtResource("4_mhbcd")
 name = "Red Guy"
 level = 10
 portrait = ExtResource("4_ilj50")
+battleSprite = ExtResource("4_mhbcd")
 currentDialogue = PackedStringArray("It\'s time to fight!")
 inventorySize = 10
 damageRange = Vector2i(10, 15)
-maxHealth = 15
+maxHealth = 100
 stats = {
 "CHA": 12,
 "CON": 9,

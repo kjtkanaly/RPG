@@ -29,11 +29,6 @@ public partial class EnemyAttackSequence : AttackSequence
         return battleScene.GetPlayerTeamDataAtIndex(0);
     }
 
-    public override Node2D GetDefenderPos()
-    {
-        return battleScene.GetPlayerPosAtIndex(0);
-    }
-
     protected override BattleState GetNextTeamTurn() 
     {
         return playerTurnState;

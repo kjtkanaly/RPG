@@ -14,7 +14,7 @@ public partial class DamageLabel : Label
     private float time;
     private float displayTime = 1.5f;
     private float finalDiff = 150.0f;
-    private float posRange = 50.0f;
+    private float posRange = 10.0f;
     private Vector2 initPos;
 
     //-------------------------------------------------------------------------
@@ -50,10 +50,13 @@ public partial class DamageLabel : Label
         // Set the label to destroy after the timer ends
         timer.Timeout += Destroy;
 
-        // Calc the init 
-        Position = new Vector2(
+        // Get the random offset
+        Vector2 offset = new Vector2(
             posRange * 2 * (rng.Randf() - 0.5f),
             posRange * 2 * (rng.Randf() - 0.5f));
+
+        // Calc the init 
+        Position = (-1 * (Size / 2)) + offset;
 
         // Log the init pos
         initPos = Position;
