@@ -62,6 +62,20 @@ public partial class CharacterData : Node
 
     public Texture2D GetBattleSprite() {return battleSprite;}
 
+    public void UpdateCharacterData(CharacterData inData) 
+    {
+        name = inData.GetName();
+        level = inData.GetLevel();
+        portrait = inData.GetPortrait();
+        battleSprite = inData.GetBattleSprite();
+        currentDialogue = inData.GetCurrentDialogue();
+        inventorySize = inData.GetInventorySize();
+        damageRange = inData.GetDamageRange();
+        maxHealth = inData.GetMaxHealth();
+        currentHealth = inData.GetCurrentHealth();
+        stats = inData.GetStats();
+    }
+
     // Protected
 
     // Private

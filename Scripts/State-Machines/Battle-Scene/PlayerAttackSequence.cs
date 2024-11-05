@@ -11,6 +11,7 @@ public partial class PlayerAttackSequence : AttackSequence
 
     // Private
     [Export] private BattleState victoryState;
+    // Change this to the Enemy Team Turn State
     [Export] private BattleState enemyAttackSequence;
 
     //-------------------------------------------------------------------------
@@ -45,7 +46,7 @@ public partial class PlayerAttackSequence : AttackSequence
         return enemyAttackSequence;
     }
 
-    protected override void DisplayDamage(int value) 
+    protected override void DisplayDamage(int damage) 
     {
         // Instantiate the damage label
         DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
@@ -53,7 +54,7 @@ public partial class PlayerAttackSequence : AttackSequence
         // Add the label to the scene
         GetDefenderNode().AddChild(damageLabelInst);
 
-        SceneTreeTimer timer = damageLabelInst.Init(value, battleScene.main.rng);
+        SceneTreeTimer timer = damageLabelInst.Init(damage, battleScene.main.rng);
 
         timer.Timeout += SetAnimationDone;
     }   

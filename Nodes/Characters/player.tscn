@@ -11,7 +11,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
 
-[node name="Player" groups=["Player", "Team"] instance=ExtResource("1_wj6b2")]
+[node name="Player" groups=["Player", "Player-Team"] instance=ExtResource("1_wj6b2")]
 movementData = ExtResource("2_2gnvc")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]

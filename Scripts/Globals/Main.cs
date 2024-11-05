@@ -99,11 +99,11 @@ public partial class Main : Node
 
     public async void EndBattle (
         List<CharacterData> inPlayerTeam, 
-        List<CharacterData> inEnemyTeam
-    )
+        List<CharacterData> inEnemyTeam)
     {
+        // If the previous scene is null then crash tbh
         if (previousScene == null) {
-            GetTree().UnloadCurrentScene();
+            GD.PushError("No previous scene loaded");
         }
 
         // Swap back to scene prior to the battle
@@ -113,23 +113,11 @@ public partial class Main : Node
         await ToSignal(GetTree(), SceneTree.SignalName.NodeAdded);
         await ToSignal(GetTree().CurrentScene, Node.SignalName.Ready);
 
-        // Get the Enemy Node
-        CharacterDirector enemyNode = 
-            (CharacterDirector) GetNode(battleQueue.GetEnemyInstanceNodePath());
+        // Update the Enemy Team Objects Post Battle
+        PostBattleEnemyEvents(inEnemyTeam);
 
-        // Switch the enemy to a cool down state
-        enemyNode.SwitchCurrentStateToCoolDown();
-
-        // If the player won, then get rid of the enemy instance
-        if (inEnemyTeam[0].GetCurrentHealth() <= 0) {
-            enemyNode.QueueFree();
-        }
-        // Set the enemy instance visible and set to cooldown
-        else {
-            Color colour = enemyNode.Modulate;
-            colour.A = 1;
-            enemyNode.Modulate = colour;
-        }
+        // Update the Player Team Objects Post Battle
+        PostBattlePlayerTeamEvents(inPlayerTeam);
     }
 
     public BattleQueue GetBattleQueue()
@@ -150,6 +138,50 @@ public partial class Main : Node
     // Protected
 
     // Private
+    private void PostBattleEnemyEvents(List<CharacterData> inEnemyTeam)
+    {
+        // Get the Enemy Node
+        CharacterDirector enemyNode = 
+            (CharacterDirector) GetNode(battleQueue.GetEnemyInstanceNodePath());
+
+        // Switch the enemy to a cool down state
+        enemyNode.SwitchCurrentStateToCoolDown();
+
+        // If the player won, then get rid of the enemy instance
+        if (inEnemyTeam[0].GetCurrentHealth() <= 0) {
+            enemyNode.QueueFree();
+        }
+        // Set the enemy instance visible and set to cooldown
+        else {
+            Color colour = enemyNode.Modulate;
+            colour.A = 1;
+            enemyNode.Modulate = colour;
+        }
+    }
+
+    private void PostBattlePlayerTeamEvents(List<CharacterData> inPlayerTeam)
+    {
+        // Get the Player Team's Nodes
+        Godot.Collections.Array<Godot.Node> playerTeamNodes = 
+            GetTree().GetNodesInGroup("Player-Team");
+
+        // Cycle through the Player's Team and Update their Data
+        for (int i = 0; i < playerTeamNodes.Count; i++) {
+            // Conver the player team member node to character director
+            CharacterDirector playerTeamMember = 
+                (CharacterDirector) playerTeamNodes[i];
+
+            // Cycle through the List of Input Player Team Data and find one that matches the current member
+            for (int j = 0; j < inPlayerTeam.Count; j++) {
+                if (playerTeamMember.GetCharacterData().GetName() 
+                    != inPlayerTeam[j].GetName()) {
+                    continue;
+                }
+
+                playerTeamMember.UpdateCharacterData(inPlayerTeam[j]);
+            }
+        }
+    }
 
     //-------------------------------------------------------------------------
 	// Debug Methods

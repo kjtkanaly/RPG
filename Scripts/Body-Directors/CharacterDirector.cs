@@ -138,6 +138,11 @@ public partial class CharacterDirector : CharacterBody2D
         return movementSM.GetCurrentState();
     }
 
+    public void UpdateCharacterData(CharacterData inData) 
+    {
+        characterData.UpdateCharacterData(inData);
+    }
+
     // Protected
 
     // Private

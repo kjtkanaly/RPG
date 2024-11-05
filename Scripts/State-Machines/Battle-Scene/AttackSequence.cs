@@ -78,7 +78,7 @@ public partial class AttackSequence : BattleState
     // Protected
     protected virtual BattleState DefenderDead() {return null;}
 
-    protected virtual void DisplayDamage(int value) {}   
+    protected virtual void DisplayDamage(int damage) {}   
 
     protected virtual BattleState GetNextTeamTurn() {return null;}
 

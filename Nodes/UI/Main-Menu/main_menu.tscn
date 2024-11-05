@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://b5u4mr4wg8n8q"]
+
+[ext_resource type="Script" path="res://Scripts/UI/MainMenu.cs" id="1_62byp"]
+[ext_resource type="Texture2D" uid="uid://bkelf6u83xvhv" path="res://Visuals/UI/Logo.png" id="1_yqgmu"]
+[ext_resource type="Texture2D" uid="uid://m2h21b6etg74" path="res://Visuals/UI/Play-Button.png" id="2_mvge3"]
+[ext_resource type="PackedScene" uid="uid://cey0gn772dfi2" path="res://Scenes/Debug/player_movement_test_scene.tscn" id="2_uuov0"]
+[ext_resource type="Texture2D" uid="uid://bhckssq6m68x1" path="res://Visuals/UI/Options-Button.png" id="3_mkg6i"]
+[ext_resource type="ButtonGroup" uid="uid://leqfp2me3yn" path="res://Resources/Button-Groups/main-menu.tres" id="3_wxad3"]
+[ext_resource type="Texture2D" uid="uid://b5wl84gbhb5qw" path="res://Visuals/UI/Play-Button-Hover.png" id="3_xobam"]
+[ext_resource type="Texture2D" uid="uid://7xt3m5udrc8d" path="res://Visuals/UI/Quit-Button.png" id="4_rbojd"]
+[ext_resource type="Texture2D" uid="uid://djwe2nv2cp1xv" path="res://Visuals/UI/Options-Button-Hover.png" id="5_4is2u"]
+[ext_resource type="Texture2D" uid="uid://br26umhuid2jx" path="res://Visuals/UI/Quit-Button-Hover.png" id="7_mkksj"]
+
+[node name="Main-Menu" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0941176, 0.12549, 0.160784, 1)
+script = ExtResource("1_62byp")
+gameStartPacked = ExtResource("2_uuov0")
+group = ExtResource("3_wxad3")
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -322.0
+offset_top = -254.0
+offset_right = 322.0
+offset_bottom = -131.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_yqgmu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -61.0
+offset_right = 86.0
+offset_bottom = 213.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+
+[node name="Play" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("3_wxad3")
+texture_normal = ExtResource("2_mvge3")
+texture_hover = ExtResource("3_xobam")
+metadata/Value = 0
+
+[node name="Options" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("3_wxad3")
+texture_normal = ExtResource("3_mkg6i")
+texture_hover = ExtResource("5_4is2u")
+metadata/Value = 1
+
+[node name="Quit" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("3_wxad3")
+texture_normal = ExtResource("4_rbojd")
+texture_hover = ExtResource("7_mkksj")
+metadata/Value = 2
