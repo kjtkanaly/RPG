@@ -13,27 +13,22 @@ def main():
     UpdateInstanceToTemplate(templateData, instanceData)
 
     # Save the updated instance
-    with open("Resources/Character-Data/Allies/dummy-test.json", "w") as outfile: 
+    with open(filePath, "w") as outfile: 
         json.dump(instanceData, outfile, indent=4)
 
 
 def UpdateInstanceToTemplate(template, instance):
     
     for key, value in template.items():
+        updatedValue = None
         if (type(value) is dict):
-            subInstance = {}
-            UpdateInstanceToTemplate(value, subInstance)
-            instance[key] = subInstance
+            updatedValue = {}
+            UpdateInstanceToTemplate(value, updatedValue)
         else:
-            print(key, value)
-            instance[key] = value
+            updatedValue = value
 
-
-def ClimbThroughDict(dictionary):
-    for key, value in dictionary.items():
-        print(key)
-        if (type(value) is dict):
-            ClimbThroughDict(value)
+        if (key not in instance.keys()):
+            instance[key] = updatedValue
 
 def GetFileAsString(filePath):
     with open(filePath, 'r') as file:
