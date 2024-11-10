@@ -1,0 +1,15 @@
+{
+    "Name":"Dummy",
+    "Dialog":
+    {
+        "Fight":
+        [
+            ""
+        ],
+        "Talk":
+        [   
+            "I love being dumb!", 
+            "It makes life more interesting!"
+        ]
+    }
+}

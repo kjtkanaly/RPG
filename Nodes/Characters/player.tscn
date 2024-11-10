@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjmrxg28ecmk0"]
+[gd_scene load_steps=8 format=3 uid="uid://cjmrxg28ecmk0"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
 [ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_2gnvc"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Character/idle.tscn" id="5_5m0yb"]
 [ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
 [ext_resource type="PackedScene" uid="uid://d3rcof83jkmqw" path="res://Nodes/State-Machine/Character/interact.tscn" id="6_x1tnx"]
-[ext_resource type="Texture2D" uid="uid://62dwrkdmelrh" path="res://Visuals/Sprites/Player/Dialogue_Icon.png" id="7_mcxd3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
@@ -34,19 +33,3 @@ texture = ExtResource("6_w7vtq")
 [node name="CollisionShape2D" parent="." index="2"]
 visible = false
 shape = SubResource("RectangleShape2D_1wx77")
-
-[node name="Character-Data" parent="." index="6"]
-name = "Joe Mama"
-level = 10
-portrait = ExtResource("7_mcxd3")
-inventorySize = 10
-damageRange = Vector2i(10, 15)
-maxHealth = 100
-stats = {
-"CHA": 11,
-"CON": 8,
-"DEX": 13,
-"INT": 12,
-"STR": 13,
-"WIS": 8
-}

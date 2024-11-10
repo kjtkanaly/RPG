@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dyj2cjowbhbcb"]
+[gd_scene load_steps=4 format=3 uid="uid://dyj2cjowbhbcb"]
 
 [ext_resource type="PackedScene" uid="uid://co588ibgypwgp" path="res://Nodes/Characters/basic_enemy.tscn" id="1_7m0ax"]
 [ext_resource type="Resource" uid="uid://b5dyfe1r6xo2o" path="res://Resources/Custom/Movement/Basic-Enemies/red_guy.tres" id="2_u1dtl"]
-[ext_resource type="Texture2D" uid="uid://dcx2d6u1k87n3" path="res://Visuals/Sprites/Characters/Enemy_Dummy_Dialogue_Icon.png" id="4_ilj50"]
 [ext_resource type="Texture2D" uid="uid://dmhu0fy2g5r5i" path="res://Visuals/Sprites/Characters/Enemy_Dummy.png" id="4_mhbcd"]
 
 [node name="Red-Guy" instance=ExtResource("1_7m0ax")]
@@ -11,21 +10,3 @@ movementData = ExtResource("2_u1dtl")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("4_mhbcd")
-
-[node name="Character-Data" parent="." index="8"]
-name = "Red Guy"
-level = 10
-portrait = ExtResource("4_ilj50")
-battleSprite = ExtResource("4_mhbcd")
-currentDialogue = PackedStringArray("It\'s time to fight!")
-inventorySize = 10
-damageRange = Vector2i(10, 15)
-maxHealth = 100
-stats = {
-"CHA": 12,
-"CON": 9,
-"DEX": 14,
-"INT": 6,
-"STR": 11,
-"WIS": 9
-}
