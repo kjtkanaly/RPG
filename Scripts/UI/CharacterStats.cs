@@ -37,7 +37,7 @@ public partial class CharacterStats : Control
     {
         SetName(inData.GetName());
         SetStats(inData.GetStats());
-        SetHP(inData.GetCurrentHealth(), inData.GetMaxHealth());
+        SetHP(inData.GetHealthByKey("Current"), inData.GetHealthByKey("Max"));
         SetLevel(inData.GetLevel());
         SetPortraitPicture(inData.GetPortrait());
     }

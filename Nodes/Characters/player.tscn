@@ -33,3 +33,6 @@ texture = ExtResource("6_w7vtq")
 [node name="CollisionShape2D" parent="." index="2"]
 visible = false
 shape = SubResource("RectangleShape2D_1wx77")
+
+[node name="Character-Data" parent="." index="6"]
+dataPath = "res://Resources/Character-Data/player.json"

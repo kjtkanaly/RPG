@@ -56,7 +56,7 @@ public partial class AttackSequence : BattleState
         }
 
         // If the defender is dead
-        if (defenderData.GetCurrentHealth() <= 0) {
+        if (defenderData.GetHealthByKey("Current") <= 0) {
             return DefenderDead();
         }
 
@@ -103,7 +103,7 @@ public partial class AttackSequence : BattleState
     {
         defenderData.IterateCurrentHealth(-1 * damage);
 
-        GD.Print($"Dealt Damage: {damage} | Remaining Damage: {defenderData.GetCurrentHealth()}");
+        GD.Print($"Dealt Damage: {damage} | Remaining Damage: {defenderData.GetHealthByKey("Current")}");
     }
 
     //-------------------------------------------------------------------------

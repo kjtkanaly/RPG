@@ -13,33 +13,44 @@ public partial class CharacterData : Node
 
     // Private
     [Export] private string dataPath = "";
+    private Texture2D portrait;
+    private Texture2D battleSprite;
     private Dictionary data;
 
     //-------------------------------------------------------------------------
     // Game Events
     public override void _Ready()
     {
-        // Load in Character Data File
-        LoadData();
-
-        // Priint the Name
-        GD.Print(data["Name"]);
+        Init();
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
+    public void Init()
+    {
+        // Load in Character Data File
+        LoadData();
+
+        // Load the texture 2D
+        portrait = (Texture2D) GD.Load(GetPortraitPath());
+        battleSprite = (Texture2D) GD.Load(GetBattleSpritePath());
+
+        // Priint the Name
+        GD.Print(data["Name"]);
+    }
+
     public string GetName() {return (string) data["Name"];}
 
     public int GetLevel() {return (int) data["Level"];}
 
-    public Texture2D GetPortrait() {return (Texture2D) data["Portrait"];}
-
-    public string[] GetCurrentDialogue() {return (string[]) data["Current Dialogue"];}
+    public string[] GetDialogByKey(string key) {return ((Dictionary<string, string[]>) data["Dialog"])[key];}
 
     public int GetInventorySize() {return (int) data["Inventory-Size"];}
 
     public Vector2I GetDamageRange() {return (Vector2I) data["Damage-Range"];}
+
+    public int GetHealthByKey(string key) {return ((Dictionary<string, int>) data["Health"])[key];}
 
     public int GetMaxHealth() {return (int) data["Max Health"];}
 
@@ -49,7 +60,13 @@ public partial class CharacterData : Node
 
     public Dictionary<string, int> GetStats() {return (Dictionary<string, int>) data["Stats"];}
 
-    public Texture2D GetBattleSprite() {return (Texture2D) data["Battle Sprite"];}
+    public Texture2D GetPortrait() {return portrait;}
+
+    public Texture2D GetBattleSprite() {return battleSprite;}
+
+    public string GetPortraitPath() {return (string) data["Portrait-Path"];}
+
+    public string GetBattleSpritePath() {return (string) data["Battle-Sprite-Path"];}
 
     public void UpdateCharacterData(CharacterData inData) 
     {
@@ -57,10 +74,10 @@ public partial class CharacterData : Node
         data["level"] = inData.GetLevel();
         data["portrait"] = inData.GetPortrait();
         data["battleSprite"] = inData.GetBattleSprite();
-        data["currentDialogue"] = inData.GetCurrentDialogue();
+        // data["currentDialogue"] = inData.GetDialogByKey();
         data["inventorySize"] = inData.GetInventorySize();
-        data["damageRange"] = inData.GetDamageRange();
-        data["maxHealth"] = inData.GetMaxHealth();
+        // data["damageRange"] = inData.GetDamageRange();
+        // data["maxHealth"] = inData.GetMaxHealth();
         data["currentHealth"] = inData.GetCurrentHealth();
         data["stats"] = inData.GetStats();
     }

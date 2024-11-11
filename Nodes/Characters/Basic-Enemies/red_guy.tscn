@@ -10,3 +10,6 @@ movementData = ExtResource("2_u1dtl")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("4_mhbcd")
+
+[node name="Character-Data" parent="." index="8"]
+dataPath = "res://Resources/Character-Data/Enemies/red-guy.json"
