@@ -16,7 +16,7 @@
     "Inventory-Size": 1,
     "Damage-Range": {
         "Min": 0,
-        "max": 1
+        "Max": 1
     },
     "Stats": {
         "DEX": 10,

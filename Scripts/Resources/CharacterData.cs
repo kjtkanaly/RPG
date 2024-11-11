@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using Godot.Collections;
-using System.IO;
 
 public partial class CharacterData : Node
 {
@@ -35,30 +34,40 @@ public partial class CharacterData : Node
         // Load the texture 2D
         portrait = (Texture2D) GD.Load(GetPortraitPath());
         battleSprite = (Texture2D) GD.Load(GetBattleSpritePath());
-
-        // Priint the Name
-        GD.Print(data["Name"]);
     }
+
+    public Dictionary GetData() {return data;}
 
     public string GetName() {return (string) data["Name"];}
 
     public int GetLevel() {return (int) data["Level"];}
 
-    public string[] GetDialogByKey(string key) {return ((Dictionary<string, string[]>) data["Dialog"])[key];}
+    public string[] GetDialogByKey(string key) 
+    {
+        return ((Dictionary<string, string[]>) data["Dialog"])[key];
+    }
 
     public int GetInventorySize() {return (int) data["Inventory-Size"];}
 
-    public Vector2I GetDamageRange() {return (Vector2I) data["Damage-Range"];}
+    public int GetHealthByKey(string key) 
+{
+        return ((Dictionary<string, int>) data["Health"])[key];
+    }
+    
+    public void SetHealthByKey(string key, int value) 
+    {
+        ((Dictionary<string, int>) data["Health"])[key] = value;
+    }
 
-    public int GetHealthByKey(string key) {return ((Dictionary<string, int>) data["Health"])[key];}
+    public void IterateCurrentHealth(int step) 
+    {
+        SetHealthByKey("Current", GetHealthByKey("Current") + step);
+    }
 
-    public int GetMaxHealth() {return (int) data["Max Health"];}
-
-    public int GetCurrentHealth() {return (int) data["Current Health"];}
-
-    public void IterateCurrentHealth(int step) {/*data["currentHealth"] += step;*/}
-
-    public Dictionary<string, int> GetStats() {return (Dictionary<string, int>) data["Stats"];}
+    public Dictionary<string, int> GetStats() 
+    {
+        return (Dictionary<string, int>) data["Stats"];
+    }
 
     public Texture2D GetPortrait() {return portrait;}
 
@@ -66,25 +75,40 @@ public partial class CharacterData : Node
 
     public string GetPortraitPath() {return (string) data["Portrait-Path"];}
 
-    public string GetBattleSpritePath() {return (string) data["Battle-Sprite-Path"];}
+    public string GetBattleSpritePath() 
+    {
+        return (string) data["Battle-Sprite-Path"];
+    }
+
+    public Vector2I GetDamageRange() 
+    {
+        int min = ((Dictionary<string, int>) data["Damage-Range"])["Min"];
+        int max = ((Dictionary<string, int>) data["Damage-Range"])["Max"];
+        return new Vector2I(min, max);
+    }
 
     public void UpdateCharacterData(CharacterData inData) 
     {
-        data["name"] = inData.GetName();
-        data["level"] = inData.GetLevel();
-        data["portrait"] = inData.GetPortrait();
-        data["battleSprite"] = inData.GetBattleSprite();
-        // data["currentDialogue"] = inData.GetDialogByKey();
-        data["inventorySize"] = inData.GetInventorySize();
-        // data["damageRange"] = inData.GetDamageRange();
-        // data["maxHealth"] = inData.GetMaxHealth();
-        data["currentHealth"] = inData.GetCurrentHealth();
-        data["stats"] = inData.GetStats();
+        CopyDictionaryValues(data, inData.GetData());
     }
 
     // Protected
 
     // Private
+    private void CopyDictionaryValues(Dictionary data, Dictionary inData)
+    {
+        foreach (var (key, value) in inData) {
+            if (value.VariantType == Variant.Type.Dictionary) {
+                CopyDictionaryValues(
+                    (Dictionary) data[key], 
+                    (Dictionary) inData[key]);
+            }
+            else {
+                data[key] = inData[key];
+            }
+        }
+    }
+
     private void LoadData() 
     {
         // Error Check - If the path doesn't exist

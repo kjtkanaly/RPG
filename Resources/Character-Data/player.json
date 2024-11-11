@@ -10,13 +10,13 @@
     },
     "Level": 1,
     "Health": {
-        "Max": 10,
-        "Current": 10
+        "Max": 100,
+        "Current": 100
     },
     "Inventory-Size": 1,
     "Damage-Range": {
         "Min": 10,
-        "max": 15
+        "Max": 15
     },
     "Stats": {
         "DEX": 13,
