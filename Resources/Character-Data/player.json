@@ -1,0 +1,31 @@
+{
+    "Name": "Joe Mama",
+    "Dialog": {
+        "Fight": [
+            ""
+        ],
+        "Talk": [
+            ""
+        ]
+    },
+    "Level": 1,
+    "Health": {
+        "Max": 10,
+        "Current": 10
+    },
+    "Inventory-Size": 1,
+    "Damage-Range": {
+        "Min": 10,
+        "max": 15
+    },
+    "Stats": {
+        "DEX": 13,
+        "STR": 12,
+        "CON": 10,
+        "WIS": 9,
+        "INT": 8,
+        "CHA": 15
+    },
+    "Portrait-Path": "res://Visuals/Sprites/Player/Dialogue_Icon.png",
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Player/Player_001.png"
+}
