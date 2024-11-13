@@ -36,6 +36,8 @@ public partial class TextBox : Control
     [Export] protected bool debugMode;
     [Export] protected Label label;
     [Export] protected TextureRect textRect;
+    [Export] protected AudioStreamPlayer2D audio;
+    int previousVisibleCharacter = -1;
 
     // Private
 
@@ -62,6 +64,13 @@ public partial class TextBox : Control
         if (!Visible) {
             return;
         }
+
+        // Check if we neeed play a text sound
+        if (Math.Abs(label.VisibleCharacters - previousVisibleCharacter) == 1) {
+            GD.Print(label.VisibleCharacters);
+            previousVisibleCharacter = label.VisibleCharacters;
+            audio.Play();
+        }
     }
 
     //-------------------------------------------------------------------------
@@ -72,6 +81,7 @@ public partial class TextBox : Control
         Visible = true;
         label.Text = text;
         SetIcon(icon);
+        previousVisibleCharacter = -1;
 
         // Animate the Text
         label.VisibleRatio = 0;

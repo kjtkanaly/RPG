@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/ButtonGroupUI.cs" id="3_o3533"]
 [ext_resource type="ButtonGroup" uid="uid://casfrwaqdavco" path="res://Resources/Button-Groups/bool-text-box.tres" id="4_1rbr3"]
 
-[node name="Bool-Text-Box" type="MarginContainer" node_paths=PackedStringArray("boolButtons", "label")]
+[node name="Bool-Text-Box" type="MarginContainer" node_paths=PackedStringArray("boolButtons", "label", "audio")]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -22,6 +22,7 @@ script = ExtResource("1_75o5q")
 boolButtons = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer")
 debugMode = true
 label = NodePath("Panel/MarginContainer/VBoxContainer/Text")
+audio = NodePath("Audio")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -74,3 +75,5 @@ toggle_mode = true
 button_group = ExtResource("4_1rbr3")
 text = "YES"
 metadata/value = true
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
