@@ -22,20 +22,22 @@ enemyTeamSceneNodes = [NodePath("Enemy-Team/One"), NodePath("Enemy-Team/Two"), N
 [node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
 startingState = NodePath("Battle-Intro")
 
-[node name="Battle-Intro" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTurnState") instance=ExtResource("8_hn318")]
+[node name="Battle-Intro" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTurnState", "enemyTurnState") instance=ExtResource("8_hn318")]
 playerTurnState = NodePath("../Player-Turn")
+enemyTurnState = NodePath("../Enemy-Attack-Sequence")
 
 [node name="Player-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("fleeBattle", "playerAttackSequence") instance=ExtResource("3_4otpn")]
 fleeBattle = NodePath("../Flee-Battle")
 playerAttackSequence = NodePath("../Player-Attack-Sequence")
 
-[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "enemyAttackSequence", "playerTurn") instance=ExtResource("5_febhu")]
+[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("5_febhu")]
 victoryState = NodePath("../Victory-State")
-enemyAttackSequence = NodePath("../Enemy-Attack-Sequence")
-playerTurn = NodePath("../Player-Turn")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Attack-Sequence")
 
-[node name="Enemy-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTurnState") instance=ExtResource("7_k2g15")]
-playerTurnState = NodePath("../Player-Turn")
+[node name="Enemy-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTeamTurn", "enemyTeamTurn") instance=ExtResource("7_k2g15")]
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath(".")
 
 [node name="Flee-Battle" parent="Battle-State-Machine" instance=ExtResource("4_up8t5")]
 

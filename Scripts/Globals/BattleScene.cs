@@ -27,6 +27,7 @@ public partial class BattleScene : Node2D
     private List<CharacterData> playerTeam = new List<CharacterData>();
     private List<CharacterData> enemyTeam = new List<CharacterData>();
     private List<CharacterData> battleOrder = new List<CharacterData>();
+    private int currentBattleOrderIndex = 0;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -61,6 +62,9 @@ public partial class BattleScene : Node2D
 
         // Determine the battle order
         SetBattleOrder();
+
+        // Reset the current battle order index
+        currentBattleOrderIndex = 0;
 
         // Init the Battle Scene State Machine
         stateMachine.Init(this);
@@ -101,6 +105,38 @@ public partial class BattleScene : Node2D
     public BattleSceneCharacter GetEnemyNodeAtIndex(int index) 
     {
         return enemyTeamSceneNodes[index];
+    }
+
+    public bool IsInPlayerTeam(CharacterData data) 
+    {
+        for (int i = 0; i < playerTeam.Count; i++) {
+            if (data.GetName() == playerTeam[i].GetName()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void StepCurrentBattleOrderIndex() 
+    {
+        currentBattleOrderIndex += 1;
+        if (currentBattleOrderIndex >= battleOrder.Count) {
+            currentBattleOrderIndex -= battleOrder.Count;
+        }
+    }
+
+    public CharacterData GetCurrentCharacterInBattleOrder() 
+    {
+        return battleOrder[currentBattleOrderIndex];
+    }
+
+    public CharacterData GetNextCharacterInBattleOrder()
+    {   
+        int nextIndex = currentBattleOrderIndex + 1;
+        if (nextIndex >= battleOrder.Count) {
+            nextIndex -= battleOrder.Count;
+        }
+        return battleOrder[nextIndex];
     }
 
     // Protected

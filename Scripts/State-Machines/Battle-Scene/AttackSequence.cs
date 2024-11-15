@@ -12,7 +12,8 @@ public partial class AttackSequence : BattleState
     protected bool attackSequencnDone = false;
 
     // Private
-    [Export] private BattleState playerTurn;
+    [Export] private BattleState playerTeamTurn;
+    [Export] private BattleState enemyTeamTurn;
     private CharacterData attackerData;
     private CharacterData defenderData;
 
@@ -62,7 +63,9 @@ public partial class AttackSequence : BattleState
 
         // If attack is done but the defender isn't dead
         else {
-            return GetNextTeamTurn();
+            BattleState nextState = GetNextTeamTurn();
+            battleScene.StepCurrentBattleOrderIndex();
+            return nextState;
         }
     }
 
@@ -78,9 +81,7 @@ public partial class AttackSequence : BattleState
     // Protected
     protected virtual BattleState DefenderDead() {return null;}
 
-    protected virtual void DisplayDamage(int damage) {}   
-
-    protected virtual BattleState GetNextTeamTurn() {return null;}
+    protected virtual void DisplayDamage(int damage) {}
 
     protected void SetAnimationDone()
     {
@@ -104,6 +105,19 @@ public partial class AttackSequence : BattleState
         defenderData.IterateCurrentHealth(-1 * damage);
 
         GD.Print($"Dealt Damage: {damage} | Remaining Damage: {defenderData.GetHealthByKey("Current")}");
+    }
+
+    private BattleState GetNextTeamTurn() 
+    {
+        bool nextCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
+            battleScene.GetNextCharacterInBattleOrder());
+            
+        if (nextCharacterIsOnPlayerTeam) {
+            return playerTeamTurn;
+        }
+        else {
+            return enemyTeamTurn;
+        }
     }
 
     //-------------------------------------------------------------------------

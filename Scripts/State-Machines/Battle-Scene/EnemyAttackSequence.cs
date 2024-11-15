@@ -11,7 +11,6 @@ public partial class EnemyAttackSequence : AttackSequence
 
     // Private
     [Export] private BattleState defeatState;
-    [Export] private BattleState playerTurnState;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -27,11 +26,6 @@ public partial class EnemyAttackSequence : AttackSequence
     public override CharacterData GetDefenderData()
     {
         return battleScene.GetPlayerTeamDataAtIndex(0);
-    }
-
-    protected override BattleState GetNextTeamTurn() 
-    {
-        return playerTurnState;
     }
 
     // Protected

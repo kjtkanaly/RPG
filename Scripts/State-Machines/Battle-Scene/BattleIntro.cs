@@ -11,6 +11,7 @@ public partial class BattleIntro : BattleState
 
     // Private
     [Export] private BattleState playerTurnState;
+    [Export] private BattleState enemyTurnState;
     private bool introPlaying = false;
 
     //-------------------------------------------------------------------------
@@ -29,7 +30,7 @@ public partial class BattleIntro : BattleState
     {
         GD.Print(introPlaying);
         if (!introPlaying) {
-            return playerTurnState;
+            return GetFirstCharacterTurn();
         }
 
         return null;
@@ -54,6 +55,19 @@ public partial class BattleIntro : BattleState
         await ToSignal(battleScene.main.GetMainUI(), MainUI.SignalName.DialogueOver);
 
         introPlaying = false;
+    }
+
+    private BattleState GetFirstCharacterTurn()
+    {
+        bool firstCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
+            battleScene.GetCurrentCharacterInBattleOrder());
+            
+        if (firstCharacterIsOnPlayerTeam) {
+            return playerTurnState;
+        }
+        else {
+            return enemyTurnState;
+        }
     }
 
     //-------------------------------------------------------------------------

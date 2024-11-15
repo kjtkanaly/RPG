@@ -12,7 +12,6 @@ public partial class PlayerAttackSequence : AttackSequence
     // Private
     [Export] private BattleState victoryState;
     // Change this to the Enemy Team Turn State
-    [Export] private BattleState enemyAttackSequence;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -39,11 +38,6 @@ public partial class PlayerAttackSequence : AttackSequence
     protected override BattleState DefenderDead() 
     {
         return victoryState;
-    }
-
-    protected override BattleState GetNextTeamTurn() 
-    {
-        return enemyAttackSequence;
     }
 
     protected override void DisplayDamage(int damage) 
