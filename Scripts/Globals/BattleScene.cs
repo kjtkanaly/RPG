@@ -150,8 +150,6 @@ public partial class BattleScene : Node2D
             // Roll initiative
             int initiativeVal = GetInitiative(teamData[i].GetStatByKey("DEX"));
 
-            GD.Print($"{teamData[i].GetName()} roll: {initiativeVal}");
-
             // Set position in the battle order
             AppendBattleOrder(teamData[i], initiativeVal);
         }
@@ -167,25 +165,24 @@ public partial class BattleScene : Node2D
 
     private void AppendBattleOrder(CharacterData data, int initiativeVal)
     {
-        // Init the battle index
-        int battleOrderIndex = 0;
+        int battleOrderIndex = battleOrder.Count;
 
         // Go through the current battle order 
         for (int i = battleOrder.Count - 1; i > -1; i--) {
             // If the initiative value is less than the current position's value
             if (initiativeVal > battleOrder[i].GetInitiativeValue()) {
-                continue;
+                battleOrderIndex = i;
             }
-
-            battleOrderIndex = i;
-
-            // Check if current battle pos is equal to the new initiative value
-            if (initiativeVal == battleOrder[battleOrderIndex].GetInitiativeValue()) {
-                DetermineWhichCharacterGoesFirst(data, battleOrderIndex);
-            }
-
-            break;
         }
+        
+        // Check if current battle pos is equal to the new initiative value
+        if (battleOrderIndex != battleOrder.Count) {
+            if (initiativeVal == battleOrder[battleOrderIndex].GetInitiativeValue()) {
+                battleOrderIndex = DetermineWhichCharacterGoesFirst(data, battleOrderIndex);
+            }
+        }
+
+        GD.Print($"{data.GetName()} roll: {initiativeVal}, index: {battleOrderIndex}");
 
         // Insert the position and log it's initiative value
         data.SetInitiative(initiativeVal);
@@ -205,7 +202,7 @@ public partial class BattleScene : Node2D
         else if (data.GetStatByKey("DEX") == battleOrder[battleOrderIndex].GetStatByKey("DEX")) {
             // Flip a coin
             if (main.rng.RandiRange(0, 1) == 0) {
-                battleOrderIndex -= 1;
+                battleOrderIndex += 1;
             }
         }
 
