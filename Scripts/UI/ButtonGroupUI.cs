@@ -52,6 +52,11 @@ public partial class ButtonGroupUI : Control
             return;
         }
 
+        // Check if the new button index is disabled
+        if (buttons[newButtonIndex].Disabled == true) {
+            return;
+        }
+
         currentButtonIndex = newButtonIndex;
         buttons[currentButtonIndex].ButtonPressed = true;
     }

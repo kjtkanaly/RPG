@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://o0w5yevss7s3"]
+[gd_scene load_steps=7 format=3 uid="uid://o0w5yevss7s3"]
 
 [ext_resource type="Script" path="res://Scripts/UI/BattleSceneUI.cs" id="1_hin22"]
 [ext_resource type="PackedScene" uid="uid://bhe0v2375rdtl" path="res://Nodes/UI/main_action.tscn" id="2_w3gda"]
 [ext_resource type="PackedScene" uid="uid://bwih33n4im4e2" path="res://Nodes/UI/character_stats.tscn" id="3_xkhth"]
+[ext_resource type="PackedScene" uid="uid://be2l0qf7u4m1y" path="res://Nodes/UI/Battle-Scene/select_enemy_box.tscn" id="4_qvaju"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_jau1h"]
 
-[node name="Battle-Scene-UI" type="CanvasLayer" node_paths=PackedStringArray("mainAction", "characterStats")]
+[sub_resource type="ButtonGroup" id="ButtonGroup_mnh0x"]
+
+[node name="Battle-Scene-UI" type="CanvasLayer" node_paths=PackedStringArray("mainAction", "characterStats", "selectEnemyBox")]
 script = ExtResource("1_hin22")
 mainAction = NodePath("Main-Action")
 characterStats = NodePath("Character-Stats")
+selectEnemyBox = NodePath("Select-Enemy-Box")
 
 [node name="Main-Action" parent="." instance=ExtResource("2_w3gda")]
 visible = false
@@ -17,3 +21,7 @@ group = SubResource("ButtonGroup_jau1h")
 
 [node name="Character-Stats" parent="." instance=ExtResource("3_xkhth")]
 visible = false
+
+[node name="Select-Enemy-Box" parent="." instance=ExtResource("4_qvaju")]
+visible = false
+group = SubResource("ButtonGroup_mnh0x")

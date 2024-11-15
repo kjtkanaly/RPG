@@ -66,6 +66,9 @@ public partial class BattleScene : Node2D
         // Reset the current battle order index
         currentBattleOrderIndex = 0;
 
+        // Log the Enemy options
+        UpdateEnemySelectOptions();
+
         // Init the Battle Scene State Machine
         stateMachine.Init(this);
     }
@@ -243,6 +246,13 @@ public partial class BattleScene : Node2D
         }
 
         return battleOrderIndex;
+    }
+
+    private void UpdateEnemySelectOptions() {
+        for (int i = 0; i < enemyTeam.Count; i++) {
+            GetBattleUI().GetSelectEnemyBox().SetEnemyTextAtIndex(i, enemyTeam[i].GetName());
+            GetBattleUI().GetSelectEnemyBox().SetEnemySelectAtIndexAsEnabled(i);
+        }
     }
 
     //-------------------------------------------------------------------------

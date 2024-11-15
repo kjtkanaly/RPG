@@ -51,6 +51,10 @@ public partial class PlayerAttackSequence : AttackSequence
         SceneTreeTimer timer = damageLabelInst.Init(damage, battleScene.main.rng);
 
         timer.Timeout += SetAnimationDone;
+
+        // Play the hit sound effect
+        audioPlayer.Stream = soundEffect;
+        audioPlayer.Play();
     }   
 
     // Private

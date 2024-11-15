@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://duqk2867wvx3j"]
+[gd_scene load_steps=12 format=3 uid="uid://duqk2867wvx3j"]
 
 [ext_resource type="Script" path="res://Scripts/Globals/BattleScene.cs" id="1_rt48m"]
 [ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_sgfx0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bqsveenfoilcs" path="res://Nodes/State-Machine/flee_battle.tscn" id="4_up8t5"]
 [ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="5_febhu"]
 [ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="6_y2u7w"]
+[ext_resource type="AudioStream" uid="uid://bsh2s3xvxs4g2" path="res://Audio/Sound-Effects/Hit-Sounds/Hit-001.wav" id="7_erx1e"]
 [ext_resource type="PackedScene" uid="uid://cvvw5b4bvc1qe" path="res://Nodes/State-Machine/Battle-Scene/enemy_attack_sequence.tscn" id="7_k2g15"]
 [ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="8_hn318"]
 [ext_resource type="PackedScene" uid="uid://c6ac6ter8sbit" path="res://Nodes/Battle/battle_scene_character.tscn" id="10_hi1gg"]
@@ -30,8 +31,10 @@ enemyTurnState = NodePath("../Enemy-Attack-Sequence")
 fleeBattle = NodePath("../Flee-Battle")
 playerAttackSequence = NodePath("../Player-Attack-Sequence")
 
-[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("5_febhu")]
+[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "audioPlayer", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("5_febhu")]
 victoryState = NodePath("../Victory-State")
+audioPlayer = NodePath("../../Sound-Effects")
+soundEffect = ExtResource("7_erx1e")
 playerTeamTurn = NodePath("../Player-Turn")
 enemyTeamTurn = NodePath("../Enemy-Attack-Sequence")
 
@@ -55,3 +58,5 @@ sprite = NodePath("../One/Sprite")
 [node name="Three" parent="Enemy-Team" node_paths=PackedStringArray("sprite") instance=ExtResource("10_hi1gg")]
 position = Vector2(200, -65)
 sprite = NodePath("../One/Sprite")
+
+[node name="Sound-Effects" type="AudioStreamPlayer2D" parent="."]

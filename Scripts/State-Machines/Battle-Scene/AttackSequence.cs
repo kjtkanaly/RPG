@@ -9,6 +9,8 @@ public partial class AttackSequence : BattleState
 
     // Protected
     [Export] protected PackedScene damageLabel;
+    [Export] protected AudioStreamPlayer2D audioPlayer;
+    [Export] protected AudioStream soundEffect;
     protected bool attackSequencnDone = false;
 
     // Private
@@ -16,6 +18,8 @@ public partial class AttackSequence : BattleState
     [Export] private BattleState enemyTeamTurn;
     private CharacterData attackerData;
     private CharacterData defenderData;
+    private int attackerIndex = -1;
+    private int defenderIndex = -1;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -78,6 +82,9 @@ public partial class AttackSequence : BattleState
     public virtual BattleSceneCharacter GetDefenderNode()
     {return null;}
 
+    public void SetAttackerIndex(int inIndex) { attackerIndex = inIndex; }
+    public void SetDefenderIndex(int inIndex) { defenderIndex = inIndex; }
+
     // Protected
     protected virtual BattleState DefenderDead() {return null;}
 
@@ -111,7 +118,7 @@ public partial class AttackSequence : BattleState
     {
         bool nextCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
             battleScene.GetNextCharacterInBattleOrder());
-            
+
         if (nextCharacterIsOnPlayerTeam) {
             return playerTeamTurn;
         }

@@ -12,6 +12,7 @@ public partial class BattleSceneUI : CanvasLayer
     // Private
     [Export] private MainAction mainAction;
     [Export] private CharacterStats characterStats;
+    [Export] private SelectEnemyBox selectEnemyBox;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -19,35 +20,23 @@ public partial class BattleSceneUI : CanvasLayer
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public void ShowMainAction() 
-    {
-        mainAction.Visible = true;
-    }
+    public void ShowMainAction() { mainAction.Visible = true; }
 
-    public void HideMainAction()
-    {
-        mainAction.Visible = false;
-    }
+    public void HideMainAction() { mainAction.Visible = false; }
 
-    public MainAction GetMainAction()
-    {
-        return mainAction;
-    }
+    public MainAction GetMainAction() { return mainAction; }
 
-    public void ShowCharacterStats() 
-    {
-        characterStats.Visible = true;
-    }
+    public void ShowCharacterStats() { characterStats.Visible = true; }
 
-    public void HideCharacterStats() 
-    {
-        characterStats.Visible = false;
-    }
+    public void HideCharacterStats() { characterStats.Visible = false; }
 
-    public CharacterStats GetCharacterStats() 
-    {
-        return characterStats;
-    }
+    public CharacterStats GetCharacterStats() { return characterStats; }
+
+    public void ShowSelectEnemyBox() { selectEnemyBox.Visible = true; }
+
+    public void HideSelectEnemyBox() { selectEnemyBox.Visible = false; }
+
+    public SelectEnemyBox GetSelectEnemyBox() { return selectEnemyBox; }
 
     public void HideUI() {
         
