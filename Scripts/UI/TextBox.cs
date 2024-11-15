@@ -67,7 +67,6 @@ public partial class TextBox : Control
 
         // Check if we neeed play a text sound
         if (Math.Abs(label.VisibleCharacters - previousVisibleCharacter) == 1) {
-            GD.Print(label.VisibleCharacters);
             previousVisibleCharacter = label.VisibleCharacters;
             audio.Play();
         }

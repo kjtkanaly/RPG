@@ -15,6 +15,7 @@ public partial class CharacterData : Node
     private Texture2D portrait;
     private Texture2D battleSprite;
     private Dictionary data;
+    private int initiativeValue;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -34,6 +35,9 @@ public partial class CharacterData : Node
         // Load the texture 2D
         portrait = (Texture2D) GD.Load(GetPortraitPath());
         battleSprite = (Texture2D) GD.Load(GetBattleSpritePath());
+
+        // Reset the initiative value
+        initiativeValue = -1;
     }
 
     public Dictionary GetData() {return data;}
@@ -50,7 +54,7 @@ public partial class CharacterData : Node
     public int GetInventorySize() {return (int) data["Inventory-Size"];}
 
     public int GetHealthByKey(string key) 
-{
+    {
         return ((Dictionary<string, int>) data["Health"])[key];
     }
     
@@ -67,6 +71,11 @@ public partial class CharacterData : Node
     public Dictionary<string, int> GetStats() 
     {
         return (Dictionary<string, int>) data["Stats"];
+    }
+
+    public int GetStatByKey(string key)
+    {
+        return ((Dictionary<string, int>) data["Stats"])[key];
     }
 
     public Texture2D GetPortrait() {return portrait;}
@@ -91,6 +100,10 @@ public partial class CharacterData : Node
     {
         CopyDictionaryValues(data, inData.GetData());
     }
+
+    public int GetInitiativeValue() { return initiativeValue; }
+
+    public void SetInitiative(int inVal) { initiativeValue = inVal; }
 
     // Protected
 
