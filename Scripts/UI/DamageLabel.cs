@@ -14,7 +14,7 @@ public partial class DamageLabel : Label
     private float time;
     private float displayTime = 1.5f;
     private float finalDiff = 150.0f;
-    private float posRange = 10.0f;
+    private float posRange = 0f;
     private Vector2 initPos;
 
     //-------------------------------------------------------------------------
@@ -56,7 +56,7 @@ public partial class DamageLabel : Label
             posRange * 2 * (rng.Randf() - 0.5f));
 
         // Calc the init 
-        Position = (-1 * (Size / 2)) + offset;
+        Position += offset;
 
         // Log the init pos
         initPos = Position;

@@ -12,14 +12,14 @@ public partial class AttackSequence : BattleState
     [Export] protected AudioStreamPlayer2D audioPlayer;
     [Export] protected AudioStream soundEffect;
     protected bool attackSequencnDone = false;
+    protected int attackerIndex = -1;
+    protected int defenderIndex = -1;
 
     // Private
     [Export] private BattleState playerTeamTurn;
     [Export] private BattleState enemyTeamTurn;
     private CharacterData attackerData;
     private CharacterData defenderData;
-    private int attackerIndex = -1;
-    private int defenderIndex = -1;
 
     //-------------------------------------------------------------------------
     // Game Events

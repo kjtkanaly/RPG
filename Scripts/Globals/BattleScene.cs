@@ -23,7 +23,7 @@ public partial class BattleScene : Node2D
     // Private
     [Export] private BattleSceneUI battleUI;
     [Export] private BattleStateMachine stateMachine;
-    [Export] private BattleSceneCharacter[] enemyTeamSceneNodes;
+    [Export] private BattleSceneCharacter[] enemyTeamSceneNodes = new BattleSceneCharacter[4];
     private Array<CharacterData> playerTeam = new Array<CharacterData>();
     private Array<CharacterData> enemyTeam = new Array<CharacterData>();
     private Array<CharacterData> battleOrder = new Array<CharacterData>();
@@ -165,7 +165,8 @@ public partial class BattleScene : Node2D
         BattleSceneCharacter[] teamSprites)
     {
         for (int i = 0; i < teamData.Count; i++) {
-            teamSprites[i].GetSprite().Texture = teamData[i].GetBattleSprite();
+            GD.Print($"Enemy Team Sprite: {i} | {teamData[i].GetBattleSprite()} | {teamSprites[i].Position}");
+            teamSprites[i].Texture = teamData[i].GetBattleSprite();
         }
     }
 

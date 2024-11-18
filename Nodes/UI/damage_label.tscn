@@ -4,21 +4,14 @@
 [ext_resource type="Script" path="res://Scripts/UI/DamageLabel.cs" id="2_u2tkk"]
 
 [node name="Damage-Label" type="Label"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -32.0
-offset_right = 42.0
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 84.0
+offset_bottom = 64.0
 theme_override_colors/font_color = Color(1, 0, 0.25098, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("1_1ha4g")
 theme_override_font_sizes/font_size = 64
 text = "000"
+horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("2_u2tkk")

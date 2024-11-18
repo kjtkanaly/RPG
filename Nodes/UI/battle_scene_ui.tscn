@@ -27,6 +27,7 @@ visible = false
 group = SubResource("ButtonGroup_mnh0x")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 z_index = -10
 anchors_preset = 15
 anchor_right = 1.0

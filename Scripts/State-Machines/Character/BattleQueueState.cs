@@ -88,7 +88,8 @@ public partial class BattleQueueState : CharacterBodyState
         return true;
     }
 
-    private async void BeginBattle() 
+    // TODO: Make this async and add some cool animations
+    private void BeginBattle() 
     {
         // Do some animatio
 

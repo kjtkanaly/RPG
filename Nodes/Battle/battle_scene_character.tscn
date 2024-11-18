@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/Battle/BattleSceneCharacter.cs" id="1_2m4ff"]
 
-[node name="Battle-Scene-Character" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Battle-Scene-Character" type="TextureRect"]
+offset_right = 256.0
+offset_bottom = 256.0
+stretch_mode = 4
 script = ExtResource("1_2m4ff")
-sprite = NodePath("Sprite")
-
-[node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(6, 6)

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class BattleSceneCharacter : Node2D
+public partial class BattleSceneCharacter : TextureRect
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -10,7 +10,6 @@ public partial class BattleSceneCharacter : Node2D
     // Protected
 
     // Private
-    [Export] private Sprite2D sprite;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -18,7 +17,6 @@ public partial class BattleSceneCharacter : Node2D
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public Sprite2D GetSprite() {return sprite;}
 
     // Protected
 
