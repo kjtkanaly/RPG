@@ -1,15 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://dyj2cjowbhbcb"]
+[gd_scene load_steps=6 format=3 uid="uid://dyj2cjowbhbcb"]
 
 [ext_resource type="PackedScene" uid="uid://co588ibgypwgp" path="res://Nodes/Characters/basic_enemy.tscn" id="1_7m0ax"]
-[ext_resource type="Resource" uid="uid://b5dyfe1r6xo2o" path="res://Resources/Custom/Movement/Basic-Enemies/red_guy.tres" id="2_u1dtl"]
+[ext_resource type="Resource" uid="uid://b5dyfe1r6xo2o" path="res://Resources/Custom/Movement/Basic-Enemies/red_guy.tres" id="2_rcwg2"]
 [ext_resource type="Texture2D" uid="uid://dmhu0fy2g5r5i" path="res://Visuals/Sprites/Characters/Enemy_Dummy.png" id="4_mhbcd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0fqak"]
+size = Vector2(17, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_if00v"]
+size = Vector2(25, 35)
 
 [node name="Red-Guy" instance=ExtResource("1_7m0ax")]
 rotation = 6.68874e-05
-movementData = ExtResource("2_u1dtl")
+movementData = ExtResource("2_rcwg2")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("4_mhbcd")
 
+[node name="CollisionShape2D" parent="." index="2"]
+visible = false
+position = Vector2(-0.500067, -1)
+shape = SubResource("RectangleShape2D_0fqak")
+debug_color = Color(0.980392, 0, 0.364706, 0.419608)
+
 [node name="Character-Data" parent="." index="6"]
 dataPath = "res://Resources/Character-Data/Enemies/red-guy.json"
+
+[node name="Shape" parent="Agro-Area" index="0"]
+position = Vector2(-0.000133775, -2)
+
+[node name="Combat-Range" parent="." index="8"]
+visible = false
+
+[node name="CollisionShape2D" parent="Combat-Range" index="0"]
+shape = SubResource("RectangleShape2D_if00v")
+debug_color = Color(0.698039, 0.341176, 0.894118, 0.419608)

@@ -20,3 +20,6 @@ position = Vector2(-125, 2.08165e-12)
 
 [node name="Red-Guy" parent="." instance=ExtResource("5_vsppj")]
 position = Vector2(2.08165e-12, -130)
+
+[node name="Red-Guy2" parent="." instance=ExtResource("5_vsppj")]
+position = Vector2(-132, -123)

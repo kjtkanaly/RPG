@@ -13,6 +13,7 @@ public partial class Run : CharacterBodyState
     // Private
     [Export] private State idleState;
     [Export] private State interactState;
+    [Export] private State battleQueueState;
     private Vector2 direction;
 
     //-------------------------------------------------------------------------
@@ -21,7 +22,12 @@ public partial class Run : CharacterBodyState
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    override public State ProcessGeneral(float delta) {      
+    override public State ProcessGeneral(float delta) {    
+        // Check if a basic enemy has entered the combat zone
+        if (IsGroupMemeberInComabatRange("Basic-Enemy")) {
+            return battleQueueState;
+        }
+
         // Check if the character is trying to interact
         if (IsInteracting() && characterDirector.CanInteract()) {
             return interactState;

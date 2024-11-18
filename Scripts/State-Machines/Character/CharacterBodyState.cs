@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class CharacterBodyState : State
 {
@@ -56,6 +57,25 @@ public partial class CharacterBodyState : State
         }
 
         return true;
+    }
+
+    protected bool IsGroupMemeberInComabatRange(string groupName) 
+    {
+        // Safety check if no combat range
+        if (characterDirector.GetCombatArea() == null) {
+            return false;
+        }
+        
+        Array<Node2D> bodies = 
+            characterDirector.GetCombatArea().GetOverlappingBodies();
+
+        for (int i = 0; i < bodies.Count; i++) {
+            if (bodies[i].IsInGroup(groupName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Private

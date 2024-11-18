@@ -18,8 +18,9 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected Timer interactionDelayTimer;
     [Export] protected Inventory inventory;
     [Export] protected Area2D agroArea;
-    [Export] protected Area2D fightArea;
+    [Export] protected Area2D combatArea;
     [Export] protected CharacterBodyState coolDownState;
+    [Export] protected CharacterBodyState agroState;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -32,9 +33,8 @@ public partial class CharacterDirector : CharacterBody2D
         Init();
     }
 
-    public void Init() {
+    virtual public void Init() {
         // Get the global player stats object
-        playerStats = GetNode<PlayerStats>("/root/PlayerStats");
         main = GetNode<Main>("/root/Main");
 
         // Initialize the movement State Machine
@@ -63,55 +63,27 @@ public partial class CharacterDirector : CharacterBody2D
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public MovementData GetMovementData() 
-    {
-        return movementData;
-    }
+    public MovementData GetMovementData() { return movementData; }
 
-    public CharacterData GetCharacterData()
-    {
-        return characterData;
-    }
+    public CharacterData GetCharacterData() { return characterData; }
 
-    public AnimationPlayer GetAnimationPlayer() 
-    {
-        return animationPlayer;
-    }
+    public AnimationPlayer GetAnimationPlayer() { return animationPlayer; }
 
-    public AudioStreamPlayer GetAudioPlayer()
-    {
-        return audioPlayer;
-    }
+    public AudioStreamPlayer GetAudioPlayer() { return audioPlayer; }
 
-    public Main GetMain()
-    {
-        return main;
-    }
+    public Main GetMain() { return main; }
 
-    public Sprite2D GetSprite() 
-    {
-        return sprite;
-    }
+    public Sprite2D GetSprite() { return sprite; }
 
-    public RayCast2D GetInteractRay()
-    {
-        return interactRay;
-    }
+    public RayCast2D GetInteractRay() { return interactRay; }
 
-    public Inventory GetInventory()
-    {
-        return inventory;
-    }
+    public Inventory GetInventory() { return inventory; }
 
-    public Area2D GetAgroArea() 
-    {
-        return agroArea;    
-    }
+    public Area2D GetAgroArea() { return agroArea; }
 
-    public Area2D GetFightArea() 
-    {
-        return fightArea;
-    }
+    public Area2D GetCombatArea() { return combatArea; }
+
+    public State GetCurrentState() { return movementSM.GetCurrentState(); }
 
     public void StartInteractionDelayTimer()
     {
@@ -133,14 +105,19 @@ public partial class CharacterDirector : CharacterBody2D
         movementSM.SetCurrentState(coolDownState);
     }
 
-    public State GetCurrentState() 
+    public void SwitchCurrentStateToAgro()
     {
-        return movementSM.GetCurrentState();
+        movementSM.SetCurrentState(agroState);
     }
 
     public void UpdateCharacterData(CharacterData inData) 
     {
         characterData.UpdateCharacterData(inData);
+    }
+
+    public bool IsWaitingForBattle() 
+    {
+        return movementSM.GetCurrentState().Name == "Battle-Waiting";
     }
 
     // Protected

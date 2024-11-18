@@ -11,6 +11,7 @@ public partial class Agro : CharacterBodyState
 
     // Private
     [Export] private State searchState;
+    [Export] private State battleWaitingState;
     private CharacterDirector player;
     private bool battleBegins = false;
 
@@ -31,15 +32,9 @@ public partial class Agro : CharacterBodyState
 
     public override State ProcessPhysics(float delta)
     {
-        if (IsPlayerInFightRange()) {
-            // Switch the Enemy's Current State to Cool Down
-            characterDirector.SwitchCurrentStateToCoolDown();
-
-            // 
-            GD.Print($"Enemy State @Agro: {characterDirector.GetCurrentState().Name}");
-
-            // Begin fight
-            EnemyBeginsBattle();
+        // If the Basic Enemy has reached the player switch battle waiting
+        if (IsGroupMemeberInComabatRange("Player")) {
+            return battleWaitingState;
         }
 
         // TODO: If the player has escaped
@@ -56,20 +51,6 @@ public partial class Agro : CharacterBodyState
     // Protected
 
     // Private
-    private bool IsPlayerInFightRange() 
-    {
-        Godot.Collections.Array<Godot.Node2D> bodies = 
-            characterDirector.GetFightArea().GetOverlappingBodies();
-
-        foreach (Node2D node in bodies) {
-            if (node.IsInGroup("Player")) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void UpdateVelocityTowardsPlayer()
     {
         Vector2 direction = (player.Position - characterDirector.Position).Normalized();
@@ -79,27 +60,27 @@ public partial class Agro : CharacterBodyState
             * characterDirector.GetMovementData().speed;
     }
 
-    private async void EnemyBeginsBattle() 
-    {
-        // Create the Text Box Data Object
-        TextBox.TextBoxData data = new TextBox.TextBoxData(
-            TextBox.TEXT_BOX_TYPE.item,
-            characterDirector.GetCharacterData().GetDialogByKey("Fight"),
-            characterDirector.GetCharacterData().GetPortrait());
+    // private async void EnemyBeginsBattle() 
+    // {
+    //     // Create the Text Box Data Object
+    //     TextBox.TextBoxData data = new TextBox.TextBoxData(
+    //         TextBox.TEXT_BOX_TYPE.item,
+    //         characterDirector.GetCharacterData().GetDialogByKey("Fight"),
+    //         characterDirector.GetCharacterData().GetPortrait());
 
-        characterDirector.GetMain().GetMainUI().DispalyTextBox(data);
+    //     characterDirector.GetMain().GetMainUI().DispalyTextBox(data);
         
-        // Wait for the Dialogue to be done
-        await ToSignal(characterDirector.GetMain().GetMainUI(), MainUI.SignalName.DialogueOver);
+    //     // Wait for the Dialogue to be done
+    //     await ToSignal(characterDirector.GetMain().GetMainUI(), MainUI.SignalName.DialogueOver);
 
-        GD.Print("Begin battle");
+    //     GD.Print("Begin battle");
 
-        // Switch to battle scene
-        main.BeginBattle(
-            new CharacterData[] {player.GetCharacterData()}, 
-            new CharacterData[] {characterDirector.GetCharacterData()},
-            characterDirector);
-    }
+    //     // Switch to battle scene
+    //     main.BeginBattle(
+    //         new CharacterData[] {player.GetCharacterData()}, 
+    //         new CharacterData[] {characterDirector.GetCharacterData()},
+    //         characterDirector);
+    // }
 
     //-------------------------------------------------------------------------
     // Debug Methods

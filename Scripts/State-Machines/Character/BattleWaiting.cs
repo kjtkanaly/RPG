@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public partial class <ExampleClassName> : <ExampleClassInheritance>
+public partial class BattleWaiting : CharacterBodyState
 {
     //-------------------------------------------------------------------------
     // Game Componenets

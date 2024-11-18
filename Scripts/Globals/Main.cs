@@ -1,7 +1,6 @@
 using Godot;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Godot.Collections;
 
 public partial class Main : Node
 {
@@ -74,32 +73,34 @@ public partial class Main : Node
     }
 
     public void BeginBattle(
-        CharacterData[] inPlayerTeam, 
-        CharacterData[] inEnemyTeam,
-        CharacterDirector inEnemyDirector) 
+        Array<String> inPlayerTeam, 
+        Array<String> inEnemyTeam,
+        Array<CharacterDirector> inEnemyDirectors) 
     {
         // Set the enemy instance invisible
-        Color colour = inEnemyDirector.Modulate;
-        colour.A = 0;
-        inEnemyDirector.Modulate = colour;
+        for (int i = 0; i < inEnemyDirectors.Count; i++) {
+            Color colour = inEnemyDirectors[i].Modulate;
+            colour.A = 0;
+            inEnemyDirectors[i].Modulate = colour;
+        }
 
         // Log current scene
         previousScene = new PackedScene();
         previousScene.Pack(GetTree().CurrentScene);
 
-        // Queue the battle info
+        // // Queue the battle info
         battleQueue.QueueBattle(
             inPlayerTeam, 
             inEnemyTeam, 
-            inEnemyDirector.GetPath());
+            inEnemyDirectors);
 
         // Begin the battle scene
         GetTree().ChangeSceneToPacked(battleScene);
     }
 
     public async void EndBattle (
-        List<CharacterData> inPlayerTeam, 
-        List<CharacterData> inEnemyTeam)
+        Array<CharacterData> inPlayerTeam, 
+        Array<CharacterData> inEnemyTeam)
     {
         // If the previous scene is null then crash tbh
         if (previousScene == null) {
@@ -138,28 +139,31 @@ public partial class Main : Node
     // Protected
 
     // Private
-    private void PostBattleEnemyEvents(List<CharacterData> inEnemyTeam)
+    private void PostBattleEnemyEvents(Array<CharacterData> inEnemyTeam)
     {
         // Get the Enemy Node
-        CharacterDirector enemyNode = 
-            (CharacterDirector) GetNode(battleQueue.GetEnemyInstanceNodePath());
+        Array<CharacterDirector> enemyNodes = new Array<CharacterDirector>();
+        for (int i = 0; i < battleQueue.GetEnemyNodePaths().Count; i++) {
+            CharacterDirector enemyNode = 
+                (CharacterDirector) GetNode(battleQueue.GetEnemyNodePaths()[i]);
+            
+            // Switch the enemy to a cool down state
+            enemyNode.SwitchCurrentStateToCoolDown();
 
-        // Switch the enemy to a cool down state
-        enemyNode.SwitchCurrentStateToCoolDown();
-
-        // If the player won, then get rid of the enemy instance
-        if (inEnemyTeam[0].GetHealthByKey("Current") <= 0) {
-            enemyNode.QueueFree();
-        }
-        // Set the enemy instance visible and set to cooldown
-        else {
-            Color colour = enemyNode.Modulate;
-            colour.A = 1;
-            enemyNode.Modulate = colour;
+            // If the player won, then get rid of the enemy instance
+            if (inEnemyTeam[0].GetHealthByKey("Current") <= 0) {
+                enemyNode.QueueFree();
+            }
+            // Set the enemy instance visible and set to cooldown
+            else {
+                Color colour = enemyNode.Modulate;
+                colour.A = 1;
+                enemyNode.Modulate = colour;
+            }
         }
     }
 
-    private void PostBattlePlayerTeamEvents(List<CharacterData> inPlayerTeam)
+    private void PostBattlePlayerTeamEvents(Array<CharacterData> inPlayerTeam)
     {
         // Get the Player Team's Nodes
         Godot.Collections.Array<Godot.Node> playerTeamNodes = 

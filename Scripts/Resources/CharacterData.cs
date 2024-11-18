@@ -21,16 +21,16 @@ public partial class CharacterData : Node
     // Game Events
     public override void _Ready()
     {
-        Init();
+        Init(dataPath);
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public void Init()
+    public void Init(String inDataPath)
     {
         // Load in Character Data File
-        LoadData();
+        LoadData(inDataPath);
 
         // Load the texture 2D
         portrait = (Texture2D) GD.Load(GetPortraitPath());
@@ -39,6 +39,8 @@ public partial class CharacterData : Node
         // Reset the initiative value
         initiativeValue = -1;
     }
+
+    public string GetDataPath() { return dataPath; }
 
     public Dictionary GetData() {return data;}
 
@@ -122,11 +124,11 @@ public partial class CharacterData : Node
         }
     }
 
-    private void LoadData() 
+    private void LoadData(String inDataPath) 
     {
         // Error Check - If the path doesn't exist
-        if (!Godot.FileAccess.FileExists(dataPath)) {
-            string ErrorMsg = "Unknown Character Data Path" + dataPath;
+        if (!Godot.FileAccess.FileExists(inDataPath)) {
+            string ErrorMsg = $"Unknown Character Data Path '{inDataPath}'";
             GD.PushError(ErrorMsg);
         }
 
@@ -134,7 +136,7 @@ public partial class CharacterData : Node
         string rawData;
 
         // Read in the raw data string
-        rawData = Godot.FileAccess.GetFileAsString(dataPath);
+        rawData = Godot.FileAccess.GetFileAsString(inDataPath);
 
         // Parse the data
         Json jsonLoader = new Json();

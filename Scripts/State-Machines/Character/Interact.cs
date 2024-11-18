@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class Interact : CharacterBodyState
 {
@@ -121,14 +122,14 @@ public partial class Interact : CharacterBodyState
         // Start the character's interaction delay timer
         characterDirector.StartInteractionDelayTimer();
 
-        // If Enemy then start battle sequence
-        if (npc.IsInGroup("Enemy")) {
-            // Switch to battle scene
-            main.BeginBattle(
-                new CharacterData[] {characterDirector.GetCharacterData()}, 
-                new CharacterData[] {npc.GetCharacterData()},
-                npc);
-        }
+        // // If Enemy then start battle sequence
+        // if (npc.IsInGroup("Enemy")) {
+        //     // Switch to battle scene
+        //     main.BeginBattle(
+        //         new CharacterData[] {characterDirector.GetCharacterData()}, 
+        //         new CharacterData[] {npc.GetCharacterData()},
+        //         new Array<CharacterDirector> {npc});
+        // }
     }
 
     //-------------------------------------------------------------------------

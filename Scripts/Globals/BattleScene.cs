@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using System.Collections.Generic;
+using Godot.Collections;
 
 public partial class BattleScene : Node2D
 {
@@ -24,9 +24,9 @@ public partial class BattleScene : Node2D
     [Export] private BattleSceneUI battleUI;
     [Export] private BattleStateMachine stateMachine;
     [Export] private BattleSceneCharacter[] enemyTeamSceneNodes;
-    private List<CharacterData> playerTeam = new List<CharacterData>();
-    private List<CharacterData> enemyTeam = new List<CharacterData>();
-    private List<CharacterData> battleOrder = new List<CharacterData>();
+    private Array<CharacterData> playerTeam = new Array<CharacterData>();
+    private Array<CharacterData> enemyTeam = new Array<CharacterData>();
+    private Array<CharacterData> battleOrder = new Array<CharacterData>();
     private int currentBattleOrderIndex = 0;
 
     //-------------------------------------------------------------------------
@@ -146,20 +146,22 @@ public partial class BattleScene : Node2D
 
     // Private
     private void SetTeamInfo(
-        List<CharacterData> teamInfo,
-        List<CharacterData> inTeamInfo) 
+        Array<CharacterData> teamInfo,
+        Array<String> inTeamInfo) 
     {
         // Clear the old teamInfo
         teamInfo.Clear();
 
         // Copy over the data
-        foreach (CharacterData data in inTeamInfo) {
+        for (int i = 0; i < inTeamInfo.Count; i++) {
+            CharacterData data = new CharacterData();
+            data.Init(inTeamInfo[i]);
             teamInfo.Add(data);
         }
     }
 
     private void SetTeamSprites(
-        List<CharacterData> teamData, 
+        Array<CharacterData> teamData, 
         BattleSceneCharacter[] teamSprites)
     {
         for (int i = 0; i < teamData.Count; i++) {
@@ -169,7 +171,7 @@ public partial class BattleScene : Node2D
 
     private void SetBattleOrder() 
     {
-        // Init the battle order list
+        // Init the battle order Array
         battleOrder.Clear();
 
         AddTeamToBattleOrder(playerTeam);
@@ -182,7 +184,7 @@ public partial class BattleScene : Node2D
         }
     }
 
-    private void AddTeamToBattleOrder(List<CharacterData> teamData)
+    private void AddTeamToBattleOrder(Array<CharacterData> teamData)
     {
         // Loop over the player team
         for (int i = 0; i < teamData.Count; i++) {

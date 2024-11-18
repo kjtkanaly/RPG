@@ -1,20 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://co588ibgypwgp"]
+[gd_scene load_steps=7 format=3 uid="uid://co588ibgypwgp"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_n7ywj"]
 [ext_resource type="PackedScene" uid="uid://d0f8hnmpva1fp" path="res://Nodes/State-Machine/Character/search.tscn" id="2_fwt0y"]
 [ext_resource type="PackedScene" uid="uid://cpqqyx1xmiw0c" path="res://Nodes/State-Machine/Character/agro.tscn" id="3_hqgbs"]
 [ext_resource type="PackedScene" uid="uid://ln0hkl43kjgb" path="res://Nodes/State-Machine/Character/cool_down.tscn" id="4_3qy37"]
+[ext_resource type="PackedScene" uid="uid://dec07hmdwgcwv" path="res://Nodes/State-Machine/Character/battle_waiting.tscn" id="5_3xmr7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_srxlb"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_rhspy"]
 radius = 100.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_wehss"]
-radius = 25.0
-
-[node name="Basic-Enemy" node_paths=PackedStringArray("agroArea", "fightArea", "coolDownState") instance=ExtResource("1_n7ywj")]
-agroArea = NodePath("Agro-Area")
-fightArea = NodePath("Fight-Area")
+[node name="Basic-Enemy" node_paths=PackedStringArray("coolDownState", "agroState") groups=["Basic-Enemy", "Enemy"] instance=ExtResource("1_n7ywj")]
 coolDownState = NodePath("State-Machine/Cool-Down")
+agroState = NodePath("State-Machine/Agro")
 
 [node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
 startingState = NodePath("Search")
@@ -22,19 +19,17 @@ startingState = NodePath("Search")
 [node name="Search" parent="State-Machine" index="0" node_paths=PackedStringArray("agroState") instance=ExtResource("2_fwt0y")]
 agroState = NodePath("../Agro")
 
-[node name="Agro" parent="State-Machine" index="1" node_paths=PackedStringArray("searchState") instance=ExtResource("3_hqgbs")]
+[node name="Agro" parent="State-Machine" index="1" node_paths=PackedStringArray("searchState", "battleWaitingState") instance=ExtResource("3_hqgbs")]
 searchState = NodePath("../Search")
+battleWaitingState = NodePath("../Battle-Waiting")
 
 [node name="Cool-Down" parent="State-Machine" index="2" node_paths=PackedStringArray("searchState") instance=ExtResource("4_3qy37")]
 searchState = NodePath("../Search")
 
-[node name="Agro-Area" type="Area2D" parent="." index="6"]
+[node name="Battle-Waiting" parent="State-Machine" index="3" instance=ExtResource("5_3xmr7")]
 
-[node name="Shape" type="CollisionShape2D" parent="Agro-Area" index="0"]
-shape = SubResource("CircleShape2D_srxlb")
+[node name="Agro-Area" parent="." index="7"]
+visible = false
 
-[node name="Fight-Area" type="Area2D" parent="." index="7"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Fight-Area" index="0"]
-shape = SubResource("CircleShape2D_wehss")
-debug_color = Color(0.905882, 0.117647, 0.678431, 0.419608)
+[node name="Shape" parent="Agro-Area" index="0"]
+shape = SubResource("CircleShape2D_rhspy")

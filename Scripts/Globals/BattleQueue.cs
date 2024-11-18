@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using System.Collections.Generic;
+using Godot.Collections;
 
 public partial class BattleQueue : Node
 {
@@ -11,52 +11,53 @@ public partial class BattleQueue : Node
     // Protected
 
     // Private
-    private List<CharacterData> playerTeam;
-    private List<CharacterData> enemyTeam;
-    private String enemyInstanceNodePath;
+    private Array<String> playerTeamDataPaths = new Array<string>();
+    private Array<String> enemyTeamDataPaths = new Array<string>();
+    private Array<String> enemyInstanceNodePath = new Array<string>();
 
     //-------------------------------------------------------------------------
     // Game Events
     public override void _Ready()
     {
-        playerTeam = new List<CharacterData>();
-        enemyTeam = new List<CharacterData>();
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
     public void QueueBattle(
-        CharacterData[] inPlayerTeam,
-        CharacterData[] inEnemyTeam,
-        String inEnemyInstanceNodePath) 
+        Array<String> inPlayerTeam,
+        Array<String> inEnemyTeam,
+        Array<CharacterDirector> inEnemyDirectors) 
     {
         // Clear out the old teams worth of data
-        playerTeam.Clear();
-        enemyTeam.Clear();
+        playerTeamDataPaths.Clear();
+        enemyTeamDataPaths.Clear();
+        enemyInstanceNodePath.Clear();
 
-        foreach (CharacterData data in inPlayerTeam) {
-            playerTeam.Add(data);
+        for (int i = 0; i < inPlayerTeam.Count; i++) {
+            playerTeamDataPaths.Add(inPlayerTeam[i]);
         }
 
-        foreach (CharacterData data in inEnemyTeam) {
-            enemyTeam.Add(data);
+        for (int i = 0; i < inEnemyTeam.Count; i++) {
+            enemyTeamDataPaths.Add(inEnemyTeam[i]);
         }
 
-        enemyInstanceNodePath = inEnemyInstanceNodePath;
+        for (int i = 0; i < inEnemyDirectors.Count; i++) {
+            enemyInstanceNodePath.Add(inEnemyDirectors[i].GetPath());
+        }
     }
 
-    public List<CharacterData> GetPlayerTeam()
+    public Array<String> GetPlayerTeam()
     {
-        return playerTeam;
+        return playerTeamDataPaths;
     }
 
-    public List<CharacterData> GetEnemyTeam()
+    public Array<String> GetEnemyTeam()
     {
-        return enemyTeam;
+        return enemyTeamDataPaths;
     }
 
-    public String GetEnemyInstanceNodePath()
+    public Array<String> GetEnemyNodePaths()
     {
         return enemyInstanceNodePath;
     }

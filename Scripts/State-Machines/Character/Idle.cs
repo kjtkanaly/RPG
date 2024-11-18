@@ -12,6 +12,7 @@ public partial class Idle : CharacterBodyState
     // Private
     [Export] private State runState;
     [Export] private State interactState;
+    [Export] private State battleQueueState;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -27,6 +28,11 @@ public partial class Idle : CharacterBodyState
     }
 
     override public State ProcessGeneral(float delta) {
+        // Check if a basic enemy has entered the combat zone
+        if (IsGroupMemeberInComabatRange("Basic-Enemy")) {
+            return battleQueueState;
+        }
+
         // Check if the run state is triggered
         if (IsMoving()) {
             return runState;
