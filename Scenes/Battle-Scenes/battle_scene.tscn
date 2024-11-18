@@ -19,6 +19,7 @@ stateMachine = NodePath("Battle-State-Machine")
 enemyTeamSceneNodes = [NodePath("Enemy-Team/One"), NodePath("Enemy-Team/Two"), NodePath("Enemy-Team/Three")]
 
 [node name="Battle-Scene-UI" parent="." instance=ExtResource("2_xg13y")]
+layer = -10
 
 [node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
 startingState = NodePath("Battle-Intro")

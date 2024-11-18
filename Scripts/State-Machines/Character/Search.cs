@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class Search : CharacterBodyState
 {
@@ -102,7 +103,7 @@ public partial class Search : CharacterBodyState
     private bool IsPlayerInAgroRange() 
     {
         // Get the objects in the area 2D
-        Godot.Collections.Array<Godot.Node2D> bodies = 
+        Array<Godot.Node2D> bodies = 
             characterDirector.GetAgroArea().GetOverlappingBodies();
 
         foreach(Node2D node in bodies) {
