@@ -19,6 +19,7 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected Inventory inventory;
     [Export] protected Area2D agroArea;
     [Export] protected Area2D combatArea;
+    [Export] protected CharacterBodyState idleState;
     [Export] protected CharacterBodyState coolDownState;
     [Export] protected CharacterBodyState agroState;
     protected PlayerStats playerStats;
@@ -98,6 +99,11 @@ public partial class CharacterDirector : CharacterBody2D
         else {
             return true;
         }
+    }
+
+    public void SwitchCurrentStateToIdle()
+    {
+        movementSM.SetCurrentState(idleState);
     }
 
     public void SwitchCurrentStateToCoolDown() 

@@ -70,9 +70,17 @@ public partial class CharacterBodyState : State
             characterDirector.GetCombatArea().GetOverlappingBodies();
 
         for (int i = 0; i < bodies.Count; i++) {
-            if (bodies[i].IsInGroup(groupName)) {
-                return true;
+            // Check if the body is in the correct group
+            if (!bodies[i].IsInGroup(groupName)) {
+                continue;
             }
+
+            // Make sure the body isn't in cool down
+            if (((CharacterDirector) bodies[i]).GetCurrentState().Name == "Cool-Down") {
+                continue;
+            }
+
+            return true;
         }
 
         return false;

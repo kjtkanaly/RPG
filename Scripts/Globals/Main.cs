@@ -141,8 +141,6 @@ public partial class Main : Node
     // Private
     private void PostBattleEnemyEvents(Array<CharacterData> inEnemyTeam)
     {
-        // Get the Enemy Node
-        Array<CharacterDirector> enemyNodes = new Array<CharacterDirector>();
         for (int i = 0; i < battleQueue.GetEnemyNodePaths().Count; i++) {
             CharacterDirector enemyNode = 
                 (CharacterDirector) GetNode(battleQueue.GetEnemyNodePaths()[i]);
@@ -166,7 +164,7 @@ public partial class Main : Node
     private void PostBattlePlayerTeamEvents(Array<CharacterData> inPlayerTeam)
     {
         // Get the Player Team's Nodes
-        Godot.Collections.Array<Godot.Node> playerTeamNodes = 
+        Array<Node> playerTeamNodes = 
             GetTree().GetNodesInGroup("Player-Team");
 
         // Cycle through the Player's Team and Update their Data
@@ -174,6 +172,8 @@ public partial class Main : Node
             // Conver the player team member node to character director
             CharacterDirector playerTeamMember = 
                 (CharacterDirector) playerTeamNodes[i];
+
+            playerTeamMember.SwitchCurrentStateToIdle();
 
             // Cycle through the List of Input Player Team Data and find one that matches the current member
             for (int j = 0; j < inPlayerTeam.Count; j++) {
