@@ -34,6 +34,16 @@ public partial class PlayerAttackSequence : AttackSequence
         return battleScene.GetEnemyNodeAtIndex(defenderIndex);
     }
 
+    public override bool AllDefendersAreDead() 
+    {
+        for (int i = 0; i < battleScene.GetEnemyTeamData().Count; i++) {
+            if (battleScene.GetEnemyTeamData()[i].GetHealthByKey("Current") > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Protected
     protected override BattleState DefenderDead() 
     {

@@ -61,7 +61,7 @@ public partial class AttackSequence : BattleState
         }
 
         // If the defender is dead
-        if (defenderData.GetHealthByKey("Current") <= 0) {
+        if (AllDefendersAreDead()) {
             return DefenderDead();
         }
 
@@ -84,6 +84,8 @@ public partial class AttackSequence : BattleState
 
     public void SetAttackerIndex(int inIndex) { attackerIndex = inIndex; }
     public void SetDefenderIndex(int inIndex) { defenderIndex = inIndex; }
+
+    public virtual bool AllDefendersAreDead() { return false; }
 
     // Protected
     protected virtual BattleState DefenderDead() {return null;}

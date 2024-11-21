@@ -85,10 +85,14 @@ public partial class BattleScene : Node2D
         return playerTeam[index];
     }
 
+    public Array<CharacterData> GetPlayerTeamData() { return playerTeam; }
+
     public CharacterData GetEnemyTeamDataAtIndex(int index)
     {
         return enemyTeam[index];
     }
+
+    public Array<CharacterData> GetEnemyTeamData() { return enemyTeam; }
 
     public BattleSceneUI GetBattleUI() 
     {
@@ -147,16 +151,14 @@ public partial class BattleScene : Node2D
     // Private
     private void SetTeamInfo(
         Array<CharacterData> teamInfo,
-        Array<String> inTeamInfo) 
+        Array<CharacterData> inTeamInfo) 
     {
         // Clear the old teamInfo
         teamInfo.Clear();
 
         // Copy over the data
         for (int i = 0; i < inTeamInfo.Count; i++) {
-            CharacterData data = new CharacterData();
-            data.Init(inTeamInfo[i]);
-            teamInfo.Add(data);
+            teamInfo.Add(inTeamInfo[i]);
         }
     }
 

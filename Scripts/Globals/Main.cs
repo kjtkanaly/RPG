@@ -73,8 +73,8 @@ public partial class Main : Node
     }
 
     public void BeginBattle(
-        Array<String> inPlayerTeam, 
-        Array<String> inEnemyTeam,
+        Array<CharacterData> inPlayerTeam, 
+        Array<CharacterData> inEnemyTeam,
         Array<CharacterDirector> inEnemyDirectors) 
     {
         // Set the enemy instance invisible
@@ -177,6 +177,8 @@ public partial class Main : Node
 
             // Cycle through the List of Input Player Team Data and find one that matches the current member
             for (int j = 0; j < inPlayerTeam.Count; j++) {
+
+                GD.Print($"{inPlayerTeam[j].GetName()}: {inPlayerTeam[j].GetHealthByKey("Current")}");
                 if (playerTeamMember.GetCharacterData().GetName() 
                     != inPlayerTeam[j].GetName()) {
                     continue;

@@ -10,8 +10,8 @@
     },
     "Level": 1,
     "Health": {
-        "Max": 120,
-        "Current": 120
+        "Max": 12,
+        "Current": 12
     },
     "Inventory-Size": 1,
     "Damage-Range": {

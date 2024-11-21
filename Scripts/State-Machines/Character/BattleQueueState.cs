@@ -101,21 +101,21 @@ public partial class BattleQueueState : CharacterBodyState
 
         // Pass in Arrays with the character data path's for player and team
         // Pass in the node path's for the enemy team
-        Array<String> playerTeamDataPaths = new Array<string>();
-        Array<String> enemyTeamDataPaths = new Array<string>();
 
         // Get the Player Team info
-        playerTeamDataPaths.Add(characterDirector.GetCharacterData().GetDataPath());
+        Array<CharacterData> playerTeamCopy = new Array<CharacterData>();
+        playerTeamCopy.Add(characterDirector.GetCharacterData().CopyData());
 
         // Get the Enemy Team info
+        Array<CharacterData> queuedEnemiesCopy = new Array<CharacterData>();
         for (int i = 0; i < queuedEnemies.Count; i++) {
-            enemyTeamDataPaths.Add(queuedEnemies[i].GetCharacterData().GetDataPath());
+            queuedEnemiesCopy.Add(queuedEnemies[i].GetCharacterData().CopyData());
         }
 
         // Switch to battle scene
         main.BeginBattle(
-            playerTeamDataPaths,
-            enemyTeamDataPaths,
+            playerTeamCopy,
+            queuedEnemiesCopy,
             queuedEnemies);
     }
 

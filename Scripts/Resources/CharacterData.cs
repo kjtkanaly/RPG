@@ -150,6 +150,15 @@ public partial class CharacterData : Node
         // Convert the JSON data to a Godot Dictionary Object
         data = (Dictionary) jsonLoader.Data;
     }
+    
+    public CharacterData CopyData() 
+    {
+        CharacterData copy = new CharacterData();
+        copy.Init(dataPath);
+        copy.UpdateCharacterData(this);
+
+        return copy;
+    }
 
     //-------------------------------------------------------------------------
     // Debug Methods

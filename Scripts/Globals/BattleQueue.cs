@@ -11,8 +11,8 @@ public partial class BattleQueue : Node
     // Protected
 
     // Private
-    private Array<String> playerTeamDataPaths = new Array<string>();
-    private Array<String> enemyTeamDataPaths = new Array<string>();
+    private Array<CharacterData> playerTeamDataPaths = new Array<CharacterData>();
+    private Array<CharacterData> enemyTeamDataPaths = new Array<CharacterData>();
     private Array<String> enemyInstanceNodePath = new Array<string>();
 
     //-------------------------------------------------------------------------
@@ -25,8 +25,8 @@ public partial class BattleQueue : Node
     // Methods
     // Public
     public void QueueBattle(
-        Array<String> inPlayerTeam,
-        Array<String> inEnemyTeam,
+        Array<CharacterData> inPlayerTeam,
+        Array<CharacterData> inEnemyTeam,
         Array<CharacterDirector> inEnemyDirectors) 
     {
         // Clear out the old teams worth of data
@@ -47,12 +47,12 @@ public partial class BattleQueue : Node
         }
     }
 
-    public Array<String> GetPlayerTeam()
+    public Array<CharacterData> GetPlayerTeam()
     {
         return playerTeamDataPaths;
     }
 
-    public Array<String> GetEnemyTeam()
+    public Array<CharacterData> GetEnemyTeam()
     {
         return enemyTeamDataPaths;
     }
