@@ -30,6 +30,13 @@ public partial class EnemyTeamTurn : BattleState
         if (!choiceMade) {
             return null;
         }
+
+        // If the enemy team member is dead
+        GD.Print($"Checking Enemy Memeber's Health: {battleScene.GetCurrentCharacterInBattleOrder().GetHealthByKey("Current")}");
+        if (battleScene.GetCurrentCharacterInBattleOrder().GetHealthByKey("Current") <= 0) {
+            BattleState nextState = GetNextTeamTurn();
+            return nextState;
+        }
         
         // Assume for now that the enemy will only attack
         // TODO: setup system and logic for enemy deciding to attack or other actions

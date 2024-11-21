@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using Godot.Collections;
 
-public partial class VictoryState : BattleState
+public partial class DefeatState : BattleState
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -19,7 +20,7 @@ public partial class VictoryState : BattleState
     // Public
     public async override void Enter()
     {
-        string[] message = {"Victory!!!"};
+        string[] message = {"Defeat..."};
 
         TextBox.TextBoxData data = new TextBox.TextBoxData(
             TextBox.TEXT_BOX_TYPE.dialogue,
@@ -30,7 +31,7 @@ public partial class VictoryState : BattleState
 
         await ToSignal(battleScene.main.GetMainUI(), MainUI.SignalName.DialogueOver);
 
-        battleScene.LeaveBattle(true);
+        battleScene.LeaveBattle(false);
     }
 
     // Protected
@@ -40,3 +41,7 @@ public partial class VictoryState : BattleState
     //-------------------------------------------------------------------------
     // Debug Methods
 }
+
+// If you want to denote an area for future devlopement mark with it
+// with a to do comment. Example,
+// TODO: Do some shit

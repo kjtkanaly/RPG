@@ -3,6 +3,12 @@ using System;
 
 public partial class ButtonGroupUI : Control
 {
+    public enum TEXT_TYPE 
+    {
+        ENABLED,
+        DISABLED
+    }
+
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public

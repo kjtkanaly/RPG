@@ -43,9 +43,20 @@ public partial class SelectEnemyBox : ButtonGroupUI
         buttons[index].Disabled = false;
     }
 
-    public void SetEnemyTextAtIndex(int index, string text) 
+    public void SetEnemySelectAtIndexAsDisabled(int index)
+    {
+        buttons[index].Disabled = true;
+    }
+
+    public void SetEnemyTextAtIndex(int index, string text, TEXT_TYPE textType) 
     {
         enemyNameLabels[index].Text = text;
+
+        if (textType == TEXT_TYPE.DISABLED) {
+            Color c = enemyNameLabels[index].Modulate;
+            c.V = 0.5f;
+            enemyNameLabels[index].Modulate = c;
+        }
     }
 
     // Protected

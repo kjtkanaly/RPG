@@ -16,8 +16,6 @@ public partial class AttackSequence : BattleState
     protected int defenderIndex = -1;
 
     // Private
-    [Export] private BattleState playerTeamTurn;
-    [Export] private BattleState enemyTeamTurn;
     private CharacterData attackerData;
     private CharacterData defenderData;
 
@@ -61,16 +59,18 @@ public partial class AttackSequence : BattleState
         }
 
         // If the defender is dead
+        if (GetDefenderData().GetHealthByKey("Current") <= 0) {
+            IndicateDefenderDead();
+        }
+
+        // If all defenders is dead
         if (AllDefendersAreDead()) {
             return DefenderDead();
         }
 
         // If attack is done but the defender isn't dead
-        else {
-            BattleState nextState = GetNextTeamTurn();
-            battleScene.StepCurrentBattleOrderIndex();
-            return nextState;
-        }
+        BattleState nextState = GetNextTeamTurn();
+        return nextState;
     }
 
     public virtual CharacterData GetAttackerData() 
@@ -85,10 +85,12 @@ public partial class AttackSequence : BattleState
     public void SetAttackerIndex(int inIndex) { attackerIndex = inIndex; }
     public void SetDefenderIndex(int inIndex) { defenderIndex = inIndex; }
 
-    public virtual bool AllDefendersAreDead() { return false; }
-
     // Protected
     protected virtual BattleState DefenderDead() {return null;}
+
+    protected virtual bool AllDefendersAreDead() { return false; }
+
+    protected virtual void IndicateDefenderDead() { }
 
     protected virtual void DisplayDamage(int damage) {}
 
@@ -114,19 +116,6 @@ public partial class AttackSequence : BattleState
         defenderData.IterateCurrentHealth(-1 * damage);
 
         GD.Print($"Dealt Damage: {damage} | Remaining Damage: {defenderData.GetHealthByKey("Current")}");
-    }
-
-    private BattleState GetNextTeamTurn() 
-    {
-        bool nextCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
-            battleScene.GetNextCharacterInBattleOrder());
-
-        if (nextCharacterIsOnPlayerTeam) {
-            return playerTeamTurn;
-        }
-        else {
-            return enemyTeamTurn;
-        }
     }
 
     //-------------------------------------------------------------------------

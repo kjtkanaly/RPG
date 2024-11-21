@@ -16,6 +16,7 @@ public partial class CharacterData : Node
     private Texture2D battleSprite;
     private Dictionary data;
     private int initiativeValue;
+    private int teamIndex;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -38,6 +39,9 @@ public partial class CharacterData : Node
 
         // Reset the initiative value
         initiativeValue = -1;
+
+        // Reset the team index
+        teamIndex = -1;
     }
 
     public string GetDataPath() { return dataPath; }
@@ -106,6 +110,10 @@ public partial class CharacterData : Node
     public int GetInitiativeValue() { return initiativeValue; }
 
     public void SetInitiative(int inVal) { initiativeValue = inVal; }
+
+    public int GetTeamIndex() { return teamIndex; }
+
+    public void SetTeamIndex(int inVal) { teamIndex = inVal; }
 
     // Protected
 

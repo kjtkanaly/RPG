@@ -28,7 +28,13 @@ public partial class EnemyAttackSequence : AttackSequence
         return battleScene.GetPlayerTeamDataAtIndex(0);
     }
 
-    public override bool AllDefendersAreDead() 
+    // Protected
+    protected override BattleState DefenderDead() 
+    {
+        return defeatState;
+    }
+
+    protected override bool AllDefendersAreDead() 
     {
         for (int i = 0; i < battleScene.GetPlayerTeamData().Count; i++) {
             if (battleScene.GetPlayerTeamData()[i].GetHealthByKey("Current") > 0) {
@@ -36,12 +42,6 @@ public partial class EnemyAttackSequence : AttackSequence
             }
         }
         return true;
-    }
-
-    // Protected
-    protected override BattleState DefenderDead() 
-    {
-        return defeatState;
     }
 
     protected override void DisplayDamage(int damage) 

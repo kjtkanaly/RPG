@@ -8,6 +8,8 @@ public partial class BattleState : Node
     // Public
 
     // Protected
+    [Export] protected BattleState playerTeamTurn;
+    [Export] protected BattleState enemyTeamTurn;
     protected BattleScene battleScene;
 
     // Private
@@ -49,6 +51,20 @@ public partial class BattleState : Node
     }
 
     // Protected
+    protected BattleState GetNextTeamTurn() 
+    {
+        bool nextCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
+            battleScene.GetNextCharacterInBattleOrder());
+
+        battleScene.StepCurrentBattleOrderIndex();
+
+        if (nextCharacterIsOnPlayerTeam) {
+            return playerTeamTurn;
+        }
+        else {
+            return enemyTeamTurn;
+        }
+    }
 
     // Private
 

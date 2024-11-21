@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://is6jq4n5825p"]
+[gd_scene load_steps=6 format=3 uid="uid://is6jq4n5825p"]
 
 [ext_resource type="Script" path="res://Scripts/Globals/Main.cs" id="1_jr0nc"]
 [ext_resource type="PackedScene" uid="uid://b6lfqmyffcmtu" path="res://Nodes/Globals/main_ui.tscn" id="2_b1dtx"]
 [ext_resource type="PackedScene" uid="uid://duqk2867wvx3j" path="res://Scenes/Battle-Scenes/battle_scene.tscn" id="2_n12jh"]
+[ext_resource type="PackedScene" uid="uid://bod2riq51dmon" path="res://Nodes/Globals/game_over_screen.tscn" id="3_7t5x6"]
 [ext_resource type="PackedScene" uid="uid://djg1p85qetfv4" path="res://Nodes/Globals/battle_queue.tscn" id="4_xie2f"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("mainUI", "battleQueue")]
@@ -11,6 +12,7 @@ script = ExtResource("1_jr0nc")
 mainUI = NodePath("Main-UI")
 battleQueue = NodePath("Battle-Queue")
 battleScene = ExtResource("2_n12jh")
+gameOverScreen = ExtResource("3_7t5x6")
 
 [node name="Main-UI" parent="." instance=ExtResource("2_b1dtx")]
 

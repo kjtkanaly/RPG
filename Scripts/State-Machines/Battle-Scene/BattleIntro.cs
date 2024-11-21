@@ -10,8 +10,6 @@ public partial class BattleIntro : BattleState
     // Protected
 
     // Private
-    [Export] private BattleState playerTurnState;
-    [Export] private BattleState enemyTurnState;
     private bool introPlaying = false;
 
     //-------------------------------------------------------------------------
@@ -63,10 +61,10 @@ public partial class BattleIntro : BattleState
             battleScene.GetCurrentCharacterInBattleOrder());
             
         if (firstCharacterIsOnPlayerTeam) {
-            return playerTurnState;
+            return playerTeamTurn;
         }
         else {
-            return enemyTurnState;
+            return enemyTeamTurn;
         }
     }
 

@@ -15,8 +15,8 @@ public partial class BattleScene : Node2D
     // Game Componenets
     // Public
     public Main main;
-    public int currentAllyIndex = 0;
-    public int currentEnemyIndex = 0;
+    public int currentPlayerTeamIndex = 0;
+    public int currentEnemyTeamIndex = 0;
 
     // Protected
 
@@ -73,11 +73,11 @@ public partial class BattleScene : Node2D
         stateMachine.Init(this);
     }
 
-    public void LeaveBattle() 
+    public void LeaveBattle(bool playerVictory) 
     {
         //TODO: Setup a system to make sure the character data has all been updated
         //      Likely need to first just verify if this done via reference
-        main.EndBattle(playerTeam, enemyTeam);
+        main.EndBattle(playerTeam, enemyTeam, playerVictory);
     }
 
     public CharacterData GetPlayerTeamDataAtIndex(int index) 
@@ -146,6 +146,28 @@ public partial class BattleScene : Node2D
         return battleOrder[nextIndex];
     }
 
+    public void UpdateEnemySelectOptions() {
+        // Update the individual Enemy Text Lines
+        for (int i = 0; i < enemyTeam.Count; i++) {
+            // If the enemy is still alive
+            if (enemyTeam[i].GetHealthByKey("Current") > 0) {
+                GetBattleUI().GetSelectEnemyBox().SetEnemyTextAtIndex(
+                    i, 
+                    enemyTeam[i].GetName(), 
+                    ButtonGroupUI.TEXT_TYPE.ENABLED);
+                GetBattleUI().GetSelectEnemyBox().SetEnemySelectAtIndexAsEnabled(i);
+            }
+            else {
+                // If the enemy is dead
+                GetBattleUI().GetSelectEnemyBox().SetEnemyTextAtIndex(
+                    i, 
+                    enemyTeam[i].GetName(), 
+                    ButtonGroupUI.TEXT_TYPE.DISABLED);
+                GetBattleUI().GetSelectEnemyBox().SetEnemySelectAtIndexAsEnabled(i);
+            }
+        }
+    }
+
     // Protected
 
     // Private
@@ -159,6 +181,7 @@ public partial class BattleScene : Node2D
         // Copy over the data
         for (int i = 0; i < inTeamInfo.Count; i++) {
             teamInfo.Add(inTeamInfo[i]);
+            teamInfo[i].SetTeamIndex(i);
         }
     }
 
@@ -251,13 +274,6 @@ public partial class BattleScene : Node2D
         }
 
         return battleOrderIndex;
-    }
-
-    private void UpdateEnemySelectOptions() {
-        for (int i = 0; i < enemyTeam.Count; i++) {
-            GetBattleUI().GetSelectEnemyBox().SetEnemyTextAtIndex(i, enemyTeam[i].GetName());
-            GetBattleUI().GetSelectEnemyBox().SetEnemySelectAtIndexAsEnabled(i);
-        }
     }
 
     //-------------------------------------------------------------------------

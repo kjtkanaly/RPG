@@ -18,6 +18,7 @@ public partial class Main : Node
     [Export] private MainUI mainUI;
     [Export] private BattleQueue battleQueue;
     [Export] private PackedScene battleScene;
+    [Export] private PackedScene gameOverScreen;
     private PackedScene previousScene;
 
     //-------------------------------------------------------------------------
@@ -98,27 +99,17 @@ public partial class Main : Node
         GetTree().ChangeSceneToPacked(battleScene);
     }
 
-    public async void EndBattle (
+    public void EndBattle (
         Array<CharacterData> inPlayerTeam, 
-        Array<CharacterData> inEnemyTeam)
+        Array<CharacterData> inEnemyTeam,
+        bool playerVictory)
     {
-        // If the previous scene is null then crash tbh
-        if (previousScene == null) {
-            GD.PushError("No previous scene loaded");
+        if (playerVictory) {
+            PlayerVictorySequence(inPlayerTeam, inEnemyTeam);
         }
-
-        // Swap back to scene prior to the battle
-        GetTree().ChangeSceneToPacked(previousScene);
-
-        // Wait for the Scene root to be loaded and then wait for it be ready
-        await ToSignal(GetTree(), SceneTree.SignalName.NodeAdded);
-        await ToSignal(GetTree().CurrentScene, Node.SignalName.Ready);
-
-        // Update the Enemy Team Objects Post Battle
-        PostBattleEnemyEvents(inEnemyTeam);
-
-        // Update the Player Team Objects Post Battle
-        PostBattlePlayerTeamEvents(inPlayerTeam);
+        else {
+            GameOverSequence();
+        }
     }
 
     public BattleQueue GetBattleQueue()
@@ -139,7 +130,31 @@ public partial class Main : Node
     // Protected
 
     // Private
-    private void PostBattleEnemyEvents(Array<CharacterData> inEnemyTeam)
+    private async void PlayerVictorySequence(
+        Array<CharacterData> inPlayerTeam,
+        Array<CharacterData> inEnemyTeam)
+    {
+        // If the previous scene is null then crash tbh
+        if (previousScene == null) {
+            GD.PushError("No previous scene loaded");
+        }
+        
+        // Swap back to scene prior to the battle
+        GetTree().ChangeSceneToPacked(previousScene);
+
+        // Wait for the Scene root to be loaded and then wait for it be ready
+        await ToSignal(GetTree(), SceneTree.SignalName.NodeAdded);
+        await ToSignal(GetTree().CurrentScene, Node.SignalName.Ready);
+
+        // Update the Enemy Team Objects Post Battle
+        EnemyEventsPostPlayerVictory(inEnemyTeam);
+
+        // Update the Player Team Objects Post Battle
+        PlayerTeamEventsPostPlayerVictory(inPlayerTeam);
+    }
+
+    private void EnemyEventsPostPlayerVictory(
+        Array<CharacterData> inEnemyTeam)
     {
         for (int i = 0; i < battleQueue.GetEnemyNodePaths().Count; i++) {
             CharacterDirector enemyNode = 
@@ -161,7 +176,8 @@ public partial class Main : Node
         }
     }
 
-    private void PostBattlePlayerTeamEvents(Array<CharacterData> inPlayerTeam)
+    private void PlayerTeamEventsPostPlayerVictory(
+        Array<CharacterData> inPlayerTeam)
     {
         // Get the Player Team's Nodes
         Array<Node> playerTeamNodes = 
@@ -187,6 +203,12 @@ public partial class Main : Node
                 playerTeamMember.UpdateCharacterData(inPlayerTeam[j]);
             }
         }
+    }
+
+    private void GameOverSequence() 
+    {
+        // Swap back to scene prior to the battle
+        GetTree().ChangeSceneToPacked(gameOverScreen);
     }
 
     //-------------------------------------------------------------------------

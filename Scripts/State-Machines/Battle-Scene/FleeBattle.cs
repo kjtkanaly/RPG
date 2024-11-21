@@ -19,7 +19,7 @@ public partial class FleeBattle : BattleState
     // Public
     public override void Enter()
     {
-        battleScene.LeaveBattle();
+        battleScene.LeaveBattle(true);
     }
 
     // Protected

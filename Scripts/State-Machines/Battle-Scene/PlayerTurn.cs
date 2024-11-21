@@ -35,6 +35,9 @@ public partial class PlayerTurn : BattleState
         battleScene.GetBattleUI().ShowMainAction();
         battleScene.GetBattleUI().ShowCharacterStats();
 
+        // Update the enemy select UI
+        battleScene.UpdateEnemySelectOptions();
+
         phase = PHASE.MAIN_ACTION;
     }
 
@@ -91,6 +94,10 @@ public partial class PlayerTurn : BattleState
     }
 
     private BattleState ProcessEnemySelect(int index) {
+        // Check if the selected enemy is still alive
+        if (battleScene.GetEnemyTeamData()[index].GetHealthByKey("Current") <= 0) {
+            return null;
+        }
         ((AttackSequence) playerAttackSequence).SetDefenderIndex(index);
         return playerAttackSequence;
     }

@@ -34,7 +34,13 @@ public partial class PlayerAttackSequence : AttackSequence
         return battleScene.GetEnemyNodeAtIndex(defenderIndex);
     }
 
-    public override bool AllDefendersAreDead() 
+    // Protected
+    protected override BattleState DefenderDead() 
+    {
+        return victoryState;
+    }
+
+    protected override bool AllDefendersAreDead() 
     {
         for (int i = 0; i < battleScene.GetEnemyTeamData().Count; i++) {
             if (battleScene.GetEnemyTeamData()[i].GetHealthByKey("Current") > 0) {
@@ -44,10 +50,11 @@ public partial class PlayerAttackSequence : AttackSequence
         return true;
     }
 
-    // Protected
-    protected override BattleState DefenderDead() 
+    protected override void IndicateDefenderDead() 
     {
-        return victoryState;
+        Color defenderColor = battleScene.GetEnemyNodeAtIndex(defenderIndex).Modulate;
+        defenderColor.V = 0.5f;
+        battleScene.GetEnemyNodeAtIndex(defenderIndex).Modulate = defenderColor;
     }
 
     protected override void DisplayDamage(int damage) 
