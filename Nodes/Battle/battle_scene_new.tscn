@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=3 uid="uid://dky8lxuytpx3g"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/BattleSceneNew.cs" id="1_upag8"]
+[ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_7w5ca"]
+[ext_resource type="Texture2D" uid="uid://n72s8f1rhkdv" path="res://Visuals/UI/Battle-Scene-UI/Enemy-Selected.png" id="2_cvasv"]
+[ext_resource type="PackedScene" uid="uid://1m2vitw5b1sp" path="res://Nodes/Battle/battle_scene_character.tscn" id="2_gpa8h"]
+[ext_resource type="Script" path="res://Scripts/Battle/TargetEnemyUI.cs" id="4_aq6ol"]
+[ext_resource type="PackedScene" uid="uid://byk6nden8shbw" path="res://Nodes/Battle/action_selection_node.tscn" id="4_x2edg"]
+[ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="7_dl12v"]
+[ext_resource type="PackedScene" uid="uid://b2tsod01peupp" path="res://Nodes/State-Machine/player_turn.tscn" id="8_kiq6o"]
+[ext_resource type="PackedScene" uid="uid://ccxw067wwb37e" path="res://Nodes/State-Machine/Battle-Scene/enemy_team_turn.tscn" id="9_qrrvt"]
+[ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="10_odc8l"]
+[ext_resource type="PackedScene" uid="uid://cvvw5b4bvc1qe" path="res://Nodes/State-Machine/Battle-Scene/enemy_attack_sequence.tscn" id="11_v5ghy"]
+[ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="12_u02q4"]
+[ext_resource type="PackedScene" uid="uid://h1xx7qe2uq43" path="res://Nodes/State-Machine/Battle-Scene/defeat_state.tscn" id="13_t2agb"]
+
+[node name="Battle-Scene-New" type="Node2D" node_paths=PackedStringArray("stateMachine", "enemyNodes", "playerNodes", "targetEnemyUI", "actionSelectionNode")]
+script = ExtResource("1_upag8")
+stateMachine = NodePath("Battle-State-Machine")
+enemyNodes = [NodePath("Enemy-Nodes/Enemy-00"), NodePath("Enemy-Nodes/Enemy-01"), NodePath("Enemy-Nodes/Enemy-02"), NodePath("Enemy-Nodes/Enemy-03")]
+playerNodes = [NodePath("Player-Nodes/Player-00"), NodePath("Player-Nodes/Player-01"), NodePath("Player-Nodes/Player-02"), NodePath("Player-Nodes/Player-03")]
+targetEnemyUI = NodePath("Camera2D/Target-Select")
+actionSelectionNode = NodePath("Camera2D/Action-Selection-Node")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Target-Select" type="Sprite2D" parent="Camera2D"]
+z_index = 2
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("2_cvasv")
+script = ExtResource("4_aq6ol")
+
+[node name="Action-Selection-Node" parent="Camera2D" instance=ExtResource("4_x2edg")]
+
+[node name="Enemy-Nodes" type="Node" parent="."]
+
+[node name="Enemy-00" parent="Enemy-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(290, -275)
+typeValue = 4
+
+[node name="Enemy-01" parent="Enemy-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(452, -215)
+typeValue = 4
+
+[node name="Enemy-02" parent="Enemy-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(639, -156)
+typeValue = 4
+
+[node name="Enemy-03" parent="Enemy-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(117, -354)
+typeValue = 4
+
+[node name="Player-Nodes" type="Node" parent="."]
+
+[node name="Player-00" parent="Player-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(-326, 118)
+
+[node name="Player-01" parent="Player-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(-149, 170)
+
+[node name="Player-02" parent="Player-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(27, 233)
+
+[node name="Player-03" parent="Player-Nodes" instance=ExtResource("2_gpa8h")]
+position = Vector2(-504, 70)
+
+[node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_7w5ca")]
+startingState = NodePath("Battle-Intro")
+
+[node name="Battle-Intro" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTeamTurn", "enemyTeamTurn") instance=ExtResource("7_dl12v")]
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Player-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("playerAttackSequence", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("8_kiq6o")]
+playerAttackSequence = NodePath("../Player-Attack-Sequence")
+playerTeamTurn = NodePath(".")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Enemy-Team-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("enemyAttackSequence", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("9_qrrvt")]
+enemyAttackSequence = NodePath("../Enemy-Attack-Sequence")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath(".")
+
+[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("10_odc8l")]
+victoryState = NodePath("../Victory-State")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Enemy-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("defeatState", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("11_v5ghy")]
+defeatState = NodePath("../Defeat-State")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Victory-State" parent="Battle-State-Machine" instance=ExtResource("12_u02q4")]
+
+[node name="Defeat-State" parent="Battle-State-Machine" instance=ExtResource("13_t2agb")]

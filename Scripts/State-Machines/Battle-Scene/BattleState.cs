@@ -10,7 +10,7 @@ public partial class BattleState : Node
     // Protected
     [Export] protected BattleState playerTeamTurn;
     [Export] protected BattleState enemyTeamTurn;
-    protected BattleScene battleScene;
+    protected BattleSceneNew battleScene;
 
     // Private
 
@@ -20,7 +20,7 @@ public partial class BattleState : Node
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public virtual void Init (BattleScene scene)
+    public virtual void Init (BattleSceneNew scene)
     {
         battleScene = scene;
     }
@@ -53,12 +53,15 @@ public partial class BattleState : Node
     // Protected
     protected BattleState GetNextTeamTurn() 
     {
-        bool nextCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
-            battleScene.GetNextCharacterInBattleOrder());
+        int nextBattleIndex = battleScene.GetCurrentBattleOrderIndex() + 1;
+        if (nextBattleIndex >= battleScene.GetBattleOrder().Count) {
+            nextBattleIndex -= battleScene.GetBattleOrder().Count;
+        }
 
-        battleScene.StepCurrentBattleOrderIndex();
+        // Increment the current battle order index
+        battleScene.SetCurrentBattleOrderIndex(nextBattleIndex);
 
-        if (nextCharacterIsOnPlayerTeam) {
+        if (battleScene.GetBattleOrder()[nextBattleIndex].IsOnPlayerTeam()) {
             return playerTeamTurn;
         }
         else {

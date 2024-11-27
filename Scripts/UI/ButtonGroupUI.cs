@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class ButtonGroupUI : Control
 {
@@ -15,7 +16,8 @@ public partial class ButtonGroupUI : Control
 
     // Protected
     [Export] protected ButtonGroup group;
-    protected Godot.Collections.Array<Godot.BaseButton> buttons;
+    protected Main main;
+    protected Array<Godot.BaseButton> buttons;
     protected int currentButtonIndex = 0;
 
     // Private
@@ -24,6 +26,9 @@ public partial class ButtonGroupUI : Control
     // Game Events
     public override void _Ready()
     {
+        // Get the global player stats object
+        main = GetNode<Main>("/root/Main");
+
         // Get the buttons in the group
         buttons = group.GetButtons();
 
@@ -65,25 +70,51 @@ public partial class ButtonGroupUI : Control
 
         currentButtonIndex = newButtonIndex;
         buttons[currentButtonIndex].ButtonPressed = true;
+
+        // Play Sound Effect
+        main.PlayIncrementSoundEffect();
     }
 
     public bool GetSelectedButtonBoolValue()
     {
+        SelectButton();
+
         BaseButton pressedButton = group.GetPressedButton();
 
-        return (bool) pressedButton.GetMeta("value");
+        bool value = (bool) pressedButton.GetMeta("value");
+        return value;
     }
 
     public int GetSelectedButtonIntValue()
     {
+        SelectButton();
+
         BaseButton pressedButton = group.GetPressedButton();
 
-        return (int) pressedButton.GetMeta("value");
+        int value = (int) pressedButton.GetMeta("value");
+        return value;
     }
 
     // Protected
+    public void SetButtonPressedByName(string inName)
+    {
+       BaseButton pressedButton = group.GetPressedButton();
+
+        for(int i = 0; i < buttons.Count; i++) {
+            if ((string) buttons[i].GetMeta("Name") == inName) {
+                buttons[i].ButtonPressed = true;
+            }
+        }
+    }
 
     // Private
+    private void SelectButton() 
+    {
+        main.PlaySelectSoundEffect();
+        // await ToSignal(
+        //     main.GetSoundEffectPlayer(), 
+        //     AudioStreamPlayer2D.SignalName.Finished);
+    }
 
     //-------------------------------------------------------------------------
 	// Debug Methods

@@ -17,8 +17,13 @@ public partial class Main : Node
     // Private
     [Export] private MainUI mainUI;
     [Export] private BattleQueue battleQueue;
+    [Export] private AudioStreamPlayer2D soundEffectPlayer;
+    [Export] private AudioStream incrementSoundEffect;
+    [Export] private AudioStream selectSoundEffect;
     [Export] private PackedScene battleScene;
     [Export] private PackedScene gameOverScreen;
+    [Export] private PackedScene mainMenu;
+    [Export] private PackedScene checkpointScene;
     private PackedScene previousScene;
 
     //-------------------------------------------------------------------------
@@ -96,6 +101,7 @@ public partial class Main : Node
             inEnemyDirectors);
 
         // Begin the battle scene
+        // SwitchToPackedScene(battleScene);
         GetTree().ChangeSceneToPacked(battleScene);
     }
 
@@ -125,6 +131,51 @@ public partial class Main : Node
     public MainUI GetMainUI()
     {
         return mainUI;
+    }
+
+    public void RestartFromCheckpoint() 
+    {
+        // Reload to the previous checkpoint
+        // TODO: Setup checkpoints lol
+        GetTree().ChangeSceneToPacked(checkpointScene);
+    }
+
+    public void QuitToMainMenu() 
+    {
+        GetTree().ChangeSceneToPacked(mainMenu);
+    }
+
+    public AudioStreamPlayer2D GetSoundEffectPlayer() { return soundEffectPlayer; }
+
+    public void PlayIncrementSoundEffect() 
+    { 
+        soundEffectPlayer.Stream = incrementSoundEffect; 
+        soundEffectPlayer.Play();
+    }
+
+    public void PlaySelectSoundEffect()
+    {
+        soundEffectPlayer.Stream = incrementSoundEffect; 
+        soundEffectPlayer.Play();
+    }
+
+    public async void SwitchToPackedScene(PackedScene scene)
+    {
+        Tween transitoinTween = mainUI.GetSceneTransition().SceneFade(
+            SceneTransition.FadeDirection.OUT);
+
+        await ToSignal(transitoinTween, Tween.SignalName.Finished);
+
+        GetTree().ChangeSceneToPacked(scene);
+    }
+
+    public async void FadeIn()
+    {
+        Tween transitoinTween = mainUI.GetSceneTransition().SceneFade(
+            SceneTransition.FadeDirection.IN);
+
+        await ToSignal(transitoinTween, Tween.SignalName.Finished);
+        return;
     }
 
     // Protected

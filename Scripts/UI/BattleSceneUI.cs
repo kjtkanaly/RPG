@@ -10,7 +10,6 @@ public partial class BattleSceneUI : CanvasLayer
     // Protected
 
     // Private
-    [Export] private MainAction mainAction;
     [Export] private CharacterStats characterStats;
     [Export] private SelectEnemyBox selectEnemyBox;
 
@@ -20,12 +19,6 @@ public partial class BattleSceneUI : CanvasLayer
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public void ShowMainAction() { mainAction.Visible = true; }
-
-    public void HideMainAction() { mainAction.Visible = false; }
-
-    public MainAction GetMainAction() { return mainAction; }
-
     public void ShowCharacterStats() { characterStats.Visible = true; }
 
     public void HideCharacterStats() { characterStats.Visible = false; }

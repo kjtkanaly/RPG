@@ -20,15 +20,13 @@ public partial class BattleIntro : BattleState
     // Public
     public override void Enter()
     {
-        introPlaying = true;
-        IntroAnimation();
+
     }
 
     public override BattleState ProcessGeneral(float delta)
     {
-        GD.Print(introPlaying);
         if (!introPlaying) {
-            return GetFirstCharacterTurn();
+            return GetFirstTurn();
         }
 
         return null;
@@ -37,30 +35,14 @@ public partial class BattleIntro : BattleState
     // Protected
 
     // Private
-    private async void IntroAnimation() 
+    private BattleState GetFirstTurn()
     {
-        string enemyName = battleScene.GetEnemyTeamDataAtIndex(0).GetName();
-        string[] message = {
-            $"{enemyName} approaches the player!"};
+        // DEBUG
+        return playerTeamTurn;
 
-        TextBox.TextBoxData data = new TextBox.TextBoxData(
-            TextBox.TEXT_BOX_TYPE.dialogue,
-            message,
-            null);
+        GD.Print($"First Character: {battleScene.GetCurrentCharacter().GetData().GetName()}");
 
-        battleScene.main.GetMainUI().DispalyTextBox(data);
-
-        await ToSignal(battleScene.main.GetMainUI(), MainUI.SignalName.DialogueOver);
-
-        introPlaying = false;
-    }
-
-    private BattleState GetFirstCharacterTurn()
-    {
-        bool firstCharacterIsOnPlayerTeam = battleScene.IsInPlayerTeam(
-            battleScene.GetCurrentCharacterInBattleOrder());
-            
-        if (firstCharacterIsOnPlayerTeam) {
+        if (battleScene.GetCurrentCharacter().IsOnPlayerTeam()) {
             return playerTeamTurn;
         }
         else {

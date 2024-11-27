@@ -15,15 +15,14 @@ public partial class BattleScene : Node2D
     // Game Componenets
     // Public
     public Main main;
-    public int currentPlayerTeamIndex = 0;
-    public int currentEnemyTeamIndex = 0;
 
     // Protected
 
     // Private
     [Export] private BattleSceneUI battleUI;
     [Export] private BattleStateMachine stateMachine;
-    [Export] private BattleSceneCharacter[] enemyTeamSceneNodes = new BattleSceneCharacter[4];
+    [Export] private EnemyTeamBattleNodes enemyTeamBattleNodes;
+    [Export] private BattleScenePlayerTeam[] playerTeamSceneNodes = new BattleScenePlayerTeam[4];
     private Array<CharacterData> playerTeam = new Array<CharacterData>();
     private Array<CharacterData> enemyTeam = new Array<CharacterData>();
     private Array<CharacterData> battleOrder = new Array<CharacterData>();
@@ -58,7 +57,10 @@ public partial class BattleScene : Node2D
         SetTeamInfo(enemyTeam, battleQueue.GetEnemyTeam());
 
         // Set the Enemy Team Sprties
-        SetTeamSprites(enemyTeam, enemyTeamSceneNodes);
+        enemyTeamBattleNodes.SetTeamSprites(enemyTeam);
+
+        // Set the Player Team Sprites
+        // SetTeamSprites(playerTeam, playerTeamSceneNodes);
 
         // Determine the battle order
         SetBattleOrder();
@@ -69,8 +71,8 @@ public partial class BattleScene : Node2D
         // Log the Enemy options
         UpdateEnemySelectOptions();
 
-        // Init the Battle Scene State Machine
-        stateMachine.Init(this);
+        // // Init the Battle Scene State Machine
+        // stateMachine.Init(this);
     }
 
     public void LeaveBattle(bool playerVictory) 
@@ -80,24 +82,17 @@ public partial class BattleScene : Node2D
         main.EndBattle(playerTeam, enemyTeam, playerVictory);
     }
 
-    public CharacterData GetPlayerTeamDataAtIndex(int index) 
-    {
-        return playerTeam[index];
-    }
+    public CharacterData GetPlayerTeamDataAtIndex(int index) { return playerTeam[index]; }
 
     public Array<CharacterData> GetPlayerTeamData() { return playerTeam; }
 
-    public CharacterData GetEnemyTeamDataAtIndex(int index)
-    {
-        return enemyTeam[index];
-    }
+    public CharacterData GetEnemyTeamDataAtIndex(int index) { return enemyTeam[index]; }
 
     public Array<CharacterData> GetEnemyTeamData() { return enemyTeam; }
 
-    public BattleSceneUI GetBattleUI() 
-    {
-        return battleUI;
-    }
+    public BattleSceneUI GetBattleUI() { return battleUI; }
+
+    public EnemyTeamBattleNodes GetEnemyTeamBattleNodes() { return enemyTeamBattleNodes; }
 
     public void HideUI() 
     {
@@ -109,9 +104,9 @@ public partial class BattleScene : Node2D
         battleUI.ShowUI();
     }
 
-    public BattleSceneCharacter GetEnemyNodeAtIndex(int index) 
-    {
-        return enemyTeamSceneNodes[index];
+    public BattleScenePlayerTeam GetPlayerNodeAtIndex(int index) 
+    { 
+        return playerTeamSceneNodes[index];
     }
 
     public bool IsInPlayerTeam(CharacterData data) 
@@ -182,16 +177,6 @@ public partial class BattleScene : Node2D
         for (int i = 0; i < inTeamInfo.Count; i++) {
             teamInfo.Add(inTeamInfo[i]);
             teamInfo[i].SetTeamIndex(i);
-        }
-    }
-
-    private void SetTeamSprites(
-        Array<CharacterData> teamData, 
-        BattleSceneCharacter[] teamSprites)
-    {
-        for (int i = 0; i < teamData.Count; i++) {
-            GD.Print($"Enemy Team Sprite: {i} | {teamData[i].GetBattleSprite()} | {teamSprites[i].Position}");
-            teamSprites[i].Texture = teamData[i].GetBattleSprite();
         }
     }
 

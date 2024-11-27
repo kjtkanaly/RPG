@@ -12,12 +12,11 @@ public partial class AttackSequence : BattleState
     [Export] protected AudioStreamPlayer2D audioPlayer;
     [Export] protected AudioStream soundEffect;
     protected bool attackSequencnDone = false;
-    protected int attackerIndex = -1;
     protected int defenderIndex = -1;
+    protected CharacterData attackerData;
+    protected CharacterData defenderData;
 
     // Private
-    private CharacterData attackerData;
-    private CharacterData defenderData;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -27,13 +26,15 @@ public partial class AttackSequence : BattleState
     // Public
     public override void Enter()
     {
-        // Log that the attack sequence is beggning
-        attackSequencnDone = false;
+        // Log the Defender's Index
+        defenderIndex = GetDefenderIndex();
+        GD.Print($"Target Index: {defenderIndex}");
 
-        // Get the Source of the Attack's Character Data
-        attackerData = GetAttackerData();
+        // // Log that the attack sequence is beggning
+        // attackSequencnDone = false;
 
-        // Get the Target of the Attack's Character Data
+        // Get the Attacker and Defender Data
+        attackerData = battleScene.GetCurrentCharacter().GetData();
         defenderData = GetDefenderData();
 
         // Calculate the damage to deal
@@ -42,24 +43,24 @@ public partial class AttackSequence : BattleState
         // Deal damage to the enemy (weather NPC or Player)
         DealDamage(damage);
 
-        // Update the UI (Utilize the tween)
+        // // Update the UI (Utilize the tween)
 
-        // Begin Animation that implies damage
-        DisplayDamage(damage);
+        // // Begin Animation that implies damage
+        // DisplayDamage(damage);
 
-        // Set the attack sequence to exit once the damage label is done
+        // // Set the attack sequence to exit once the damage label is done
         
     }
 
     public override BattleState ProcessGeneral(float delta)
     {
-        // Check if the attack is done
-        if (!attackSequencnDone) {
-            return null;
-        }
+        // // Check if the attack is done
+        // if (!attackSequencnDone) {
+        //     return null;
+        // }
 
         // If the defender is dead
-        if (GetDefenderData().GetHealthByKey("Current") <= 0) {
+        if (defenderData.GetHealthByKey("Current") <= 0) {
             IndicateDefenderDead();
         }
 
@@ -73,16 +74,11 @@ public partial class AttackSequence : BattleState
         return nextState;
     }
 
-    public virtual CharacterData GetAttackerData() 
-    {return null;}   
+    public virtual CharacterData GetDefenderData() { return null; } 
 
-    public virtual CharacterData GetDefenderData() 
-    {return null;} 
-
-    public virtual BattleSceneCharacter GetDefenderNode()
+    public virtual BattleSceneEnemy GetDefenderNode()
     {return null;}
 
-    public void SetAttackerIndex(int inIndex) { attackerIndex = inIndex; }
     public void SetDefenderIndex(int inIndex) { defenderIndex = inIndex; }
 
     // Protected
@@ -98,6 +94,8 @@ public partial class AttackSequence : BattleState
     {
         attackSequencnDone = true;
     }
+
+    protected virtual int GetDefenderIndex() { return 0; }
 
     // Private
     private int GetDamage() 

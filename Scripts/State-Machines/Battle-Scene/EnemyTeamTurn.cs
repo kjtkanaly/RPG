@@ -32,8 +32,8 @@ public partial class EnemyTeamTurn : BattleState
         }
 
         // If the enemy team member is dead
-        GD.Print($"Checking Enemy Memeber's Health: {battleScene.GetCurrentCharacterInBattleOrder().GetHealthByKey("Current")}");
-        if (battleScene.GetCurrentCharacterInBattleOrder().GetHealthByKey("Current") <= 0) {
+        GD.Print($"Checking Enemy Memeber's Health: {battleScene.GetCurrentCharacter().GetData().GetHealthByKey("Current")}");
+        if (battleScene.GetCurrentCharacter().GetData().GetHealthByKey("Current") <= 0) {
             BattleState nextState = GetNextTeamTurn();
             return nextState;
         }

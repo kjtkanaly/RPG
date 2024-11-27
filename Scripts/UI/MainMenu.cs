@@ -39,9 +39,9 @@ public partial class MainMenu : ButtonGroupUI
     // Private
     private void ProcessUserChoice()
     {
-        BaseButton selectedButton = group.GetPressedButton();
+        int selectedValue = GetSelectedButtonIntValue();
 
-        switch ((int) selectedButton.GetMeta("Value")){
+        switch (selectedValue){
             case 0:
                 GoToGameStart();
                 break;
@@ -59,12 +59,13 @@ public partial class MainMenu : ButtonGroupUI
 
     private void GoToGameStart()
     {
-        GetTree().ChangeSceneToPacked(gameStartPacked);
+        main.SwitchToPackedScene(gameStartPacked);
     }
 
     private void GoToOptions() 
     {
-        GetTree().ChangeSceneToPacked(optionsUIPacked);
+        main.SwitchToPackedScene(optionsUIPacked);
+
     }
 
     private void QuitGame() 

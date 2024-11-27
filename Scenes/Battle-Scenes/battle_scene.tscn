@@ -4,44 +4,37 @@
 [ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_sgfx0"]
 [ext_resource type="PackedScene" uid="uid://o0w5yevss7s3" path="res://Nodes/UI/battle_scene_ui.tscn" id="2_xg13y"]
 [ext_resource type="PackedScene" uid="uid://b2tsod01peupp" path="res://Nodes/State-Machine/player_turn.tscn" id="3_4otpn"]
+[ext_resource type="PackedScene" uid="uid://bauumqs47r8nv" path="res://Nodes/Battle/enemy_team_battle_nodes.tscn" id="4_4i0nd"]
 [ext_resource type="PackedScene" uid="uid://bqsveenfoilcs" path="res://Nodes/State-Machine/flee_battle.tscn" id="4_up8t5"]
+[ext_resource type="PackedScene" uid="uid://bv0tu1kwtvwbc" path="res://Nodes/Battle/battle_scene_player_team.tscn" id="4_vubb5"]
 [ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="5_febhu"]
 [ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="6_y2u7w"]
 [ext_resource type="AudioStream" uid="uid://bsh2s3xvxs4g2" path="res://Audio/Sound-Effects/Hit-Sounds/Hit-001.wav" id="7_erx1e"]
 [ext_resource type="PackedScene" uid="uid://cvvw5b4bvc1qe" path="res://Nodes/State-Machine/Battle-Scene/enemy_attack_sequence.tscn" id="7_k2g15"]
 [ext_resource type="PackedScene" uid="uid://ccxw067wwb37e" path="res://Nodes/State-Machine/Battle-Scene/enemy_team_turn.tscn" id="8_abcji"]
 [ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="8_hn318"]
-[ext_resource type="PackedScene" uid="uid://c6ac6ter8sbit" path="res://Nodes/Battle/battle_scene_character.tscn" id="10_hi1gg"]
-[ext_resource type="Texture2D" uid="uid://dmhu0fy2g5r5i" path="res://Visuals/Sprites/Characters/Enemy_Dummy.png" id="12_y6o48"]
 [ext_resource type="PackedScene" uid="uid://h1xx7qe2uq43" path="res://Nodes/State-Machine/Battle-Scene/defeat_state.tscn" id="13_3bntu"]
 
-[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine", "enemyTeamSceneNodes")]
+[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine", "playerTeamSceneNodes")]
 script = ExtResource("1_rt48m")
 battleUI = NodePath("Battle-Scene-UI")
 stateMachine = NodePath("Battle-State-Machine")
-enemyTeamSceneNodes = [NodePath("Battle-Scene-UI/Battle-Scene-Character"), NodePath("Battle-Scene-UI/Battle-Scene-Character2"), NodePath("Battle-Scene-UI/Battle-Scene-Character3"), null]
+playerTeamSceneNodes = [NodePath("Battle-Scene-UI/Battle-Scene-Player-Team"), null, null, null]
 
 [node name="Battle-Scene-UI" parent="." instance=ExtResource("2_xg13y")]
 layer = -10
 
-[node name="Battle-Scene-Character" parent="Battle-Scene-UI" instance=ExtResource("10_hi1gg")]
-offset_left = 528.0
-offset_top = 254.0
-offset_right = 784.0
-offset_bottom = 510.0
-texture = ExtResource("12_y6o48")
+[node name="Battle-Scene-Player-Team" parent="Battle-Scene-UI" instance=ExtResource("4_vubb5")]
+offset_left = 294.0
+offset_top = 319.0
+offset_right = 550.0
+offset_bottom = 575.0
 
-[node name="Battle-Scene-Character2" parent="Battle-Scene-UI" instance=ExtResource("10_hi1gg")]
-offset_left = 265.0
-offset_top = 170.0
-offset_right = 521.0
-offset_bottom = 426.0
-
-[node name="Battle-Scene-Character3" parent="Battle-Scene-UI" instance=ExtResource("10_hi1gg")]
-offset_left = 727.0
-offset_top = 154.0
-offset_right = 983.0
-offset_bottom = 410.0
+[node name="Enemy-Team-Battle-Nodes" parent="Battle-Scene-UI" instance=ExtResource("4_4i0nd")]
+offset_left = 647.0
+offset_top = 45.0
+offset_right = 1176.0
+offset_bottom = 307.0
 
 [node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
 startingState = NodePath("Battle-Intro")

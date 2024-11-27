@@ -15,8 +15,6 @@ public partial class CharacterData : Node
     private Texture2D portrait;
     private Texture2D battleSprite;
     private Dictionary data;
-    private int initiativeValue;
-    private int teamIndex;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -36,12 +34,6 @@ public partial class CharacterData : Node
         // Load the texture 2D
         portrait = (Texture2D) GD.Load(GetPortraitPath());
         battleSprite = (Texture2D) GD.Load(GetBattleSpritePath());
-
-        // Reset the initiative value
-        initiativeValue = -1;
-
-        // Reset the team index
-        teamIndex = -1;
     }
 
     public string GetDataPath() { return dataPath; }
@@ -107,13 +99,13 @@ public partial class CharacterData : Node
         CopyDictionaryValues(data, inData.GetData());
     }
 
-    public int GetInitiativeValue() { return initiativeValue; }
+    public int GetInitiativeValue() { return -1; }
 
-    public void SetInitiative(int inVal) { initiativeValue = inVal; }
+    public void SetInitiative(int inVal) { }
 
-    public int GetTeamIndex() { return teamIndex; }
+    public int GetTeamIndex() { return -1; }
 
-    public void SetTeamIndex(int inVal) { teamIndex = inVal; }
+    public void SetTeamIndex(int inVal) { }
 
     // Protected
 

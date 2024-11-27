@@ -14,6 +14,7 @@ public partial class MainUI : CanvasLayer
     [Export] private BoolTextBox boolTextBox;
     [Export] private TextBox textBox;
     [Export] private InventoryUI inventoryUI;
+    [Export] private SceneTransition sceneTransition;
     private Main main;
 
     //-------------------------------------------------------------------------
@@ -91,6 +92,8 @@ public partial class MainUI : CanvasLayer
         // Emit signal that signifes the selection is made
         main.EmitSignal(Main.SignalName.SelectionMade);
     }
+
+    public SceneTransition GetSceneTransition() { return sceneTransition; }
 
     // Protected
 

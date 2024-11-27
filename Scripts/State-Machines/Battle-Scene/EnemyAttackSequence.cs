@@ -18,14 +18,9 @@ public partial class EnemyAttackSequence : AttackSequence
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public override CharacterData GetAttackerData()
-    {
-        return battleScene.GetEnemyTeamDataAtIndex(0);
-    }
-
     public override CharacterData GetDefenderData()
     {
-        return battleScene.GetPlayerTeamDataAtIndex(0);
+        return battleScene.GetPlayerNodeAtIndex(defenderIndex).GetData();
     }
 
     // Protected
@@ -36,8 +31,12 @@ public partial class EnemyAttackSequence : AttackSequence
 
     protected override bool AllDefendersAreDead() 
     {
-        for (int i = 0; i < battleScene.GetPlayerTeamData().Count; i++) {
-            if (battleScene.GetPlayerTeamData()[i].GetHealthByKey("Current") > 0) {
+        for (int i = 0; i < battleScene.GetPlayerNodes().Count; i++) {
+            if (!battleScene.GetPlayerNodes()[i].active) {
+                continue;
+            }
+
+            if (battleScene.GetPlayerNodes()[i].GetData().GetHealthByKey("Current") > 0) {
                 return false;
             }
         }
@@ -51,7 +50,7 @@ public partial class EnemyAttackSequence : AttackSequence
 
         // Construct the Text Msg
         string[] message = {
-            $"{GetAttackerData().GetName()} just dealt {damage.ToString()} damage to {GetDefenderData().GetName()}"};
+            $"{attackerData.GetName()} just dealt {damage.ToString()} damage to {GetDefenderData().GetName()}"};
         TextBox.TextBoxData textBoxData = new TextBox.TextBoxData(
             TextBox.TEXT_BOX_TYPE.dialogue,
             message,

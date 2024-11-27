@@ -19,7 +19,7 @@ public partial class BattleStateMachine : Node
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public void Init(BattleScene scene)
+    public void Init(BattleSceneNew scene)
     {
         // Init all of the child state objects
         foreach (BattleState child in GetChildren()) {

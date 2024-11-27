@@ -19,19 +19,14 @@ public partial class PlayerAttackSequence : AttackSequence
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public override CharacterData GetAttackerData()
-    {
-        return battleScene.GetPlayerTeamDataAtIndex(0);
-    }
-
     public override CharacterData GetDefenderData()
     {
-        return battleScene.GetEnemyTeamDataAtIndex(defenderIndex);
+        return battleScene.GetEnemyNodeAtIndex(defenderIndex).GetData();
     }
 
-    public override BattleSceneCharacter GetDefenderNode()
+    public override BattleSceneEnemy GetDefenderNode()
     {
-        return battleScene.GetEnemyNodeAtIndex(defenderIndex);
+        return null; // battleScene.GetEnemyTeamBattleNodes().GetEnemyNodeAtIndex(defenderIndex);
     }
 
     // Protected
@@ -42,8 +37,12 @@ public partial class PlayerAttackSequence : AttackSequence
 
     protected override bool AllDefendersAreDead() 
     {
-        for (int i = 0; i < battleScene.GetEnemyTeamData().Count; i++) {
-            if (battleScene.GetEnemyTeamData()[i].GetHealthByKey("Current") > 0) {
+        for (int i = 0; i < battleScene.GetEnemyNodes().Count; i++) {
+            if (!battleScene.GetEnemyNodes()[i].active) {
+                continue;
+            }
+
+            if (battleScene.GetEnemyNodes()[i].GetData().GetHealthByKey("Current") > 0) {
                 return false;
             }
         }
@@ -74,6 +73,11 @@ public partial class PlayerAttackSequence : AttackSequence
         audioPlayer.Stream = soundEffect;
         audioPlayer.Play();
     }   
+
+    protected override int GetDefenderIndex() 
+    { 
+        return battleScene.GetTargetEnemyUI().GetCurrentIndex(); 
+    }
 
     // Private
 
