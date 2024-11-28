@@ -37,11 +37,6 @@ public partial class BattleIntro : BattleState
     // Private
     private BattleState GetFirstTurn()
     {
-        // DEBUG
-        return playerTeamTurn;
-
-        GD.Print($"First Character: {battleScene.GetCurrentCharacter().GetData().GetName()}");
-
         if (battleScene.GetCurrentCharacter().IsOnPlayerTeam()) {
             return playerTeamTurn;
         }

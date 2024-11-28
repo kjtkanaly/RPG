@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dky8lxuytpx3g"]
+[gd_scene load_steps=15 format=3 uid="uid://dky8lxuytpx3g"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/BattleSceneNew.cs" id="1_upag8"]
 [ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_7w5ca"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1m2vitw5b1sp" path="res://Nodes/Battle/battle_scene_character.tscn" id="2_gpa8h"]
 [ext_resource type="Script" path="res://Scripts/Battle/TargetEnemyUI.cs" id="4_aq6ol"]
 [ext_resource type="PackedScene" uid="uid://byk6nden8shbw" path="res://Nodes/Battle/action_selection_node.tscn" id="4_x2edg"]
+[ext_resource type="PackedScene" uid="uid://o0w5yevss7s3" path="res://Nodes/UI/battle_scene_ui.tscn" id="5_6npc5"]
 [ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="7_dl12v"]
 [ext_resource type="PackedScene" uid="uid://b2tsod01peupp" path="res://Nodes/State-Machine/player_turn.tscn" id="8_kiq6o"]
 [ext_resource type="PackedScene" uid="uid://ccxw067wwb37e" path="res://Nodes/State-Machine/Battle-Scene/enemy_team_turn.tscn" id="9_qrrvt"]
@@ -14,12 +15,13 @@
 [ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="12_u02q4"]
 [ext_resource type="PackedScene" uid="uid://h1xx7qe2uq43" path="res://Nodes/State-Machine/Battle-Scene/defeat_state.tscn" id="13_t2agb"]
 
-[node name="Battle-Scene-New" type="Node2D" node_paths=PackedStringArray("stateMachine", "enemyNodes", "playerNodes", "targetEnemyUI", "actionSelectionNode")]
+[node name="Battle-Scene-New" type="Node2D" node_paths=PackedStringArray("stateMachine", "enemyNodes", "playerNodes", "targetEnemyUI", "battleSceneUI", "actionSelectionNode")]
 script = ExtResource("1_upag8")
 stateMachine = NodePath("Battle-State-Machine")
 enemyNodes = [NodePath("Enemy-Nodes/Enemy-00"), NodePath("Enemy-Nodes/Enemy-01"), NodePath("Enemy-Nodes/Enemy-02"), NodePath("Enemy-Nodes/Enemy-03")]
 playerNodes = [NodePath("Player-Nodes/Player-00"), NodePath("Player-Nodes/Player-01"), NodePath("Player-Nodes/Player-02"), NodePath("Player-Nodes/Player-03")]
 targetEnemyUI = NodePath("Camera2D/Target-Select")
+battleSceneUI = NodePath("Camera2D/Battle-Scene-UI")
 actionSelectionNode = NodePath("Camera2D/Action-Selection-Node")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -32,6 +34,12 @@ texture = ExtResource("2_cvasv")
 script = ExtResource("4_aq6ol")
 
 [node name="Action-Selection-Node" parent="Camera2D" instance=ExtResource("4_x2edg")]
+
+[node name="Battle-Scene-UI" parent="Camera2D" instance=ExtResource("5_6npc5")]
+offset_left = -960.0
+offset_top = -640.0
+offset_right = -960.0
+offset_bottom = -640.0
 
 [node name="Enemy-Nodes" type="Node" parent="."]
 

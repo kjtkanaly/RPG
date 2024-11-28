@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public partial class BattleSceneUI : Control
+public partial class CharacterInfo : Control
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -11,7 +11,9 @@ public partial class BattleSceneUI : Control
     // Protected
 
     // Private
-    [Export] private CharacterInfoContainer characterInfoContainer;
+    [Export] private TextureRect profilePic;
+    [Export] private Label healthValue;
+    [Export] private Label specialValue;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -19,9 +21,19 @@ public partial class BattleSceneUI : Control
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public void Init(Array<BattleSceneCharacter> characters) 
+    public void SetProfilePic(Texture2D image)
     {
-        characterInfoContainer.Init(characters);
+        profilePic.Texture = image;
+    }
+
+    public void SetHealthValue(int value) 
+    {
+        healthValue.Text = value.ToString();
+    }
+
+    public void SetSpecialValue(int value) 
+    {
+        specialValue.Text = value.ToString();
     }
 
     // Protected

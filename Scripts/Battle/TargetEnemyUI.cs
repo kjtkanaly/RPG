@@ -26,8 +26,7 @@ public partial class TargetEnemyUI : Node2D
         }
 
         // Update the Target UI Positon
-        Vector2 pos = battleScene.GetEnemyNodeAtIndex(currentIndex).Position;
-        Position = pos;
+        SetNewPosition();
     }
 
     //-------------------------------------------------------------------------
@@ -42,14 +41,33 @@ public partial class TargetEnemyUI : Node2D
         currentIndex = 0;
 
         // Set the Target Enemy UI to the first enemy's Positon
-        Vector2 pos = battleScene.GetEnemyNodeAtIndex(currentIndex).Position;
-        Position = pos;
+        SetNewPosition();
 
         // Set the UI invisible till it is needed
         Visible = false;
     }
 
+    public void NewTurn() 
+    {
+        BattleSceneCharacter character = battleScene.GetEnemyNodeAtIndex(currentIndex);
+
+        GD.Print($"New Turn, Target Enemy {character.GetData().GetHealthByKey("Current")}");
+
+        if (character.GetData().GetHealthByKey("Current") <= 0) {
+            IncrementIndex(1);
+            SetNewPosition();
+        }
+
+        Visible = true;
+    }
+
     public int GetCurrentIndex() { return currentIndex; }
+
+    public void SetNewPosition() 
+    {  
+        Vector2 pos = battleScene.GetEnemyNodeAtIndex(currentIndex).Position;
+        Position = pos;
+    }
 
     // Protected
 
@@ -66,7 +84,10 @@ public partial class TargetEnemyUI : Node2D
                 newIndex = 0;
             }
 
-            if (!battleScene.GetEnemyNodeAtIndex(newIndex).active) {
+            BattleSceneCharacter character = battleScene.GetEnemyNodeAtIndex(newIndex);
+
+            if (!character.active
+                || character.GetData().GetHealthByKey("Current") <= 0) {
                 newIndex += step;
                 continue;
             }

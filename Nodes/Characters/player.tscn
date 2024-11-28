@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjmrxg28ecmk0"]
+[gd_scene load_steps=11 format=3 uid="uid://cjmrxg28ecmk0"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
 [ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_smgeg"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://81fdhlyry56j" path="res://Nodes/State-Machine/Character/battle_queue_state.tscn" id="6_f6u33"]
 [ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
 [ext_resource type="PackedScene" uid="uid://d3rcof83jkmqw" path="res://Nodes/State-Machine/Character/interact.tscn" id="6_x1tnx"]
-[ext_resource type="PackedScene" uid="uid://duqk2867wvx3j" path="res://Scenes/Battle-Scenes/battle_scene.tscn" id="7_8qhad"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
@@ -39,7 +38,6 @@ battleQueueState = NodePath("../Battle-Queue-State")
 idleState = NodePath("../Idle")
 
 [node name="Battle-Queue-State" parent="State-Machine" index="3" instance=ExtResource("6_f6u33")]
-battleScene = ExtResource("7_8qhad")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("6_w7vtq")

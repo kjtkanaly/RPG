@@ -19,6 +19,11 @@ public partial class Level : Node2D
     {
         // Get the global player stats object
         main = GetNode<Main>("/root/Main");
+
+        Tween transitoinTween = main.GetMainUI().GetSceneTransition().SceneFade(
+            SceneTransition.FadeDirection.IN);
+
+        // await ToSignal(transitoinTween, Tween.SignalName.Finished);
     }
 
     //-------------------------------------------------------------------------

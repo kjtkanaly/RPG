@@ -16,6 +16,7 @@ public partial class BattleSceneNew : Node2D
     [Export] private Array<BattleSceneCharacter> enemyNodes;
     [Export] private Array<BattleSceneCharacter> playerNodes;
     [Export] private TargetEnemyUI targetEnemyUI;
+    [Export] private BattleSceneUI battleSceneUI;
     [Export] private ActionSelectionNode actionSelectionNode;
     private Array<BattleSceneCharacter> battleOrder;
     private int currentBattleOrderIndex = 0;
@@ -98,6 +99,9 @@ public partial class BattleSceneNew : Node2D
 
         // Reset the current battle order index
         currentBattleOrderIndex = 0;
+
+        // Init the Battle Scene UI
+        battleSceneUI.Init(playerNodes);
 
         // Init the Target Enemy UI
         targetEnemyUI.Init(this);

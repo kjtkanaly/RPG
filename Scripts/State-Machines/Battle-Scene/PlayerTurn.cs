@@ -26,7 +26,7 @@ public partial class PlayerTurn : BattleState
 
         // Set the UI elements visible
         battleScene.GetActionSelectionNode().Visible = true;
-        battleScene.GetTargetEnemyUI().Visible = true;
+        battleScene.GetTargetEnemyUI().NewTurn();
 
         // // Set the character stats
         // battleScene.GetBattleUI().GetCharacterStats().SetData(
@@ -50,7 +50,9 @@ public partial class PlayerTurn : BattleState
 
         // Check if the Player has made a selection
         if (Input.IsActionJustReleased("Attack-UI")) {
-            return playerAttackSequence;
+            if (CanAttackEnemy()) {
+                return playerAttackSequence;
+            }
         }
         else if (Input.IsActionJustReleased("Act-UI")) {
             return null;
@@ -68,6 +70,17 @@ public partial class PlayerTurn : BattleState
     // Protected
 
     // Private
+    private bool CanAttackEnemy() 
+    {   
+        // Get the defender index
+        int defenderIndex = battleScene.GetTargetEnemyUI().GetCurrentIndex(); 
+
+        if (battleScene.GetEnemyNodes()[defenderIndex].GetData().GetHealthByKey("Current") <= 0) {
+            return false;
+        }
+
+        return true;
+    }
 
     //-------------------------------------------------------------------------
 	// Debug Methods
