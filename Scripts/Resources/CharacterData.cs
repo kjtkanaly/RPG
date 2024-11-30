@@ -107,6 +107,8 @@ public partial class CharacterData : Node
 
     public void SetTeamIndex(int inVal) { }
 
+    public string GetAttackAnimationName() { return (string) data["Attack-Animation-Name"]; }
+
     // Protected
 
     // Private

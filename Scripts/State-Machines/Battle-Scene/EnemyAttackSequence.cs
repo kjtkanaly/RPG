@@ -45,25 +45,13 @@ public partial class EnemyAttackSequence : AttackSequence
 
     protected override void DisplayDamage(int damage) 
     {
-        // Show the text box showing 1) the enemy team member's choice
-        // and 2) the aount of damage done to the player
+        // Update the player node's UI
+        battleScene.GetBattleSceneUI().UpdateInfoByCharacter(
+            battleScene.GetPlayerNodeAtIndex(defenderIndex));
 
-        // Construct the Text Msg
-        string[] message = {
-            $"{attackerData.GetName()} just dealt {damage.ToString()} damage to {GetDefenderData().GetName()}"};
-        TextBox.TextBoxData textBoxData = new TextBox.TextBoxData(
-            TextBox.TEXT_BOX_TYPE.dialogue,
-            message,
-            null);
-
-        // Display the message in the text box
-        battleScene.main.GetMainUI().DispalyTextBox(textBoxData);
-
-        // Set the enemy attack sequence to end once the dialog has finished
-        battleScene.main.GetMainUI().DialogueOver += SetAnimationDone;
-
-        // TODO: Also do some animation for the damage
-
+        // Do an animation
+        battleScene.GetCurrentCharacter().PlayAttackAnimation();
+        battleScene.GetCurrentCharacter().GetAnimationPlayer().AnimationFinished += SetAnimationDone;
     }   
 
     // Private

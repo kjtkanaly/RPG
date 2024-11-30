@@ -24,6 +24,11 @@ public partial class BattleSceneUI : Control
         characterInfoContainer.Init(characters);
     }
 
+    public void UpdateInfoByCharacter(BattleSceneCharacter character) 
+    {
+        characterInfoContainer.UpdateInfoByCharacter(character);
+    }
+
     // Protected
 
     // Private

@@ -20,6 +20,7 @@ public partial class BattleSceneCharacter : Node2D
     // Private
     [Export] private TYPE typeValue;
     [Export] private Sprite2D sprite;
+    [Export] private AnimationPlayer animationPlayer;
     private CharacterData data;
     private int battleIndex;
     private int initiativeRoll;
@@ -51,6 +52,8 @@ public partial class BattleSceneCharacter : Node2D
 
     public Sprite2D GetSprite() { return sprite; }
 
+    public AnimationPlayer GetAnimationPlayer() { return animationPlayer; }
+
     public CharacterData GetData() { return data; }
 
     public int GetInitiativeRoll() { return initiativeRoll; }
@@ -60,6 +63,11 @@ public partial class BattleSceneCharacter : Node2D
     public int GetBattleIndex() { return battleIndex; }
 
     public bool IsOnPlayerTeam() { return typeValue == TYPE.PLAYER; }
+
+    public void PlayAttackAnimation() 
+    { 
+        animationPlayer.Play(data.GetAttackAnimationName());
+    }
 
     // Protected
 

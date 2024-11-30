@@ -27,5 +27,6 @@
         "CHA": 10
     },
     "Portrait-Path": "",
-    "Battle-Sprite-Path": ""
+    "Battle-Sprite-Path": "",
+    "Attack-Animation-Name": ""
 }

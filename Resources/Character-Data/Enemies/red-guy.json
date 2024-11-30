@@ -27,5 +27,6 @@
         "CHA": 10
     },
     "Portrait-Path": "res://Visuals/Sprites/Characters/Enemy_Dummy_Dialogue_Icon.png",
-    "Battle-Sprite-Path": "res://Visuals/Sprites/Characters/Enemy_Dummy.png"
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Characters/Enemy_Dummy.png",
+    "Attack-Animation-Name": "enemy_attack_00"
 }

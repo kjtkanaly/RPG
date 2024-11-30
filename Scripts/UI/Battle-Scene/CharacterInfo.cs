@@ -14,6 +14,8 @@ public partial class CharacterInfo : Control
     [Export] private TextureRect profilePic;
     [Export] private Label healthValue;
     [Export] private Label specialValue;
+    [Export] private ProgressBar healthBar;
+    [Export] private ProgressBar specialBar;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -34,6 +36,15 @@ public partial class CharacterInfo : Control
     public void SetSpecialValue(int value) 
     {
         specialValue.Text = value.ToString();
+    }
+
+    public void SetHealthBar(int current, int max=-1)
+    {
+        if (max>-1) {
+            healthBar.MaxValue = max;
+        }
+        
+        healthBar.Value = current;
     }
 
     // Protected

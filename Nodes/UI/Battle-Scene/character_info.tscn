@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Battle-Scene/CharacterInfo.cs" id="2_ct8tq"]
 [ext_resource type="Theme" uid="uid://b2thovx8kjaph" path="res://Resources/Themes/General.tres" id="4_44ro7"]
 
-[node name="Character-Info" type="TextureRect" node_paths=PackedStringArray("profilePic", "healthValue", "specialValue")]
+[node name="Character-Info" type="TextureRect" node_paths=PackedStringArray("profilePic", "healthValue", "specialValue", "healthBar", "specialBar")]
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_co56h")
@@ -13,6 +13,8 @@ script = ExtResource("2_ct8tq")
 profilePic = NodePath("MarginContainer/HBoxContainer/TextureRect/TextureRect")
 healthValue = NodePath("MarginContainer/HBoxContainer/ColorRect/VBoxContainer/HP DIV/HBoxContainer/HP-Value")
 specialValue = NodePath("MarginContainer/HBoxContainer/ColorRect/VBoxContainer/MANA DIV/HBoxContainer/SP-Value")
+healthBar = NodePath("MarginContainer/HBoxContainer/ColorRect/VBoxContainer/HP DIV/HBoxContainer/HP-Bar")
+specialBar = NodePath("MarginContainer/HBoxContainer/ColorRect/VBoxContainer/MANA DIV/HBoxContainer/SP-Bar")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -35,6 +37,7 @@ custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/TextureRect"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,6 +61,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/ColorRect"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,6 +84,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/ColorRect/VBoxContainer/HP DIV"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -108,11 +113,21 @@ theme = ExtResource("4_44ro7")
 theme_override_font_sizes/font_size = 32
 text = "100"
 
+[node name="HP-Bar" type="ProgressBar" parent="MarginContainer/HBoxContainer/ColorRect/VBoxContainer/HP DIV/HBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 1.0
+value = 50.0
+show_percentage = false
+
 [node name="MANA DIV" type="Control" parent="MarginContainer/HBoxContainer/ColorRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/ColorRect/VBoxContainer/MANA DIV"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -140,3 +155,12 @@ layout_mode = 2
 theme = ExtResource("4_44ro7")
 theme_override_font_sizes/font_size = 32
 text = "100"
+
+[node name="SP-Bar" type="ProgressBar" parent="MarginContainer/HBoxContainer/ColorRect/VBoxContainer/MANA DIV/HBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 1.0
+value = 50.0
+show_percentage = false

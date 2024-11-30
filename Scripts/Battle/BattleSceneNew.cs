@@ -77,6 +77,8 @@ public partial class BattleSceneNew : Node2D
 
     public ActionSelectionNode GetActionSelectionNode() { return actionSelectionNode; }
 
+    public BattleSceneUI GetBattleSceneUI() { return battleSceneUI; }
+
     // Protected
 
     // Private

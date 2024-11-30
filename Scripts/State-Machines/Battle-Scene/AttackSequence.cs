@@ -31,7 +31,7 @@ public partial class AttackSequence : BattleState
         GD.Print($"Target Index: {defenderIndex}");
 
         // // Log that the attack sequence is beggning
-        // attackSequencnDone = false;
+        attackSequencnDone = false;
 
         // Get the Attacker and Defender Data
         attackerData = battleScene.GetCurrentCharacter().GetData();
@@ -46,7 +46,7 @@ public partial class AttackSequence : BattleState
         // // Update the UI (Utilize the tween)
 
         // // Begin Animation that implies damage
-        // DisplayDamage(damage);
+        DisplayDamage(damage);
 
         // // Set the attack sequence to exit once the damage label is done
         
@@ -54,10 +54,10 @@ public partial class AttackSequence : BattleState
 
     public override BattleState ProcessGeneral(float delta)
     {
-        // // Check if the attack is done
-        // if (!attackSequencnDone) {
-        //     return null;
-        // }
+        // Check if the attack is done
+        if (!attackSequencnDone) {
+            return null;
+        }
 
         // If the defender is dead
         if (defenderData.GetHealthByKey("Current") <= 0) {
@@ -90,7 +90,7 @@ public partial class AttackSequence : BattleState
 
     protected virtual void DisplayDamage(int damage) {}
 
-    protected void SetAnimationDone()
+    protected void SetAnimationDone(StringName name)
     {
         attackSequencnDone = true;
     }

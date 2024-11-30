@@ -27,5 +27,6 @@
         "CHA": 15
     },
     "Portrait-Path": "res://Visuals/Sprites/Player/Dialogue_Icon.png",
-    "Battle-Sprite-Path": "res://Visuals/Sprites/Player/Player_001.png"
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Player/Player_001.png",
+    "Attack-Animation-Name": "player_attack_00"
 }
