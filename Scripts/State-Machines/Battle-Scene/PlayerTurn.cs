@@ -24,16 +24,16 @@ public partial class PlayerTurn : BattleState
     {
         GD.Print("Player Turn");
 
+        if (battleScene.GetCurrentCharacter().GetData().GetHealthByKey("Current") <= 0) {
+            return;
+        }
+
         // Set the UI elements visible
-        battleScene.GetActionSelectionNode().Visible = true;
+        battleScene.GetActionSelectionNode().NewTurn(
+            battleScene.GetCurrentCharacter());
+
+        // Init the Enemy Target
         battleScene.GetTargetEnemyUI().NewTurn();
-
-        // // Set the character stats
-        // battleScene.GetBattleUI().GetCharacterStats().SetData(
-        //     battleScene.GetPlayerTeamDataAtIndex(0));
-
-        // // Show the Player Stats
-        // battleScene.GetBattleUI().ShowCharacterStats();
     }
 
     public override void Exit()
@@ -45,6 +45,10 @@ public partial class PlayerTurn : BattleState
 
     public override BattleState ProcessGeneral(float delta) 
     {
+        if (battleScene.GetCurrentCharacter().GetData().GetHealthByKey("Current") <= 0) {
+            return GetNextTeamTurn();
+        }
+
         // Init the return state as null;
         BattleState state = null;
 

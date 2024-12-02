@@ -9,12 +9,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rhspy"]
 radius = 100.0
 
-[node name="Basic-Enemy" node_paths=PackedStringArray("coolDownState", "agroState") groups=["Basic-Enemy", "Enemy"] instance=ExtResource("1_n7ywj")]
-coolDownState = NodePath("State-Machine/Cool-Down")
-agroState = NodePath("State-Machine/Agro")
+[node name="Basic-Enemy" groups=["Basic-Enemy", "Enemy"] instance=ExtResource("1_n7ywj")]
 
-[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
+[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState", "coolDownState", "agroState")]
 startingState = NodePath("Search")
+coolDownState = NodePath("Cool-Down")
+agroState = NodePath("Agro")
 
 [node name="Search" parent="State-Machine" index="0" node_paths=PackedStringArray("agroState") instance=ExtResource("2_fwt0y")]
 agroState = NodePath("../Agro")

@@ -201,7 +201,16 @@ public partial class Main : Node
         }
 
         for (int i = 0; i < playerTeam.Count; i++) {
-            playerTeam[i].SwitchCurrentStateToIdle();
+            if (playerTeam[i].IsInGroup("Player")) {
+                playerTeam[i].GetStateMachine().SwitchCurrentStateToIdle();
+            }
+            else {
+                if (playerTeam[i].GetCharacterData().GetHealthByKey("Current") <= 0) {
+                    playerTeam[i].QueueFree();
+                    await ToSignal(playerTeam[i], Node2D.SignalName.TreeExited);
+                }
+            }
+            
         }
     }
 
@@ -209,7 +218,7 @@ public partial class Main : Node
     {
         for (int i = 0; i < enemyTeam.Count; i++) {
             // Switch the enemy to a cool down state
-            enemyTeam[i].SwitchCurrentStateToCoolDown();
+            enemyTeam[i].GetStateMachine().SwitchCurrentStateToCoolDown();
 
             Color colour = enemyTeam[i].Modulate;
                 colour.A = 1;

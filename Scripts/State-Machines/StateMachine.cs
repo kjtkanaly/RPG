@@ -13,6 +13,10 @@ public partial class StateMachine : Node
     // Private
     private State currentState;
     [Export] private State startingState;
+    [Export] protected CharacterBodyState idleState;
+    [Export] protected CharacterBodyState coolDownState;
+    [Export] protected CharacterBodyState agroState;
+    [Export] protected CharacterBodyState followPlayerState;
 
     //-------------------------------------------------------------------------
     // Game Events
@@ -64,15 +68,29 @@ public partial class StateMachine : Node
         }
     }
 
-    public void SetCurrentState(State inState) 
-    {
-        // currentState = inState;
-        ChangeState(inState);
-    }
-
     public State GetCurrentState() 
     {
         return currentState;
+    }
+
+    public void SwitchCurrentStateToIdle()
+    {
+        ChangeState(idleState);
+    }
+
+    public void SwitchCurrentStateToCoolDown() 
+    {
+        ChangeState(coolDownState);
+    }
+
+    public void SwitchCurrentStateToAgro()
+    {
+        ChangeState(agroState);
+    }
+
+    public void SwitchCurrentStateToFollowThePlayer()
+    {
+        ChangeState(followPlayerState);
     }
 
     // Protected

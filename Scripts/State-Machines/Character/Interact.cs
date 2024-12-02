@@ -53,8 +53,13 @@ public partial class Interact : CharacterBodyState
             PickupItem(collider);
         }
 
-        // If an ally interaction
-        else if (collider.IsInGroup("Ally") || collider.IsInGroup("Enemy")) {
+        // If the interaction is an Ally
+        else if (collider.IsInGroup("Ally")) {
+            InteractWithAlly(collider);
+        }
+
+        // If the interaction is an enemy
+        else if (collider.IsInGroup("Enemy")) {
             InteractWithNPC(collider);
         }
     }
@@ -98,6 +103,33 @@ public partial class Interact : CharacterBodyState
         characterDirector.StartInteractionDelayTimer();
 
         // TODO: If not enough space then display text saying no room
+    }
+
+    private async void InteractWithAlly(Node collider) 
+    {
+        // Get the Ally's Character Body
+        CharacterDirector npc = (CharacterDirector) collider;
+
+        // Create the Text Box Data Object
+        TextBox.TextBoxData data = new TextBox.TextBoxData(
+            TextBox.TEXT_BOX_TYPE.item,
+            npc.GetCharacterData().GetDialogByKey("Talk"),
+            npc.GetCharacterData().GetPortrait());
+
+        main.GetMainUI().DispalyTextBox(data);
+        
+        // Wait for the Dialogue to be done
+        await ToSignal(main.GetMainUI(), MainUI.SignalName.DialogueOver);
+
+        // Log that interaction is done
+        isInteracting = false;
+
+        // Start the character's interaction delay timer
+        characterDirector.StartInteractionDelayTimer();
+
+        // Set the Ally to follow the player and add them to the team
+        npc.GetStateMachine().SwitchCurrentStateToFollowThePlayer();
+        characterDirector.GetTeam().Add(npc);
     }
 
     private async void InteractWithNPC(Node collider)

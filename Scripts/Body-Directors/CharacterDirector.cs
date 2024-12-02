@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class CharacterDirector : CharacterBody2D
 {
@@ -19,9 +20,6 @@ public partial class CharacterDirector : CharacterBody2D
     [Export] protected Inventory inventory;
     [Export] protected Area2D agroArea;
     [Export] protected Area2D combatArea;
-    [Export] protected CharacterBodyState idleState;
-    [Export] protected CharacterBodyState coolDownState;
-    [Export] protected CharacterBodyState agroState;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -101,21 +99,6 @@ public partial class CharacterDirector : CharacterBody2D
         }
     }
 
-    public void SwitchCurrentStateToIdle()
-    {
-        movementSM.SetCurrentState(idleState);
-    }
-
-    public void SwitchCurrentStateToCoolDown() 
-    {
-        movementSM.SetCurrentState(coolDownState);
-    }
-
-    public void SwitchCurrentStateToAgro()
-    {
-        movementSM.SetCurrentState(agroState);
-    }
-
     public void UpdateCharacterData(CharacterData inData) 
     {
         characterData.UpdateCharacterData(inData);
@@ -125,6 +108,10 @@ public partial class CharacterDirector : CharacterBody2D
     {
         return movementSM.GetCurrentState().Name == "Battle-Waiting";
     }
+
+    public StateMachine GetStateMachine() { return movementSM; }
+
+    public virtual Array<CharacterDirector> GetTeam() { return null; }
 
     // Protected
 

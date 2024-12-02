@@ -73,7 +73,7 @@ public partial class BattleQueueState : CharacterBodyState
                 continue;
             }
 
-            queuedEnemies[i].SwitchCurrentStateToAgro();
+            queuedEnemies[i].GetStateMachine().SwitchCurrentStateToAgro();
         }
     }
 
@@ -91,13 +91,9 @@ public partial class BattleQueueState : CharacterBodyState
     // TODO: Make this async and add some cool animations
     private void BeginBattle() 
     {
-        // Get the Player Team info
-        Array<CharacterDirector> playerTeam = new Array<CharacterDirector>();
-        playerTeam.Add(characterDirector);
-
         // Switch to battle scene
         main.BeginBattle(
-            playerTeam,
+            characterDirector.GetTeam(),
             queuedEnemies);
     }
 

@@ -109,6 +109,7 @@ position = Vector2(13440, 9720)
 texture = ExtResource("21_qayc6")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 build_mode = 1

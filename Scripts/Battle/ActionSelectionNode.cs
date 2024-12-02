@@ -24,12 +24,15 @@ public partial class ActionSelectionNode : Node2D
     {
         battleScene = inScene;
 
-        // Set the Target Enemy UI to the first enemy's Positon
-        Vector2 pos = battleScene.GetPlayerNodeAtIndex(0).Position;
-        Position = pos;
-
         // Set the UI invisible till it is needed
         Visible = false;
+    }
+
+    public void NewTurn(BattleSceneCharacter character)
+    {
+        Position = character.Position;
+
+        battleScene.GetActionSelectionNode().Visible = true;
     }
 
     // Protected

@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjmrxg28ecmk0"]
+[gd_scene load_steps=13 format=3 uid="uid://cjmrxg28ecmk0"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
+[ext_resource type="Script" path="res://Scripts/Body-Directors/PlayerDirector.cs" id="2_rgxin"]
 [ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_smgeg"]
 [ext_resource type="PackedScene" uid="uid://c5j4mqyi6ntqi" path="res://Nodes/State-Machine/Character/run.tscn" id="4_8ci10"]
 [ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Character/idle.tscn" id="5_5m0yb"]
 [ext_resource type="PackedScene" uid="uid://81fdhlyry56j" path="res://Nodes/State-Machine/Character/battle_queue_state.tscn" id="6_f6u33"]
-[ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
 [ext_resource type="PackedScene" uid="uid://d3rcof83jkmqw" path="res://Nodes/State-Machine/Character/interact.tscn" id="6_x1tnx"]
 [ext_resource type="PackedScene" uid="uid://d1i1sw7p4x3yy" path="res://Nodes/State-Machine/Character/in_battle.tscn" id="7_pene4"]
+[ext_resource type="Texture2D" uid="uid://danxv6kwf0wnu" path="res://Visuals/Sprites/Characters/Dummy.png" id="9_5eplw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
@@ -18,12 +19,13 @@ size = Vector2(400, 300)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4087"]
 size = Vector2(35, 45)
 
-[node name="Player" node_paths=PackedStringArray("idleState") groups=["Player", "Player-Team"] instance=ExtResource("1_wj6b2")]
+[node name="Player" groups=["Player", "Player-Team"] instance=ExtResource("1_wj6b2")]
+script = ExtResource("2_rgxin")
 movementData = ExtResource("2_smgeg")
-idleState = NodePath("State-Machine/Idle")
 
-[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
+[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState", "idleState")]
 startingState = NodePath("Idle")
+idleState = NodePath("Idle")
 
 [node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState", "interactState", "battleQueueState") instance=ExtResource("4_8ci10")]
 idleState = NodePath("../Idle")
@@ -44,7 +46,7 @@ inBattle = NodePath("../InBattle")
 [node name="InBattle" parent="State-Machine" index="4" instance=ExtResource("7_pene4")]
 
 [node name="Sprite2D" parent="." index="1"]
-texture = ExtResource("6_w7vtq")
+texture = ExtResource("9_5eplw")
 
 [node name="CollisionShape2D" parent="." index="2"]
 visible = false

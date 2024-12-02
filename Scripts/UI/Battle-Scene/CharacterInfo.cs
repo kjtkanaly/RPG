@@ -30,6 +30,10 @@ public partial class CharacterInfo : Control
 
     public void SetHealthValue(int value) 
     {
+        if (value < 0) {
+            value = 0;
+        }
+
         healthValue.Text = value.ToString();
     }
 
@@ -42,6 +46,10 @@ public partial class CharacterInfo : Control
     {
         if (max>-1) {
             healthBar.MaxValue = max;
+        }
+
+        if (current < 0) {
+            current = 0;
         }
         
         healthBar.Value = current;

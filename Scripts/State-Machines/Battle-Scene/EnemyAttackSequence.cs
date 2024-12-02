@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class EnemyAttackSequence : AttackSequence
 {
@@ -68,6 +69,30 @@ public partial class EnemyAttackSequence : AttackSequence
         // Init the damage label
         damageLabelInst.Init(damage, battleScene.main.rng);
     }   
+
+    protected override int GetDefenderIndex() 
+    { 
+        Array<int> activePlayerIndex = new Array<int>();
+        for (int i = 0; i < battleScene.GetPlayerNodes().Count; i++) {
+            if (!battleScene.GetPlayerNodes()[i].active 
+                || (battleScene.GetPlayerNodes()[i].GetData().GetHealthByKey("Current") <= 0)) {
+                continue;
+            }
+
+            activePlayerIndex.Add(i);
+        }
+
+        return activePlayerIndex[battleScene.main.rng.RandiRange(
+                0, 
+                activePlayerIndex.Count - 1)];
+    }
+
+    protected override void IndicateDefenderDead() 
+    {
+        Color defenderColor = battleScene.GetPlayerNodeAtIndex(defenderIndex).Modulate;
+        defenderColor.V = 0.5f;
+        battleScene.GetPlayerNodeAtIndex(defenderIndex).Modulate = defenderColor;
+    }
 
     // Private
 

@@ -10,8 +10,8 @@
     },
     "Level": 1,
     "Health": {
-        "Max": 10,
-        "Current": 10
+        "Max": 15,
+        "Current": 15
     },
     "Inventory-Size": 1,
     "Damage-Range": {
@@ -26,7 +26,7 @@
         "INT": 8,
         "CHA": 15
     },
-    "Portrait-Path": "res://Visuals/Sprites/Player/Dialogue_Icon.png",
-    "Battle-Sprite-Path": "res://Visuals/Sprites/Player/Player_001.png",
+    "Portrait-Path": "res://Visuals/Sprites/Characters/Dummy_Dialogue_Icon.png",
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Characters/Dummy.png",
     "Attack-Animation-Name": "player_attack_00"
 }
