@@ -10,7 +10,7 @@ script = ExtResource("1_hin22")
 characterInfoContainer = NodePath("Character-Info-Container")
 
 [node name="Character-Info-Container" parent="." instance=ExtResource("2_25ps0")]
-offset_left = 848.0
-offset_top = 1172.0
-offset_right = 1908.0
-offset_bottom = 1268.0
+offset_left = 92.0
+offset_top = 1088.0
+offset_right = 1920.0
+offset_bottom = 1280.0

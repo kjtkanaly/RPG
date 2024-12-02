@@ -21,7 +21,7 @@ public partial class BattleSceneCharacter : Node2D
     [Export] private TYPE typeValue;
     [Export] private Sprite2D sprite;
     [Export] private AnimationPlayer animationPlayer;
-    private CharacterData data;
+    private CharacterDirector director;
     private int battleIndex;
     private int initiativeRoll;
     private Main main;
@@ -32,7 +32,7 @@ public partial class BattleSceneCharacter : Node2D
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public void Init(CharacterData inData) 
+    public void Init(CharacterDirector inDirector) 
     {
         // Get the Main Node
         main = GetNode<Main>("/root/Main");
@@ -41,10 +41,10 @@ public partial class BattleSceneCharacter : Node2D
         active = true;
 
         // Set the Character Data
-        data = inData;
+        director = inDirector;
         
         // Set the character's sprite
-        sprite.Texture = data.GetBattleSprite();
+        sprite.Texture = director.GetCharacterData().GetBattleSprite();
 
         // Roll Inititave
         initiativeRoll = main.rng.RandiRange(1, 20);
@@ -54,7 +54,9 @@ public partial class BattleSceneCharacter : Node2D
 
     public AnimationPlayer GetAnimationPlayer() { return animationPlayer; }
 
-    public CharacterData GetData() { return data; }
+    public CharacterDirector GetDirector() { return director; }
+
+    public CharacterData GetData() { return director.GetCharacterData(); }
 
     public int GetInitiativeRoll() { return initiativeRoll; }
 
@@ -66,7 +68,7 @@ public partial class BattleSceneCharacter : Node2D
 
     public void PlayAttackAnimation() 
     { 
-        animationPlayer.Play(data.GetAttackAnimationName());
+        animationPlayer.Play(GetData().GetAttackAnimationName());
     }
 
     // Protected

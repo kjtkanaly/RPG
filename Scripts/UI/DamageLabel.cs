@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class DamageLabel : Label
+public partial class DamageLabel : Node2D
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -10,6 +10,7 @@ public partial class DamageLabel : Label
     // Protected
 
     // Private
+    [Export] private Label label;
     private SceneTreeTimer timer;
     private float time;
     private float displayTime = 1.5f;
@@ -42,7 +43,7 @@ public partial class DamageLabel : Label
     public SceneTreeTimer Init(int value, RandomNumberGenerator rng)
     {
         // Set the Text
-        Text = value.ToString();
+        label.Text = value.ToString();
 
         // Start Tween
         timer = GetTree().CreateTimer(displayTime);

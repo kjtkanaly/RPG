@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using Godot.Collections;
 
-public partial class FleeBattle : BattleState
+public partial class InBattle : CharacterBodyState
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -12,14 +13,14 @@ public partial class FleeBattle : BattleState
     // Private
 
     //-------------------------------------------------------------------------
-    // Game Events
+	// Game Events
 
     //-------------------------------------------------------------------------
-    // Methods
+	// Methods
     // Public
-    public override void Enter()
+    public override State ProcessGeneral(float delta)
     {
-        battleScene.LeaveBattle(BattleSceneNew.END_STATE.FLEE);
+        return null;
     }
 
     // Protected
@@ -27,5 +28,5 @@ public partial class FleeBattle : BattleState
     // Private
 
     //-------------------------------------------------------------------------
-    // Debug Methods
+	// Debug Methods
 }

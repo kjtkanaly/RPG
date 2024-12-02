@@ -11,7 +11,7 @@ public partial class BattleQueueState : CharacterBodyState
     // Protected
 
     // Private
-    [Export] private PackedScene battleScene;
+    [Export] private State inBattle;
     int currentQueueCount = 0;
     int maxQueueCount = 4;
     Array<CharacterDirector> queuedEnemies = new Array<CharacterDirector>();
@@ -46,7 +46,7 @@ public partial class BattleQueueState : CharacterBodyState
 
         BeginBattle();
 
-        return null;
+        return inBattle;
     }
 
     // Protected
@@ -91,31 +91,13 @@ public partial class BattleQueueState : CharacterBodyState
     // TODO: Make this async and add some cool animations
     private void BeginBattle() 
     {
-        // Do some animatio
-
-        // Get an array of the queued enemy data
-        CharacterData[] newQueuedEnemyData = new CharacterData[queuedEnemies.Count];
-        for (int i = 0; i < queuedEnemies.Count; i++) {
-            newQueuedEnemyData[i] = queuedEnemies[i].GetCharacterData();
-        }
-
-        // Pass in Arrays with the character data path's for player and team
-        // Pass in the node path's for the enemy team
-
         // Get the Player Team info
-        Array<CharacterData> playerTeamCopy = new Array<CharacterData>();
-        playerTeamCopy.Add(characterDirector.GetCharacterData().CopyData());
-
-        // Get the Enemy Team info
-        Array<CharacterData> queuedEnemiesCopy = new Array<CharacterData>();
-        for (int i = 0; i < queuedEnemies.Count; i++) {
-            queuedEnemiesCopy.Add(queuedEnemies[i].GetCharacterData().CopyData());
-        }
+        Array<CharacterDirector> playerTeam = new Array<CharacterDirector>();
+        playerTeam.Add(characterDirector);
 
         // Switch to battle scene
         main.BeginBattle(
-            playerTeamCopy,
-            queuedEnemiesCopy,
+            playerTeam,
             queuedEnemies);
     }
 

@@ -58,16 +58,17 @@ public partial class PlayerAttackSequence : AttackSequence
 
     protected override void DisplayDamage(int damage) 
     {
-        attackSequencnDone = true;
-        
-        // // Instantiate the damage label
-        // DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
+        // Do an animation
+        battleScene.GetCurrentCharacter().PlayAttackAnimation();
 
-        // // Add the label to the scene
-        // GetDefenderNode().AddChild(damageLabelInst);
-        // damageLabelInst.Position = new Vector2(75, 75);;
+        // Instantiate the damage label
+        DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
 
-        // SceneTreeTimer timer = damageLabelInst.Init(damage, battleScene.main.rng);
+        // Add the label to the scene
+        battleScene.GetEnemyNodeAtIndex(defenderIndex).AddChild(damageLabelInst);
+
+        // Init the damage label
+        damageLabelInst.Init(damage, battleScene.main.rng);
 
         // timer.Timeout += SetAnimationDone;
 

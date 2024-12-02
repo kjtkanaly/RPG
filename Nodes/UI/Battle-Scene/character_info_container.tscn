@@ -6,8 +6,8 @@
 [node name="Character-Info-Container" type="Control" node_paths=PackedStringArray("infoContainer")]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1060.0
-offset_bottom = 96.0
+offset_right = 1828.0
+offset_bottom = 192.0
 script = ExtResource("1_nfeqn")
 packedCharacterInfo = ExtResource("2_yqprl")
 infoContainer = NodePath("HBoxContainer")
@@ -20,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 1, 1, 0.490196)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dky8lxuytpx3g"]
+[gd_scene load_steps=16 format=3 uid="uid://dky8lxuytpx3g"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/BattleSceneNew.cs" id="1_upag8"]
 [ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_7w5ca"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://byk6nden8shbw" path="res://Nodes/Battle/action_selection_node.tscn" id="4_x2edg"]
 [ext_resource type="PackedScene" uid="uid://o0w5yevss7s3" path="res://Nodes/UI/battle_scene_ui.tscn" id="5_6npc5"]
 [ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="7_dl12v"]
+[ext_resource type="PackedScene" uid="uid://cwo0v4rhvale8" path="res://Nodes/Battle/damage_label_node.tscn" id="7_l114t"]
 [ext_resource type="PackedScene" uid="uid://b2tsod01peupp" path="res://Nodes/State-Machine/player_turn.tscn" id="8_kiq6o"]
 [ext_resource type="PackedScene" uid="uid://ccxw067wwb37e" path="res://Nodes/State-Machine/Battle-Scene/enemy_team_turn.tscn" id="9_qrrvt"]
 [ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="10_odc8l"]
@@ -15,8 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="12_u02q4"]
 [ext_resource type="PackedScene" uid="uid://h1xx7qe2uq43" path="res://Nodes/State-Machine/Battle-Scene/defeat_state.tscn" id="13_t2agb"]
 
-[node name="Battle-Scene-New" type="Node2D" node_paths=PackedStringArray("stateMachine", "enemyNodes", "playerNodes", "targetEnemyUI", "battleSceneUI", "actionSelectionNode")]
+[node name="Battle-Scene-New" type="Node2D" node_paths=PackedStringArray("camera", "stateMachine", "enemyNodes", "playerNodes", "targetEnemyUI", "battleSceneUI", "actionSelectionNode")]
+process_mode = 2
 script = ExtResource("1_upag8")
+camera = NodePath("Camera2D")
 stateMachine = NodePath("Battle-State-Machine")
 enemyNodes = [NodePath("Enemy-Nodes/Enemy-00"), NodePath("Enemy-Nodes/Enemy-01"), NodePath("Enemy-Nodes/Enemy-02"), NodePath("Enemy-Nodes/Enemy-03")]
 playerNodes = [NodePath("Player-Nodes/Player-00"), NodePath("Player-Nodes/Player-01"), NodePath("Player-Nodes/Player-02"), NodePath("Player-Nodes/Player-03")]
@@ -26,6 +29,7 @@ actionSelectionNode = NodePath("Camera2D/Action-Selection-Node")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
+enabled = false
 
 [node name="Target-Select" type="Sprite2D" parent="Camera2D"]
 z_index = 2
@@ -97,6 +101,7 @@ enemyTeamTurn = NodePath("../Enemy-Team-Turn")
 
 [node name="Enemy-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("defeatState", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("11_v5ghy")]
 defeatState = NodePath("../Defeat-State")
+damageLabel = ExtResource("7_l114t")
 playerTeamTurn = NodePath("../Player-Turn")
 enemyTeamTurn = NodePath("../Enemy-Team-Turn")
 

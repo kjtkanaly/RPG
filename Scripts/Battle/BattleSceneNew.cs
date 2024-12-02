@@ -4,6 +4,13 @@ using Godot.Collections;
 
 public partial class BattleSceneNew : Node2D
 {
+    public enum END_STATE 
+    {
+        PLAYER_VICTORY,
+        ENEMY_VICTORY,
+        FLEE
+    }
+
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
@@ -12,6 +19,7 @@ public partial class BattleSceneNew : Node2D
     // Protected
 
     // Private
+    [Export] private Camera2D camera;
     [Export] private BattleStateMachine stateMachine;
     [Export] private Array<BattleSceneCharacter> enemyNodes;
     [Export] private Array<BattleSceneCharacter> playerNodes;
@@ -22,10 +30,10 @@ public partial class BattleSceneNew : Node2D
     private int currentBattleOrderIndex = 0;
 
     //-------------------------------------------------------------------------
-	// Game Events
+    // Game Events
     public override void _Ready()
     {
-        Init();
+        main = GetNode<Main>("/root/Main");
     }
 
     public override void _Process(double delta)
@@ -36,65 +44,15 @@ public partial class BattleSceneNew : Node2D
     //-------------------------------------------------------------------------
 	// Methods
     // Public
-    public int GetCurrentBattleOrderIndex() { return currentBattleOrderIndex; }
-
-    public void SetCurrentBattleOrderIndex(int val) { currentBattleOrderIndex = val; }
-
-    public BattleSceneCharacter GetCurrentCharacter() { return battleOrder[currentBattleOrderIndex]; }
-
-    public Array<BattleSceneCharacter> GetBattleOrder() { return battleOrder; } 
-
-    public Array<BattleSceneCharacter> GetEnemyNodes() { return enemyNodes; }
-
-    public Array<BattleSceneCharacter> GetPlayerNodes() { return playerNodes; }
-
-    public void LeaveBattle(bool playerVictory) 
+    public void Begin(
+        Array<CharacterDirector> inPlayerTeam, 
+        Array<CharacterDirector> inEnemyTeam) 
     {
-        Array<CharacterData> playerTeamData = new Array<CharacterData>();
-        for (int i = 0; i < playerNodes.Count; i++) {
-            if (!playerNodes[i].active) {
-                continue;
-            }
-            playerTeamData.Add(playerNodes[i].GetData());
-        }
-
-        Array<CharacterData> enemyTeamData = new Array<CharacterData>();
-        for (int i = 0; i < enemyNodes.Count; i++) {
-            if (!enemyNodes[i].active) {
-                continue;
-            }
-            enemyTeamData.Add(enemyNodes[i].GetData());
-        }
-
-        main.EndBattle(playerTeamData, enemyTeamData, playerVictory);
-    }
-
-    public BattleSceneCharacter GetEnemyNodeAtIndex(int index) { return enemyNodes[index]; }
-
-    public BattleSceneCharacter GetPlayerNodeAtIndex(int index) { return playerNodes[index]; }
-
-    public TargetEnemyUI GetTargetEnemyUI() { return targetEnemyUI; }
-
-    public ActionSelectionNode GetActionSelectionNode() { return actionSelectionNode; }
-
-    public BattleSceneUI GetBattleSceneUI() { return battleSceneUI; }
-
-    // Protected
-
-    // Private
-    private void Init() 
-    {
-        // Get the Main Node
-        main = GetNode<Main>("/root/Main");
-
-        // Get the Battle Info
-        BattleQueue battleQueue = main.GetBattleQueue();
-
         // Set the Player Team Info
-        SetTeamInfo(playerNodes, battleQueue.GetPlayerTeam());
+        SetTeamInfo(playerNodes, inPlayerTeam);
 
         // Set the Enemy Team Info
-        SetTeamInfo(enemyNodes, battleQueue.GetEnemyTeam());
+        SetTeamInfo(enemyNodes, inEnemyTeam);
 
         // Determine the battle order
         SetBattleOrder();
@@ -115,9 +73,57 @@ public partial class BattleSceneNew : Node2D
         stateMachine.Init(this);
     }
 
+    public void LeaveBattle(BattleSceneNew.END_STATE endState) 
+    {
+        Array<CharacterDirector> playerDirectors = new Array<CharacterDirector>();
+        for (int i = 0; i < playerNodes.Count; i++) {
+            if (!playerNodes[i].active) {
+                continue;
+            }
+            playerDirectors.Add(playerNodes[i].GetDirector());
+        }
+
+        Array<CharacterDirector> enemyDirectors = new Array<CharacterDirector>();
+        for (int i = 0; i < enemyNodes.Count; i++) {
+            if (!enemyNodes[i].active) {
+                continue;
+            }
+            enemyDirectors.Add(enemyNodes[i].GetDirector());
+        }
+
+        main.EndBattle(playerDirectors, enemyDirectors, endState);
+    }
+
+    public int GetCurrentBattleOrderIndex() { return currentBattleOrderIndex; }
+
+    public void SetCurrentBattleOrderIndex(int val) { currentBattleOrderIndex = val; }
+
+    public BattleSceneCharacter GetCurrentCharacter() { return battleOrder[currentBattleOrderIndex]; }
+
+    public Array<BattleSceneCharacter> GetBattleOrder() { return battleOrder; } 
+
+    public Array<BattleSceneCharacter> GetEnemyNodes() { return enemyNodes; }
+
+    public Array<BattleSceneCharacter> GetPlayerNodes() { return playerNodes; }
+
+    public BattleSceneCharacter GetEnemyNodeAtIndex(int index) { return enemyNodes[index]; }
+
+    public BattleSceneCharacter GetPlayerNodeAtIndex(int index) { return playerNodes[index]; }
+
+    public TargetEnemyUI GetTargetEnemyUI() { return targetEnemyUI; }
+
+    public ActionSelectionNode GetActionSelectionNode() { return actionSelectionNode; }
+
+    public BattleSceneUI GetBattleSceneUI() { return battleSceneUI; }
+    
+    public Camera2D GetCamera() { return camera; }
+
+    // Protected
+
+    // Private
     private void SetTeamInfo(
         Array<BattleSceneCharacter> teamNodes,
-        Array<CharacterData> teamInfo) 
+        Array<CharacterDirector> teamInfo) 
     {
         // Copy over the data
         for (int i = 0; i < teamInfo.Count; i++) {

@@ -60,28 +60,6 @@ public partial class Agro : CharacterBodyState
             * characterDirector.GetMovementData().speed;
     }
 
-    // private async void EnemyBeginsBattle() 
-    // {
-    //     // Create the Text Box Data Object
-    //     TextBox.TextBoxData data = new TextBox.TextBoxData(
-    //         TextBox.TEXT_BOX_TYPE.item,
-    //         characterDirector.GetCharacterData().GetDialogByKey("Fight"),
-    //         characterDirector.GetCharacterData().GetPortrait());
-
-    //     characterDirector.GetMain().GetMainUI().DispalyTextBox(data);
-        
-    //     // Wait for the Dialogue to be done
-    //     await ToSignal(characterDirector.GetMain().GetMainUI(), MainUI.SignalName.DialogueOver);
-
-    //     GD.Print("Begin battle");
-
-    //     // Switch to battle scene
-    //     main.BeginBattle(
-    //         new CharacterData[] {player.GetCharacterData()}, 
-    //         new CharacterData[] {characterDirector.GetCharacterData()},
-    //         characterDirector);
-    // }
-
     //-------------------------------------------------------------------------
     // Debug Methods
 }

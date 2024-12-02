@@ -11,6 +11,7 @@ public partial class Level : Node2D
     // Protected
 
     // Private
+    [Export] private CameraDirector camera;
     private Main main;
 
     //-------------------------------------------------------------------------
@@ -19,6 +20,8 @@ public partial class Level : Node2D
     {
         // Get the global player stats object
         main = GetNode<Main>("/root/Main");
+
+        main.SetCurrentOverworld(this);
 
         Tween transitoinTween = main.GetMainUI().GetSceneTransition().SceneFade(
             SceneTransition.FadeDirection.IN);
@@ -29,6 +32,7 @@ public partial class Level : Node2D
     //-------------------------------------------------------------------------
     // Methods
     // Public
+    public CameraDirector GetCamera() { return camera; }
 
     // Protected
 

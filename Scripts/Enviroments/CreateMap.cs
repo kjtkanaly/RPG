@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using Godot.Collections;
 
-public partial class FleeBattle : BattleState
+public partial class CreateMap : Node2D
 {
     //-------------------------------------------------------------------------
     // Game Componenets
@@ -12,20 +13,16 @@ public partial class FleeBattle : BattleState
     // Private
 
     //-------------------------------------------------------------------------
-    // Game Events
+	// Game Events
 
     //-------------------------------------------------------------------------
-    // Methods
+	// Methods
     // Public
-    public override void Enter()
-    {
-        battleScene.LeaveBattle(BattleSceneNew.END_STATE.FLEE);
-    }
 
     // Protected
 
     // Private
 
     //-------------------------------------------------------------------------
-    // Debug Methods
+	// Debug Methods
 }

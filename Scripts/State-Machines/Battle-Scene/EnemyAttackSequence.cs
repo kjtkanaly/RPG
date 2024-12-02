@@ -13,11 +13,18 @@ public partial class EnemyAttackSequence : AttackSequence
     [Export] private BattleState defeatState;
 
     //-------------------------------------------------------------------------
-	// Game Events
+    // Game Events
 
     //-------------------------------------------------------------------------
-	// Methods
+    // Methods
     // Public
+    // public override void Init(BattleSceneNew scene)
+    // {
+    //     base.Init(scene);
+
+    //     battleScene.GetCurrentCharacter().GetAnimationPlayer().AnimationFinished += SetAnimationDone;
+    // }
+
     public override CharacterData GetDefenderData()
     {
         return battleScene.GetPlayerNodeAtIndex(defenderIndex).GetData();
@@ -51,7 +58,15 @@ public partial class EnemyAttackSequence : AttackSequence
 
         // Do an animation
         battleScene.GetCurrentCharacter().PlayAttackAnimation();
-        battleScene.GetCurrentCharacter().GetAnimationPlayer().AnimationFinished += SetAnimationDone;
+        
+        // Instantiate the damage label
+        DamageLabel damageLabelInst = (DamageLabel) damageLabel.Instantiate();
+
+        // Add the label to the scene
+        battleScene.GetPlayerNodeAtIndex(defenderIndex).AddChild(damageLabelInst);
+
+        // Init the damage label
+        damageLabelInst.Init(damage, battleScene.main.rng);
     }   
 
     // Private

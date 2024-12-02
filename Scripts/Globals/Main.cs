@@ -16,15 +16,15 @@ public partial class Main : Node
 
     // Private
     [Export] private MainUI mainUI;
-    [Export] private BattleQueue battleQueue;
+    [Export] private BattleSceneNew battleSceneNew;
+    [Export] private Level currentOverworld;
     [Export] private AudioStreamPlayer2D soundEffectPlayer;
     [Export] private AudioStream incrementSoundEffect;
     [Export] private AudioStream selectSoundEffect;
-    [Export] private PackedScene battleScene;
+    [Export] private PackedScene packedBattleScene;
     [Export] private PackedScene gameOverScreen;
     [Export] private PackedScene mainMenu;
     [Export] private PackedScene checkpointScene;
-    private PackedScene previousScene;
 
     //-------------------------------------------------------------------------
 	// Game Events
@@ -34,8 +34,6 @@ public partial class Main : Node
 
         // Init the Main UI
         mainUI.Init(this);
-        
-        // Get the team character directors
     }
 
     public override void _Process(double delta)
@@ -78,54 +76,63 @@ public partial class Main : Node
 
     }
 
-    public void BeginBattle(
-        Array<CharacterData> inPlayerTeam, 
-        Array<CharacterData> inEnemyTeam,
-        Array<CharacterDirector> inEnemyDirectors) 
+    public async void BeginBattle(
+        Array<CharacterDirector> inPlayerTeam,
+        Array<CharacterDirector> inEnemyTeam) 
     {
-        // Set the enemy instance invisible
-        for (int i = 0; i < inEnemyDirectors.Count; i++) {
-            Color colour = inEnemyDirectors[i].Modulate;
-            colour.A = 0;
-            inEnemyDirectors[i].Modulate = colour;
-        }
+        // Zoom animation
+        Tween zoomTween = currentOverworld.GetCamera().ZoomInOnCharacter();
+        await ToSignal(zoomTween, Tween.SignalName.Finished);
+        
+        // Disable the Overworld Camera and make it invisible
+        currentOverworld.GetCamera().Enabled = false;
+        SetObjectStructVisibleValue(currentOverworld, false);
 
-        // Log current scene
-        previousScene = new PackedScene();
-        previousScene.Pack(GetTree().CurrentScene);
+        // Instantiate the battle scene
+        battleSceneNew = (BattleSceneNew) packedBattleScene.Instantiate();
+        this.AddChild(battleSceneNew);
 
-        // // Queue the battle info
-        battleQueue.QueueBattle(
-            inPlayerTeam, 
-            inEnemyTeam, 
-            inEnemyDirectors);
+        // Enable the Battle Scene and it's view
+        battleSceneNew.GetCamera().Enabled = true;
 
-        // Begin the battle scene
-        // SwitchToPackedScene(battleScene);
-        GetTree().ChangeSceneToPacked(battleScene);
+        GetTree().Paused = true;
+
+        battleSceneNew.Begin(inPlayerTeam, inEnemyTeam);
     }
 
-    public void EndBattle (
-        Array<CharacterData> inPlayerTeam, 
-        Array<CharacterData> inEnemyTeam,
-        bool playerVictory)
+    public async void EndBattle (
+        Array<CharacterDirector> playerTeam, 
+        Array<CharacterDirector> enemyTeam,
+        BattleSceneNew.END_STATE endState)
     {
-        if (playerVictory) {
-            PlayerVictorySequence(inPlayerTeam, inEnemyTeam);
-        }
-        else {
-            GameOverSequence();
-        }
-    }
+        GetTree().Paused = false;
 
-    public BattleQueue GetBattleQueue()
-    {
-        return battleQueue;
-    }
+        // Enable the Battle Scene and it's view
+        battleSceneNew.GetCamera().Enabled = false;
+        battleSceneNew.QueueFree();
+        await ToSignal(battleSceneNew, Node2D.SignalName.TreeExited);
 
-    public PackedScene GetPreviousScene()
-    {
-        return previousScene;
+        // Enable the Overworld Scene and it's View
+        currentOverworld.GetCamera().Enabled = true;
+        SetObjectStructVisibleValue(currentOverworld, true);
+
+        // Reset the Overworld Camera
+        Tween zoomTween = currentOverworld.GetCamera().ZoomOutFromCharacter();
+        await ToSignal(zoomTween, Tween.SignalName.Finished);
+
+        switch (endState) {
+            case (BattleSceneNew.END_STATE.PLAYER_VICTORY):
+                VictorySequence(playerTeam, enemyTeam);
+                break;
+            case (BattleSceneNew.END_STATE.ENEMY_VICTORY):
+                GameOverSequence();
+                break;
+            case (BattleSceneNew.END_STATE.FLEE):
+                // FleeBattleSequence(inPlayerTeam, inEnemyTeam);
+                break;
+            default:
+                break;
+        }
     }
 
     public MainUI GetMainUI()
@@ -178,81 +185,35 @@ public partial class Main : Node
         return;
     }
 
+    public void SetCurrentOverworld(Level inLevel) { currentOverworld = inLevel; }
+
     // Protected
 
     // Private
-    private async void PlayerVictorySequence(
-        Array<CharacterData> inPlayerTeam,
-        Array<CharacterData> inEnemyTeam)
+    private async void VictorySequence(
+        Array<CharacterDirector> playerTeam,
+        Array<CharacterDirector> enemyTeam
+    ) 
     {
-        // If the previous scene is null then crash tbh
-        if (previousScene == null) {
-            GD.PushError("No previous scene loaded");
+        for (int i = 0; i < enemyTeam.Count; i++) {
+            enemyTeam[i].QueueFree();
+            await ToSignal(enemyTeam[i], Node2D.SignalName.TreeExited);
         }
-        
-        // Swap back to scene prior to the battle
-        GetTree().ChangeSceneToPacked(previousScene);
 
-        // Wait for the Scene root to be loaded and then wait for it be ready
-        await ToSignal(GetTree(), SceneTree.SignalName.NodeAdded);
-        await ToSignal(GetTree().CurrentScene, Node.SignalName.Ready);
-
-        // Update the Enemy Team Objects Post Battle
-        EnemyEventsPostPlayerVictory(inEnemyTeam);
-
-        // Update the Player Team Objects Post Battle
-        PlayerTeamEventsPostPlayerVictory(inPlayerTeam);
+        for (int i = 0; i < playerTeam.Count; i++) {
+            playerTeam[i].SwitchCurrentStateToIdle();
+        }
     }
 
-    private void EnemyEventsPostPlayerVictory(
-        Array<CharacterData> inEnemyTeam)
+    private void FleeBattleSequence(Array<CharacterDirector> enemyTeam)
     {
-        for (int i = 0; i < battleQueue.GetEnemyNodePaths().Count; i++) {
-            CharacterDirector enemyNode = 
-                (CharacterDirector) GetNode(battleQueue.GetEnemyNodePaths()[i]);
-            
+        for (int i = 0; i < enemyTeam.Count; i++) {
             // Switch the enemy to a cool down state
-            enemyNode.SwitchCurrentStateToCoolDown();
+            enemyTeam[i].SwitchCurrentStateToCoolDown();
 
-            // If the player won, then get rid of the enemy instance
-            if (inEnemyTeam[0].GetHealthByKey("Current") <= 0) {
-                enemyNode.QueueFree();
-            }
-            // Set the enemy instance visible and set to cooldown
-            else {
-                Color colour = enemyNode.Modulate;
+            Color colour = enemyTeam[i].Modulate;
                 colour.A = 1;
-                enemyNode.Modulate = colour;
-            }
-        }
-    }
-
-    private void PlayerTeamEventsPostPlayerVictory(
-        Array<CharacterData> inPlayerTeam)
-    {
-        // Get the Player Team's Nodes
-        Array<Node> playerTeamNodes = 
-            GetTree().GetNodesInGroup("Player-Team");
-
-        // Cycle through the Player's Team and Update their Data
-        for (int i = 0; i < playerTeamNodes.Count; i++) {
-            // Conver the player team member node to character director
-            CharacterDirector playerTeamMember = 
-                (CharacterDirector) playerTeamNodes[i];
-
-            playerTeamMember.SwitchCurrentStateToIdle();
-
-            // Cycle through the List of Input Player Team Data and find one that matches the current member
-            for (int j = 0; j < inPlayerTeam.Count; j++) {
-
-                GD.Print($"{inPlayerTeam[j].GetName()}: {inPlayerTeam[j].GetHealthByKey("Current")}");
-                if (playerTeamMember.GetCharacterData().GetName() 
-                    != inPlayerTeam[j].GetName()) {
-                    continue;
-                }
-
-                playerTeamMember.UpdateCharacterData(inPlayerTeam[j]);
-            }
+                enemyTeam[i].Modulate = colour;
         }
     }
 
@@ -260,6 +221,13 @@ public partial class Main : Node
     {
         // Swap back to scene prior to the battle
         GetTree().ChangeSceneToPacked(gameOverScreen);
+    }
+
+    private void SetObjectStructVisibleValue(Node2D obj, bool value) 
+    {
+        Godot.Collections.Array args = new Godot.Collections.Array();
+        args.Add(value);
+        obj.PropagateCall("set_visible", args);
     }
 
     //-------------------------------------------------------------------------

@@ -55,7 +55,7 @@ public partial class AttackSequence : BattleState
     public override BattleState ProcessGeneral(float delta)
     {
         // Check if the attack is done
-        if (!attackSequencnDone) {
+        if (!IsAnimationDone()) {
             return null;
         }
 
@@ -96,6 +96,11 @@ public partial class AttackSequence : BattleState
     }
 
     protected virtual int GetDefenderIndex() { return 0; }
+
+    protected bool IsAnimationDone() 
+    { 
+        return !battleScene.GetCurrentCharacter().GetAnimationPlayer().IsPlaying();
+    }
 
     // Private
     private int GetDamage() 

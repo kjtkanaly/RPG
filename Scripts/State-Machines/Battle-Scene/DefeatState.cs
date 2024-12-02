@@ -31,7 +31,7 @@ public partial class DefeatState : BattleState
 
         await ToSignal(battleScene.main.GetMainUI(), MainUI.SignalName.DialogueOver);
 
-        battleScene.LeaveBattle(false);
+        battleScene.LeaveBattle(BattleSceneNew.END_STATE.ENEMY_VICTORY);
     }
 
     // Protected

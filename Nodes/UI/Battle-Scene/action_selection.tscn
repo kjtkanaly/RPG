@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Battle-Scene/ActionSelection.cs" id="4_8uxis"]
 
 [node name="Action-Selection" type="Control"]
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 offset_right = 768.0
