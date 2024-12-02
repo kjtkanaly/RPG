@@ -1,17 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://is6jq4n5825p"]
+[gd_scene load_steps=9 format=3 uid="uid://is6jq4n5825p"]
 
 [ext_resource type="Script" path="res://Scripts/Globals/Main.cs" id="1_jr0nc"]
-[ext_resource type="PackedScene" uid="uid://dj2i0djou3f11" path="res://Nodes/UI/item_text_box.tscn" id="2_u5jxk"]
-[ext_resource type="PackedScene" uid="uid://oya8nes740vs" path="res://Nodes/UI/dialogue_text_box.tscn" id="3_x6u8i"]
+[ext_resource type="PackedScene" uid="uid://b6lfqmyffcmtu" path="res://Nodes/Globals/main_ui.tscn" id="2_b1dtx"]
+[ext_resource type="AudioStream" uid="uid://b2pcbiqm8c5g5" path="res://Audio/Sound-Effects/General/blip-04.wav" id="2_wihyy"]
+[ext_resource type="PackedScene" uid="uid://bod2riq51dmon" path="res://Nodes/Globals/game_over_screen.tscn" id="3_7t5x6"]
+[ext_resource type="AudioStream" uid="uid://p2eltd43g7v2" path="res://Audio/Sound-Effects/General/select-02.wav" id="3_axo4b"]
+[ext_resource type="PackedScene" uid="uid://dky8lxuytpx3g" path="res://Nodes/Battle/battle_scene_new.tscn" id="4_pbhqq"]
+[ext_resource type="PackedScene" uid="uid://b5u4mr4wg8n8q" path="res://Nodes/UI/Main-Menu/main_menu.tscn" id="4_w7dxb"]
+[ext_resource type="PackedScene" uid="uid://cey0gn772dfi2" path="res://Scenes/Debug/player_movement_test_scene.tscn" id="5_7b5hb"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("itemTextBox", "dialogueTextBox")]
+[node name="Main" type="Node" node_paths=PackedStringArray("mainUI", "soundEffectPlayer")]
 process_mode = 3
 script = ExtResource("1_jr0nc")
-itemTextBox = NodePath("Item-Text-Box")
-dialogueTextBox = NodePath("Dialogue-Box")
+mainUI = NodePath("Main-UI")
+soundEffectPlayer = NodePath("Sound-Effect-Player")
+incrementSoundEffect = ExtResource("2_wihyy")
+selectSoundEffect = ExtResource("3_axo4b")
+packedBattleScene = ExtResource("4_pbhqq")
+gameOverScreen = ExtResource("3_7t5x6")
+mainMenu = ExtResource("4_w7dxb")
+checkpointScene = ExtResource("5_7b5hb")
 
-[node name="Item-Text-Box" parent="." instance=ExtResource("2_u5jxk")]
-visible = false
+[node name="Main-UI" parent="." instance=ExtResource("2_b1dtx")]
 
-[node name="Dialogue-Box" parent="." instance=ExtResource("3_x6u8i")]
-visible = false
+[node name="Sound-Effect-Player" type="AudioStreamPlayer2D" parent="."]

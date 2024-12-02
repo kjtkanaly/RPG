@@ -1,0 +1,131 @@
+[gd_scene load_steps=5 format=3 uid="uid://be2l0qf7u4m1y"]
+
+[ext_resource type="Texture2D" uid="uid://cuh0vgxlvusvu" path="res://Visuals/UI/Battle-Scene-UI/Select0-Enemy-Box.png" id="1_pj23i"]
+[ext_resource type="Script" path="res://Scripts/UI/Battle-Scene/SelectEnemyBox.cs" id="2_5pwce"]
+[ext_resource type="Theme" uid="uid://b2thovx8kjaph" path="res://Resources/Themes/General.tres" id="2_f4agt"]
+[ext_resource type="ButtonGroup" uid="uid://ds8msje7iqarr" path="res://Resources/Button-Groups/Battle-Scene/SelectEnemy.tres" id="4_ef4eu"]
+
+[node name="Select-Enemy-Box" type="TextureRect" node_paths=PackedStringArray("indicatorLabels", "enemyNameLabels")]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_pj23i")
+script = ExtResource("2_5pwce")
+indicatorLabels = [NodePath("MarginContainer/Character List/Character 1/HBoxContainer/Indicator"), NodePath("MarginContainer/Character List/Character 2/HBoxContainer/Indicator"), NodePath("MarginContainer/Character List/Character 3/HBoxContainer/Indicator")]
+enemyNameLabels = [NodePath("MarginContainer/Character List/Character 1/HBoxContainer/Label"), NodePath("MarginContainer/Character List/Character 2/HBoxContainer/Label"), NodePath("MarginContainer/Character List/Character 3/HBoxContainer/Label")]
+group = ExtResource("4_ef4eu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Character List" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Character 1" type="TextureButton" parent="MarginContainer/Character List"]
+layout_mode = 2
+size_flags_vertical = 3
+disabled = true
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("4_ef4eu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Character List/Character 1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Indicator" type="Label" parent="MarginContainer/Character List/Character 1/HBoxContainer" groups=["Indicator"]]
+custom_minimum_size = Vector2(16, 2.08165e-12)
+layout_mode = 2
+size_flags_vertical = 5
+theme = ExtResource("2_f4agt")
+theme_override_font_sizes/font_size = 32
+text = ">"
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/Character List/Character 1/HBoxContainer" groups=["Character-Name"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme = ExtResource("2_f4agt")
+theme_override_font_sizes/font_size = 32
+text = "-"
+vertical_alignment = 1
+
+[node name="Character 2" type="TextureButton" parent="MarginContainer/Character List"]
+layout_mode = 2
+size_flags_vertical = 3
+disabled = true
+toggle_mode = true
+button_group = ExtResource("4_ef4eu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Character List/Character 2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Indicator" type="Label" parent="MarginContainer/Character List/Character 2/HBoxContainer" groups=["Indicator"]]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_f4agt")
+theme_override_font_sizes/font_size = 32
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/Character List/Character 2/HBoxContainer" groups=["Character-Name"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_f4agt")
+theme_override_font_sizes/font_size = 32
+text = "-"
+vertical_alignment = 1
+
+[node name="Character 3" type="TextureButton" parent="MarginContainer/Character List"]
+layout_mode = 2
+size_flags_vertical = 3
+disabled = true
+toggle_mode = true
+button_group = ExtResource("4_ef4eu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Character List/Character 3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Indicator" type="Label" parent="MarginContainer/Character List/Character 3/HBoxContainer" groups=["Indicator"]]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_f4agt")
+theme_override_font_sizes/font_size = 32
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/Character List/Character 3/HBoxContainer" groups=["Character-Name"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_f4agt")
+theme_override_font_sizes/font_size = 32
+text = "-"
+vertical_alignment = 1

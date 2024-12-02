@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpqqyx1xmiw0c"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Character/Agro.cs" id="1_q7pd5"]
+
+[node name="Agro" type="Node"]
+script = ExtResource("1_q7pd5")

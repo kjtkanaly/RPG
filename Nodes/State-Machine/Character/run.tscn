@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5j4mqyi6ntqi"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Character/Run.cs" id="1_h0wbc"]
+
+[node name="Run" type="Node"]
+script = ExtResource("1_h0wbc")

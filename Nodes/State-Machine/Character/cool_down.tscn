@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ln0hkl43kjgb"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Character/CoolDown.cs" id="1_kakwg"]
+
+[node name="Cool-Down" type="Node"]
+script = ExtResource("1_kakwg")

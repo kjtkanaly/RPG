@@ -1,18 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://cey0gn772dfi2"]
+[gd_scene load_steps=8 format=3 uid="uid://cey0gn772dfi2"]
 
 [ext_resource type="PackedScene" uid="uid://cjmrxg28ecmk0" path="res://Nodes/Characters/player.tscn" id="1_7830l"]
+[ext_resource type="Script" path="res://Scripts/Globals/Level.cs" id="1_tw532"]
 [ext_resource type="PackedScene" uid="uid://d1mpr8vpcf1a8" path="res://Nodes/Items/bouncy_green_ball.tscn" id="2_7awty"]
-[ext_resource type="PackedScene" uid="uid://qbd8ibl8xu8w" path="res://Nodes/Characters/dummy.tscn" id="3_he4t0"]
+[ext_resource type="Script" path="res://Scripts/Body-Directors/CameraDirector.cs" id="4_b4711"]
+[ext_resource type="PackedScene" uid="uid://dyj2cjowbhbcb" path="res://Nodes/Characters/Basic-Enemies/red_guy.tscn" id="5_vsppj"]
+[ext_resource type="PackedScene" uid="uid://di2gquptmarum" path="res://Nodes/Enviroments/overworld.tscn" id="7_l7w2x"]
+[ext_resource type="PackedScene" uid="uid://cdhhhvw1i6jt0" path="res://Nodes/Characters/Basic-Allies/tharvus.tscn" id="8_723cb"]
 
-[node name="Player-Movement-Test-Scene" type="Node2D"]
+[node name="Player-Movement-Test-Scene" type="Node2D" node_paths=PackedStringArray("camera")]
+process_mode = 1
+script = ExtResource("1_tw532")
+camera = NodePath("Player/Camera2D")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+[node name="Overworld" parent="." instance=ExtResource("7_l7w2x")]
+position = Vector2(-960, -540)
+scale = Vector2(0.1, 0.1)
 
 [node name="Bouncy-Green-Ball" parent="." instance=ExtResource("2_7awty")]
+visible = false
 position = Vector2(125, 2.08165e-12)
 
 [node name="Player" parent="." instance=ExtResource("1_7830l")]
 
-[node name="Dummy" parent="." instance=ExtResource("3_he4t0")]
-position = Vector2(-125, 2.08165e-12)
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(3, 3)
+script = ExtResource("4_b4711")
+
+[node name="Red-Guy" parent="." instance=ExtResource("5_vsppj")]
+position = Vector2(2.08165e-12, -130)
+
+[node name="Red-Guy2" parent="." instance=ExtResource("5_vsppj")]
+position = Vector2(-132, -123)
+
+[node name="Tharvus" parent="." instance=ExtResource("8_723cb")]
+position = Vector2(1, 98)

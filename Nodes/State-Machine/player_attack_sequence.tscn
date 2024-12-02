@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlc3dhngpk2nf"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/PlayerAttackSequence.cs" id="1_l3kku"]
+[ext_resource type="PackedScene" uid="uid://cwo0v4rhvale8" path="res://Nodes/Battle/damage_label_node.tscn" id="2_rscnv"]
+
+[node name="Player-Attack-Sequence" type="Node"]
+script = ExtResource("1_l3kku")
+damageLabel = ExtResource("2_rscnv")

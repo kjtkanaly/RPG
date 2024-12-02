@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MovementData" load_steps=2 format=3 uid="uid://xiy18gh3hajl"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/MovementData.cs" id="1_0hi0c"]
+
+[resource]
+script = ExtResource("1_0hi0c")
+speed = 200.0
+walkSpeed = 0.0
+acceleration = 1000.0
+friction = 0.0
+mass = 0.0
+jumpVelocity = 0.0

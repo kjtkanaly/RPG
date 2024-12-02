@@ -1,31 +1,63 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjmrxg28ecmk0"]
+[gd_scene load_steps=13 format=3 uid="uid://cjmrxg28ecmk0"]
 
 [ext_resource type="PackedScene" uid="uid://bjdeh7ajvngnn" path="res://Nodes/Characters/character.tscn" id="1_wj6b2"]
-[ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_2gnvc"]
-[ext_resource type="PackedScene" uid="uid://c5j4mqyi6ntqi" path="res://Nodes/State-Machine/Movement/run.tscn" id="2_uwmi2"]
-[ext_resource type="Resource" uid="uid://d2tlll6i4yt5i" path="res://Resources/Custom/Interaction/player.tres" id="3_3mmfb"]
-[ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Movement/idle.tscn" id="3_m15nd"]
-[ext_resource type="Texture2D" uid="uid://da626lf6hpdyy" path="res://Visuals/Sprites/Player/Player_001.png" id="6_w7vtq"]
+[ext_resource type="Script" path="res://Scripts/Body-Directors/PlayerDirector.cs" id="2_rgxin"]
+[ext_resource type="Resource" uid="uid://djg4ubcurkl0j" path="res://Resources/Custom/Movement/player.tres" id="2_smgeg"]
+[ext_resource type="PackedScene" uid="uid://c5j4mqyi6ntqi" path="res://Nodes/State-Machine/Character/run.tscn" id="4_8ci10"]
+[ext_resource type="PackedScene" uid="uid://bs5undqfitoqb" path="res://Nodes/State-Machine/Character/idle.tscn" id="5_5m0yb"]
+[ext_resource type="PackedScene" uid="uid://81fdhlyry56j" path="res://Nodes/State-Machine/Character/battle_queue_state.tscn" id="6_f6u33"]
+[ext_resource type="PackedScene" uid="uid://d3rcof83jkmqw" path="res://Nodes/State-Machine/Character/interact.tscn" id="6_x1tnx"]
+[ext_resource type="PackedScene" uid="uid://d1i1sw7p4x3yy" path="res://Nodes/State-Machine/Character/in_battle.tscn" id="7_pene4"]
+[ext_resource type="Texture2D" uid="uid://danxv6kwf0wnu" path="res://Visuals/Sprites/Characters/Dummy.png" id="9_5eplw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wx77"]
 size = Vector2(20, 30)
 
-[node name="Player" instance=ExtResource("1_wj6b2")]
-movementData = ExtResource("2_2gnvc")
-interactionData = ExtResource("3_3mmfb")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuxb3"]
+size = Vector2(400, 300)
 
-[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4087"]
+size = Vector2(35, 45)
+
+[node name="Player" groups=["Player", "Player-Team"] instance=ExtResource("1_wj6b2")]
+script = ExtResource("2_rgxin")
+movementData = ExtResource("2_smgeg")
+
+[node name="State-Machine" parent="." index="0" node_paths=PackedStringArray("startingState", "idleState")]
 startingState = NodePath("Idle")
+idleState = NodePath("Idle")
 
-[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState") instance=ExtResource("2_uwmi2")]
+[node name="Run" parent="State-Machine" index="0" node_paths=PackedStringArray("idleState", "interactState", "battleQueueState") instance=ExtResource("4_8ci10")]
+idleState = NodePath("../Idle")
+interactState = NodePath("../Interact")
+battleQueueState = NodePath("../Battle-Queue-State")
+
+[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState", "interactState", "battleQueueState") instance=ExtResource("5_5m0yb")]
+runState = NodePath("../Run")
+interactState = NodePath("../Interact")
+battleQueueState = NodePath("../Battle-Queue-State")
+
+[node name="Interact" parent="State-Machine" index="2" node_paths=PackedStringArray("idleState") instance=ExtResource("6_x1tnx")]
 idleState = NodePath("../Idle")
 
-[node name="Idle" parent="State-Machine" index="1" node_paths=PackedStringArray("runState") instance=ExtResource("3_m15nd")]
-runState = NodePath("../Run")
+[node name="Battle-Queue-State" parent="State-Machine" index="3" node_paths=PackedStringArray("inBattle") instance=ExtResource("6_f6u33")]
+inBattle = NodePath("../InBattle")
+
+[node name="InBattle" parent="State-Machine" index="4" instance=ExtResource("7_pene4")]
 
 [node name="Sprite2D" parent="." index="1"]
-texture = ExtResource("6_w7vtq")
+texture = ExtResource("9_5eplw")
 
 [node name="CollisionShape2D" parent="." index="2"]
 visible = false
 shape = SubResource("RectangleShape2D_1wx77")
+
+[node name="Character-Data" parent="." index="6"]
+dataPath = "res://Resources/Character-Data/player.json"
+
+[node name="Shape" parent="Agro-Area" index="0"]
+shape = SubResource("RectangleShape2D_tuxb3")
+
+[node name="CollisionShape2D" parent="Combat-Range" index="0"]
+visible = false
+shape = SubResource("RectangleShape2D_r4087")

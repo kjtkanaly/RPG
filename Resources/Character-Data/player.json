@@ -1,0 +1,32 @@
+{
+    "Name": "Joe Mama",
+    "Dialog": {
+        "Fight": [
+            ""
+        ],
+        "Talk": [
+            ""
+        ]
+    },
+    "Level": 1,
+    "Health": {
+        "Max": 15,
+        "Current": 15
+    },
+    "Inventory-Size": 1,
+    "Damage-Range": {
+        "Min": 10,
+        "Max": 15
+    },
+    "Stats": {
+        "DEX": 13,
+        "STR": 12,
+        "CON": 10,
+        "WIS": 9,
+        "INT": 8,
+        "CHA": 15
+    },
+    "Portrait-Path": "res://Visuals/Sprites/Characters/Dummy_Dialogue_Icon.png",
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Characters/Dummy.png",
+    "Attack-Animation-Name": "player_attack_00"
+}

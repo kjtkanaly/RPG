@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://bauumqs47r8nv"]
+
+[ext_resource type="PackedScene" uid="uid://c6ac6ter8sbit" path="res://Nodes/Battle/battle_scene_enemy.tscn" id="1_f1hyy"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_yrh48"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_gg7cc"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_eymia"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_qqvog"]
+
+[node name="Enemy-Team-Battle-Nodes" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 529.0
+offset_bottom = 262.0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Enemy-0" parent="." instance=ExtResource("1_f1hyy")]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 103.0
+offset_right = 267.0
+offset_bottom = 231.0
+button_group = SubResource("ButtonGroup_yrh48")
+
+[node name="Enemy-1" parent="." instance=ExtResource("1_f1hyy")]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 29.0
+offset_right = 141.0
+offset_bottom = 157.0
+button_group = SubResource("ButtonGroup_gg7cc")
+
+[node name="Enemy-2" parent="." instance=ExtResource("1_f1hyy")]
+layout_mode = 0
+offset_left = 267.0
+offset_top = 62.0
+offset_right = 395.0
+offset_bottom = 190.0
+button_group = SubResource("ButtonGroup_eymia")
+
+[node name="Battle-Scene-Character" parent="." instance=ExtResource("1_f1hyy")]
+layout_mode = 0
+offset_left = 386.0
+offset_top = 35.0
+offset_right = 514.0
+offset_bottom = 163.0
+button_group = SubResource("ButtonGroup_qqvog")

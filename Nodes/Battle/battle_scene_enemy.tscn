@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6ac6ter8sbit"]
+
+[ext_resource type="ButtonGroup" uid="uid://c1kh6bve4axh1" path="res://Resources/Button-Groups/Battle-Scene/Battle-Scene-Enemy.tres" id="1_abnps"]
+[ext_resource type="Texture2D" uid="uid://n72s8f1rhkdv" path="res://Visuals/UI/Battle-Scene-UI/Enemy-Selected.png" id="2_52s46"]
+[ext_resource type="Script" path="res://Scripts/Battle/BattleSceneEnemy.cs" id="3_g4wlj"]
+
+[node name="Battle-Scene-Enemy" type="TextureButton"]
+custom_minimum_size = Vector2(128, 128)
+offset_right = 128.0
+offset_bottom = 128.0
+toggle_mode = true
+button_group = ExtResource("1_abnps")
+texture_pressed = ExtResource("2_52s46")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("3_g4wlj")
+
+[node name="Sprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5

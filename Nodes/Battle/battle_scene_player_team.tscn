@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bv0tu1kwtvwbc"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/BattleScenePlayerTeam.cs" id="1_g2f22"]
+[ext_resource type="PackedScene" uid="uid://d08cyfj2a145r" path="res://Nodes/UI/Battle-Scene/action_selection.tscn" id="2_kubgx"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_34jbj"]
+
+[node name="Battle-Scene-Player-Team" type="Control" node_paths=PackedStringArray("actionSelection")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_g2f22")
+actionSelection = NodePath("Action-Selection")
+
+[node name="Sprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Action-Selection" parent="." instance=ExtResource("2_kubgx")]
+visible = false
+offset_left = -256.0
+offset_top = -90.0
+offset_right = 512.0
+offset_bottom = 313.0
+group = SubResource("ButtonGroup_34jbj")

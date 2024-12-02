@@ -1,0 +1,32 @@
+{
+    "Name": "Red Guy",
+    "Dialog": {
+        "Fight": [
+            "It's Time to fight!"
+        ],
+        "Talk": [
+            ""
+        ]
+    },
+    "Level": 1,
+    "Health": {
+        "Max": 8,
+        "Current": 8
+    },
+    "Inventory-Size": 1,
+    "Damage-Range": {
+        "Min": 4,
+        "Max": 5
+    },
+    "Stats": {
+        "DEX": 10,
+        "STR": 10,
+        "CON": 10,
+        "WIS": 10,
+        "INT": 10,
+        "CHA": 10
+    },
+    "Portrait-Path": "res://Visuals/Sprites/Characters/Enemy_Dummy_Dialogue_Icon.png",
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Characters/Enemy_Dummy.png",
+    "Attack-Animation-Name": "enemy_attack_00"
+}

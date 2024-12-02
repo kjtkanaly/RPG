@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1i1sw7p4x3yy"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Character/InBattle.cs" id="1_waxtm"]
+
+[node name="InBattle" type="Node"]
+script = ExtResource("1_waxtm")

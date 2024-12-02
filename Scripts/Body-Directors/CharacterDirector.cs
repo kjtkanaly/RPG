@@ -1,30 +1,25 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class CharacterDirector : CharacterBody2D
 {
-    public enum CharacterType {
-        Player = 0,
-        Ally = 1,
-        Enemy = 2
-    }
-
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
-    [Export] public CharacterType charactertype;
-    public float itemRayLength = 30.0f;
-    public bool canInteract = true;
 
     // Protected
     [Export] protected MovementData movementData;
-    [Export] protected InteractionData interactionData;
+    [Export] protected CharacterData characterData;
     [Export] protected AnimationPlayer animationPlayer;
     [Export] protected AudioStreamPlayer audioPlayer;
     [Export] protected StateMachine movementSM;
     [Export] protected Sprite2D sprite;
     [Export] protected RayCast2D interactRay;
-    [Export] protected Timer interactionTimer;
+    [Export] protected Timer interactionDelayTimer;
+    [Export] protected Inventory inventory;
+    [Export] protected Area2D agroArea;
+    [Export] protected Area2D combatArea;
     protected PlayerStats playerStats;
     protected Main main;
 
@@ -37,18 +32,15 @@ public partial class CharacterDirector : CharacterBody2D
         Init();
     }
 
-    public void Init() {
+    virtual public void Init() {
         // Get the global player stats object
-        playerStats = GetNode<PlayerStats>("/root/PlayerStats");
         main = GetNode<Main>("/root/Main");
 
         // Initialize the movement State Machine
         movementSM.Init(this);    
 
-        // Attach the interaction flag method to the timer
-        if (interactionTimer != null) {
-            interactionTimer.Timeout += SetInteractionTrue; 
-        }
+        // Init the inventory
+        inventory.Init(characterData.GetInventorySize());
     }
 
     public override void _UnhandledInput(InputEvent inputEvent)
@@ -64,125 +56,66 @@ public partial class CharacterDirector : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        switch (charactertype) 
-        {
-            case (CharacterType.Player):
-                ProcessPlayer(delta);
-                break;
-            case (CharacterType.Ally):
-                ProcessNPC(delta);
-                break;
-            default:
-                break;
-        }
-        
-
+        movementSM.ProcessGeneral((float) delta);
     }
 
     //-------------------------------------------------------------------------
     // Methods
     // Public
-    public MovementData GetMovementData() 
+    public MovementData GetMovementData() { return movementData; }
+
+    public CharacterData GetCharacterData() { return characterData; }
+
+    public AnimationPlayer GetAnimationPlayer() { return animationPlayer; }
+
+    public AudioStreamPlayer GetAudioPlayer() { return audioPlayer; }
+
+    public Main GetMain() { return main; }
+
+    public Sprite2D GetSprite() { return sprite; }
+
+    public RayCast2D GetInteractRay() { return interactRay; }
+
+    public Inventory GetInventory() { return inventory; }
+
+    public Area2D GetAgroArea() { return agroArea; }
+
+    public Area2D GetCombatArea() { return combatArea; }
+
+    public State GetCurrentState() { return movementSM.GetCurrentState(); }
+
+    public void StartInteractionDelayTimer()
     {
-        return movementData;
+        interactionDelayTimer.Start();
     }
 
-    public InteractionData GetInteractionData()
+    public bool CanInteract()
     {
-        return interactionData;
+        if (interactionDelayTimer.TimeLeft > 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
-    public AnimationPlayer GetAnimationPlayer() 
+    public void UpdateCharacterData(CharacterData inData) 
     {
-        return animationPlayer;
+        characterData.UpdateCharacterData(inData);
     }
 
-    public AudioStreamPlayer GetAudioPlayer()
+    public bool IsWaitingForBattle() 
     {
-        return audioPlayer;
+        return movementSM.GetCurrentState().Name == "Battle-Waiting";
     }
 
-    public Sprite2D GetSprite() 
-    {
-        return sprite;
-    }
+    public StateMachine GetStateMachine() { return movementSM; }
 
-    public RayCast2D GetInteractRay()
-    {
-        return interactRay;
-    }
+    public virtual Array<CharacterDirector> GetTeam() { return null; }
 
     // Protected
 
     // Private
-    private void ProcessPlayer(double delta)  
-    {
-        if (Input.IsActionJustReleased("Interact") && canInteract) {
-            // Decide Interaction Path
-            ChooseInteractionPath();
-        }
-    }
-
-    private void ProcessNPC(double delta)
-    {
-        
-    }
-
-    private void ChooseInteractionPath() 
-    {
-        // Get the potential item's Node object
-        Node collider = (Node) interactRay.GetCollider();
-
-        // If the interaction is an item
-        if (collider.IsInGroup("Item")) {
-            PickupItem(collider);
-        }
-        // If an ally interaction
-        else if (collider.IsInGroup("Ally")) {
-            InteractWithAlly(collider);
-        }
-    }
-
-    private void PickupItem(Node collider)
-    {
-        // Get the Item Director
-        ItemDirector item = (ItemDirector) collider;
-
-        // Check if the item was just interacted with
-        if (item.coolDown) {
-            return;
-        }
-
-        // Pickup the item
-        main.DisplayItemTextBox(item);
-    }
-
-    private async void InteractWithAlly(Node collider)
-    {
-        // Get the Ally's Character Body
-        CharacterDirector ally = (CharacterDirector) collider;
-
-        // Get Interaction Data
-        InteractionData data = ally.GetInteractionData();
-
-        if (data.currentDialogue != null) {
-            main.DisplayCharacterDialogue(data);
-        }
-        
-        // Wait for the Dialogue to be done
-        await ToSignal(main, Main.SignalName.DialogueOver);
-
-        // Set the player to unable to interact to account for user delay
-        canInteract = false;
-
-        // Start the interaction delay timer
-        interactionTimer.Start();
-    }
-
-    private void SetInteractionTrue()
-    {
-        canInteract = true;
-    }
 
     //-------------------------------------------------------------------------
     // Debug Methods

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccxw067wwb37e"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/EnemyTeamTurn.cs" id="1_msjut"]
+
+[node name="Enemy-Team-Turn" type="Node"]
+script = ExtResource("1_msjut")

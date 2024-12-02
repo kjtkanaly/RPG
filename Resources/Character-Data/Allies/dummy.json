@@ -1,0 +1,32 @@
+{
+    "Name": "Dummy",
+    "Dialog": {
+        "Fight": [
+            ""
+        ],
+        "Talk": [
+            "I love being dumb!",
+            "It makes life more interesting!"
+        ]
+    },
+    "Level": 1,
+    "Health": {
+        "Max": 1000000,
+        "Current": 1000000
+    },
+    "Inventory-Size": 1,
+    "Damage-Range": {
+        "Min": 0,
+        "Max": 0
+    },
+    "Stats": {
+        "DEX": 10,
+        "STR": 10,
+        "CON": 10,
+        "WIS": 10,
+        "INT": 10,
+        "CHA": 10
+    },
+    "Portrait-Path": "res://Visuals/Sprites/Characters/Dummy_Dialogue_Icon.png",
+    "Battle-Sprite-Path": "res://Visuals/Sprites/Characters/Dummy.png"
+}

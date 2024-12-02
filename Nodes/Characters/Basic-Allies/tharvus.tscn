@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdhhhvw1i6jt0"]
+
+[ext_resource type="PackedScene" uid="uid://bwn7l2h42gqa0" path="res://Nodes/Characters/basic_ally.tscn" id="1_ps2og"]
+[ext_resource type="Resource" uid="uid://xiy18gh3hajl" path="res://Resources/Custom/Movement/Basic-Allies/tharvus.tres" id="2_kv7pa"]
+[ext_resource type="Texture2D" uid="uid://b26yjwgppw0tq" path="res://Visuals/Sprites/Characters/Tharvus.png" id="3_574lm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8d60"]
+size = Vector2(17, 29)
+
+[node name="Tharvus" instance=ExtResource("1_ps2og")]
+movementData = ExtResource("2_kv7pa")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_574lm")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_d8d60")
+
+[node name="Interaction-Timer" parent="." index="4" groups=["Ally"]]
+
+[node name="Character-Data" parent="." index="6"]
+dataPath = "res://Resources/Character-Data/Allies/Tharvus.json"

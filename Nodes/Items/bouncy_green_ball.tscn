@@ -8,6 +8,7 @@
 radius = 12.0
 
 [node name="Bouncy-Green-Ball" instance=ExtResource("1_grgw1")]
+process_mode = 0
 collision_layer = 8
 data = ExtResource("2_ndmmi")
 

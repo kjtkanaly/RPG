@@ -1,0 +1,32 @@
+{
+    "Name": "Default",
+    "Dialog": {
+        "Fight": [
+            ""
+        ],
+        "Talk": [
+            ""
+        ]
+    },
+    "Level": 1,
+    "Health": {
+        "Max": 1,
+        "Current": 1
+    },
+    "Inventory-Size": 1,
+    "Damage-Range": {
+        "Min": 0,
+        "Max": 1
+    },
+    "Stats": {
+        "DEX": 10,
+        "STR": 10,
+        "CON": 10,
+        "WIS": 10,
+        "INT": 10,
+        "CHA": 10
+    },
+    "Portrait-Path": "",
+    "Battle-Sprite-Path": "",
+    "Attack-Animation-Name": ""
+}

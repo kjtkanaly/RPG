@@ -1,8 +1,30 @@
 using Godot;
 using System;
 
-public partial class TextBox : CanvasLayer
+public partial class TextBox : Control
 {
+    public enum TEXT_BOX_TYPE 
+    {
+        item,
+        dialogue
+    }
+
+    public struct TextBoxData
+    {
+        public TEXT_BOX_TYPE type;
+        public string[] text;
+        public Texture2D icon;
+        public TextBoxData(
+            TEXT_BOX_TYPE typeValue,
+            string[] textValue,
+            Texture2D iconValue) 
+        {
+            type = typeValue;
+            text = textValue;
+            icon = iconValue;
+        }
+    }
+
     //-------------------------------------------------------------------------
     // Game Componenets
     // Public
@@ -14,6 +36,8 @@ public partial class TextBox : CanvasLayer
     [Export] protected bool debugMode;
     [Export] protected Label label;
     [Export] protected TextureRect textRect;
+    [Export] protected AudioStreamPlayer2D audio;
+    int previousVisibleCharacter = -1;
 
     // Private
 
@@ -40,6 +64,12 @@ public partial class TextBox : CanvasLayer
         if (!Visible) {
             return;
         }
+
+        // Check if we neeed play a text sound
+        if (Math.Abs(label.VisibleCharacters - previousVisibleCharacter) == 1) {
+            previousVisibleCharacter = label.VisibleCharacters;
+            audio.Play();
+        }
     }
 
     //-------------------------------------------------------------------------
@@ -50,6 +80,7 @@ public partial class TextBox : CanvasLayer
         Visible = true;
         label.Text = text;
         SetIcon(icon);
+        previousVisibleCharacter = -1;
 
         // Animate the Text
         label.VisibleRatio = 0;
@@ -68,12 +99,15 @@ public partial class TextBox : CanvasLayer
     {
         Visible = false;
         label.Text = "";
-        SetIcon(null);
+        
+        if (textRect != null) {
+            textRect.Texture = null;
+        }
     }
 
     // Protected
     protected void SetIcon(Texture2D icon) {
-        if (textRect == null) {
+        if (textRect == null || icon == null) {
             return;
         }
 

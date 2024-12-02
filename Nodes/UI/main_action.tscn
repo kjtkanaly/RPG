@@ -1,0 +1,133 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhe0v2375rdtl"]
+
+[ext_resource type="Theme" uid="uid://b2thovx8kjaph" path="res://Resources/Themes/General.tres" id="1_hnu6p"]
+[ext_resource type="Script" path="res://Scripts/UI/MainAction.cs" id="2_hfayb"]
+[ext_resource type="ButtonGroup" uid="uid://cnvglg066bnpr" path="res://Resources/Button-Groups/Battle-Scene/Main-Action.tres" id="3_12r5i"]
+[ext_resource type="Texture2D" uid="uid://cokge4bklqfy5" path="res://Visuals/Icons/icon_sword.png" id="3_u127s"]
+[ext_resource type="Texture2D" uid="uid://b55rlf1u3yyb" path="res://Visuals/Icons/icon_search.png" id="4_0lnh7"]
+[ext_resource type="Texture2D" uid="uid://cyh82decaitft" path="res://Visuals/Icons/icon_money_bag.png" id="5_j3icy"]
+[ext_resource type="Texture2D" uid="uid://k0po3dcatevr" path="res://Visuals/Icons/icon_signal.png" id="6_vvaim"]
+
+[node name="Main-Action" type="Panel"]
+offset_top = 1.0
+offset_right = 96.0
+offset_bottom = 369.0
+theme = ExtResource("1_hnu6p")
+script = ExtResource("2_hfayb")
+group = ExtResource("3_12r5i")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Fight" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("3_12r5i")
+icon_alignment = 1
+expand_icon = true
+metadata/value = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Fight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Fight/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("3_u127s")
+
+[node name="Inspect" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+toggle_mode = true
+button_group = ExtResource("3_12r5i")
+icon_alignment = 1
+expand_icon = true
+metadata/value = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Inspect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Inspect/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("4_0lnh7")
+
+[node name="Item" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+toggle_mode = true
+button_group = ExtResource("3_12r5i")
+icon_alignment = 1
+expand_icon = true
+metadata/value = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Item"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Item/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("5_j3icy")
+
+[node name="Flee" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+toggle_mode = true
+button_group = ExtResource("3_12r5i")
+icon_alignment = 1
+expand_icon = true
+metadata/value = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Flee"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Flee/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("6_vvaim")

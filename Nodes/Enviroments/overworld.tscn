@@ -1,0 +1,116 @@
+[gd_scene load_steps=22 format=3 uid="uid://di2gquptmarum"]
+
+[ext_resource type="Texture2D" uid="uid://bm3gnbyrwjbu1" path="res://Visuals/Enviroments/PreRenderedGrass/1.png" id="1_0b42a"]
+[ext_resource type="Texture2D" uid="uid://bama7qx2axd83" path="res://Visuals/Enviroments/PreRenderedGrass/11.png" id="1_slnt7"]
+[ext_resource type="Texture2D" uid="uid://bpv5nn2ifdacd" path="res://Visuals/Enviroments/PreRenderedGrass/2.png" id="2_8dwoq"]
+[ext_resource type="Texture2D" uid="uid://bkgul300vxy23" path="res://Visuals/Enviroments/PreRenderedGrass/3.png" id="3_on6o5"]
+[ext_resource type="Texture2D" uid="uid://6lqef1itdqco" path="res://Visuals/Enviroments/PreRenderedGrass/4.png" id="4_seqf2"]
+[ext_resource type="Texture2D" uid="uid://bt852irai8u31" path="res://Visuals/Enviroments/PreRenderedGrass/5.png" id="5_ny0c5"]
+[ext_resource type="Texture2D" uid="uid://cewa4h75ayeip" path="res://Visuals/Enviroments/PreRenderedGrass/6.png" id="6_ug806"]
+[ext_resource type="Texture2D" uid="uid://bd3ybibswtfu1" path="res://Visuals/Enviroments/PreRenderedGrass/7.png" id="7_j3c2l"]
+[ext_resource type="Texture2D" uid="uid://canu67udajkyr" path="res://Visuals/Enviroments/PreRenderedGrass/9.png" id="8_uux5h"]
+[ext_resource type="Texture2D" uid="uid://id8do6hmntgv" path="res://Visuals/Enviroments/PreRenderedGrass/8.png" id="9_v1cps"]
+[ext_resource type="Texture2D" uid="uid://kk61eb57mly" path="res://Visuals/Enviroments/PreRenderedGrass/10.png" id="10_re5nn"]
+[ext_resource type="Texture2D" uid="uid://dcykbi13vofxe" path="res://Visuals/Enviroments/PreRenderedGrass/12.png" id="12_7pohf"]
+[ext_resource type="Texture2D" uid="uid://dqoi8f5ren14u" path="res://Visuals/Enviroments/PreRenderedGrass/13.png" id="13_iaqyh"]
+[ext_resource type="Texture2D" uid="uid://df0qhjbcwh4x4" path="res://Visuals/Enviroments/PreRenderedGrass/14.png" id="14_ylcp0"]
+[ext_resource type="Texture2D" uid="uid://066mh0ta38gt" path="res://Visuals/Enviroments/PreRenderedGrass/15.png" id="15_fpe4j"]
+[ext_resource type="Texture2D" uid="uid://et3a0kgtkfv0" path="res://Visuals/Enviroments/PreRenderedGrass/16.png" id="16_sar1v"]
+[ext_resource type="Texture2D" uid="uid://clgpcjo7ovqyw" path="res://Visuals/Enviroments/PreRenderedGrass/17.png" id="17_riwa6"]
+[ext_resource type="Texture2D" uid="uid://emi4tkm2vlfg" path="res://Visuals/Enviroments/PreRenderedGrass/18.png" id="18_604ed"]
+[ext_resource type="Texture2D" uid="uid://ctgtlewxyi6yh" path="res://Visuals/Enviroments/PreRenderedGrass/19.png" id="19_uh1b5"]
+[ext_resource type="Texture2D" uid="uid://yhe8hoigk5rk" path="res://Visuals/Enviroments/PreRenderedGrass/20.png" id="20_0yi7v"]
+[ext_resource type="Texture2D" uid="uid://d0xa2egwimx7w" path="res://Visuals/Enviroments/PreRenderedGrass/21.png" id="21_qayc6"]
+
+[node name="Overworld" type="Node2D"]
+
+[node name="1" type="Sprite2D" parent="."]
+position = Vector2(5760, 1080)
+texture = ExtResource("1_0b42a")
+
+[node name="2" type="Sprite2D" parent="."]
+position = Vector2(9600, 1080)
+texture = ExtResource("2_8dwoq")
+
+[node name="3" type="Sprite2D" parent="."]
+position = Vector2(13440, 1080)
+texture = ExtResource("3_on6o5")
+
+[node name="4" type="Sprite2D" parent="."]
+position = Vector2(1920, 3240)
+texture = ExtResource("4_seqf2")
+
+[node name="5" type="Sprite2D" parent="."]
+position = Vector2(5760, 3240)
+texture = ExtResource("5_ny0c5")
+
+[node name="6" type="Sprite2D" parent="."]
+position = Vector2(9600, 3240)
+texture = ExtResource("6_ug806")
+
+[node name="7" type="Sprite2D" parent="."]
+position = Vector2(13440, 3240)
+texture = ExtResource("7_j3c2l")
+
+[node name="9" type="Sprite2D" parent="."]
+position = Vector2(1920, 5400)
+texture = ExtResource("8_uux5h")
+
+[node name="8" type="Sprite2D" parent="."]
+position = Vector2(17280, 3240)
+texture = ExtResource("9_v1cps")
+
+[node name="10" type="Sprite2D" parent="."]
+position = Vector2(5760, 5400)
+texture = ExtResource("10_re5nn")
+
+[node name="11" type="Sprite2D" parent="."]
+position = Vector2(9600, 5400)
+texture = ExtResource("1_slnt7")
+
+[node name="13" type="Sprite2D" parent="."]
+position = Vector2(17280, 5400)
+texture = ExtResource("13_iaqyh")
+
+[node name="12" type="Sprite2D" parent="."]
+position = Vector2(13440, 5400)
+texture = ExtResource("12_7pohf")
+
+[node name="14" type="Sprite2D" parent="."]
+position = Vector2(1920, 7560)
+texture = ExtResource("14_ylcp0")
+
+[node name="15" type="Sprite2D" parent="."]
+position = Vector2(5760, 7560)
+texture = ExtResource("15_fpe4j")
+
+[node name="16" type="Sprite2D" parent="."]
+position = Vector2(9600, 7560)
+texture = ExtResource("16_sar1v")
+
+[node name="17" type="Sprite2D" parent="."]
+position = Vector2(13440, 7560)
+texture = ExtResource("17_riwa6")
+
+[node name="18" type="Sprite2D" parent="."]
+position = Vector2(17280, 7560)
+texture = ExtResource("18_604ed")
+
+[node name="19" type="Sprite2D" parent="."]
+position = Vector2(5760, 9720)
+texture = ExtResource("19_uh1b5")
+
+[node name="20" type="Sprite2D" parent="."]
+position = Vector2(9600, 9720)
+texture = ExtResource("20_0yi7v")
+
+[node name="21" type="Sprite2D" parent="."]
+position = Vector2(13440, 9720)
+texture = ExtResource("21_qayc6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(9600, 1080, 17280, 5400, 9600, 9720, 1920, 5400)

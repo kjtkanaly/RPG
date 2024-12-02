@@ -1,0 +1,342 @@
+[gd_scene load_steps=15 format=3 uid="uid://s4nhe3svkifs"]
+
+[ext_resource type="PackedScene" uid="uid://dtw04rhir22rb" path="res://Nodes/State-Machine/battle_state_machine.tscn" id="2_sgfx0"]
+[ext_resource type="PackedScene" uid="uid://o0w5yevss7s3" path="res://Nodes/UI/battle_scene_ui.tscn" id="2_xg13y"]
+[ext_resource type="PackedScene" uid="uid://b2tsod01peupp" path="res://Nodes/State-Machine/player_turn.tscn" id="3_4otpn"]
+[ext_resource type="PackedScene" uid="uid://bauumqs47r8nv" path="res://Nodes/Battle/enemy_team_battle_nodes.tscn" id="4_4i0nd"]
+[ext_resource type="PackedScene" uid="uid://bqsveenfoilcs" path="res://Nodes/State-Machine/flee_battle.tscn" id="4_up8t5"]
+[ext_resource type="PackedScene" uid="uid://bv0tu1kwtvwbc" path="res://Nodes/Battle/battle_scene_player_team.tscn" id="4_vubb5"]
+[ext_resource type="PackedScene" uid="uid://dlc3dhngpk2nf" path="res://Nodes/State-Machine/player_attack_sequence.tscn" id="5_febhu"]
+[ext_resource type="PackedScene" uid="uid://8verm6wooeqs" path="res://Nodes/State-Machine/victory_state.tscn" id="6_y2u7w"]
+[ext_resource type="AudioStream" uid="uid://bsh2s3xvxs4g2" path="res://Audio/Sound-Effects/Hit-Sounds/Hit-001.wav" id="7_erx1e"]
+[ext_resource type="PackedScene" uid="uid://cvvw5b4bvc1qe" path="res://Nodes/State-Machine/Battle-Scene/enemy_attack_sequence.tscn" id="7_k2g15"]
+[ext_resource type="PackedScene" uid="uid://ccxw067wwb37e" path="res://Nodes/State-Machine/Battle-Scene/enemy_team_turn.tscn" id="8_abcji"]
+[ext_resource type="PackedScene" uid="uid://dyq8pi3shwerr" path="res://Nodes/State-Machine/Battle-Scene/battle_intro.tscn" id="8_hn318"]
+[ext_resource type="PackedScene" uid="uid://h1xx7qe2uq43" path="res://Nodes/State-Machine/Battle-Scene/defeat_state.tscn" id="13_3bntu"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_av7dn"]
+script/source = "using Godot;
+using System;
+using Godot.Collections;
+
+public partial class BattleScene : Node2D
+{
+    public enum Choice
+    {
+        Flee,
+        Attack,
+        Null
+    }
+
+    //-------------------------------------------------------------------------
+    // Game Componenets
+    // Public
+    public Main main;
+
+    // Protected
+
+    // Private
+    [Export] private BattleSceneUI battleUI;
+    [Export] private BattleStateMachine stateMachine;
+    [Export] private EnemyTeamBattleNodes enemyTeamBattleNodes;
+    [Export] private BattleScenePlayerTeam[] playerTeamSceneNodes = new BattleScenePlayerTeam[4];
+    private Array<CharacterData> playerTeam = new Array<CharacterData>();
+    private Array<CharacterData> enemyTeam = new Array<CharacterData>();
+    private Array<CharacterData> battleOrder = new Array<CharacterData>();
+    private int currentBattleOrderIndex = 0;
+
+    //-------------------------------------------------------------------------
+    // Game Events
+    public override void _Ready()
+    {
+        Init();
+    }
+
+    public override void _Process(double delta)
+    {
+        stateMachine.ProcessGeneral((float) delta);
+    }
+
+    //-------------------------------------------------------------------------
+    // Methods
+    // Public
+    public void Init() 
+    {
+        main = GetNode<Main>(\"/root/Main\");
+
+        // Get the Battle Info
+        BattleQueue battleQueue = main.GetBattleQueue();
+
+        // Set the Player Team Info
+        SetTeamInfo(playerTeam, battleQueue.GetPlayerTeam());
+
+        // Set the Enemy Team Info
+        SetTeamInfo(enemyTeam, battleQueue.GetEnemyTeam());
+
+        // Set the Enemy Team Sprties
+        enemyTeamBattleNodes.SetTeamSprites(enemyTeam);
+
+        // Set the Player Team Sprites
+        // SetTeamSprites(playerTeam, playerTeamSceneNodes);
+
+        // Determine the battle order
+        SetBattleOrder();
+
+        // Reset the current battle order index
+        currentBattleOrderIndex = 0;
+
+        // Log the Enemy options
+        UpdateEnemySelectOptions();
+
+        // // Init the Battle Scene State Machine
+        // stateMachine.Init(this);
+    }
+
+    public void LeaveBattle(bool playerVictory) 
+    {
+        //TODO: Setup a system to make sure the character data has all been updated
+        //      Likely need to first just verify if this done via reference
+        main.EndBattle(playerTeam, enemyTeam, playerVictory);
+    }
+
+    public CharacterData GetPlayerTeamDataAtIndex(int index) { return playerTeam[index]; }
+
+    public Array<CharacterData> GetPlayerTeamData() { return playerTeam; }
+
+    public CharacterData GetEnemyTeamDataAtIndex(int index) { return enemyTeam[index]; }
+
+    public Array<CharacterData> GetEnemyTeamData() { return enemyTeam; }
+
+    public BattleSceneUI GetBattleUI() { return battleUI; }
+
+    public EnemyTeamBattleNodes GetEnemyTeamBattleNodes() { return enemyTeamBattleNodes; }
+
+    public void HideUI() 
+    {
+        battleUI.HideUI();
+    }
+
+    public void ShowUI() 
+    {
+        battleUI.ShowUI();
+    }
+
+    public BattleScenePlayerTeam GetPlayerNodeAtIndex(int index) 
+    { 
+        return playerTeamSceneNodes[index];
+    }
+
+    public bool IsInPlayerTeam(CharacterData data) 
+    {
+        for (int i = 0; i < playerTeam.Count; i++) {
+            if (data.GetName() == playerTeam[i].GetName()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void StepCurrentBattleOrderIndex() 
+    {
+        currentBattleOrderIndex += 1;
+        if (currentBattleOrderIndex >= battleOrder.Count) {
+            currentBattleOrderIndex -= battleOrder.Count;
+        }
+    }
+
+    public CharacterData GetCurrentCharacterInBattleOrder() 
+    {
+        return battleOrder[currentBattleOrderIndex];
+    }
+
+    public CharacterData GetNextCharacterInBattleOrder()
+    {   
+        int nextIndex = currentBattleOrderIndex + 1;
+        if (nextIndex >= battleOrder.Count) {
+            nextIndex -= battleOrder.Count;
+        }
+        return battleOrder[nextIndex];
+    }
+
+    public void UpdateEnemySelectOptions() {
+        // Update the individual Enemy Text Lines
+        for (int i = 0; i < enemyTeam.Count; i++) {
+            // If the enemy is still alive
+            if (enemyTeam[i].GetHealthByKey(\"Current\") > 0) {
+                GetBattleUI().GetSelectEnemyBox().SetEnemyTextAtIndex(
+                    i, 
+                    enemyTeam[i].GetName(), 
+                    ButtonGroupUI.TEXT_TYPE.ENABLED);
+                GetBattleUI().GetSelectEnemyBox().SetEnemySelectAtIndexAsEnabled(i);
+            }
+            else {
+                // If the enemy is dead
+                GetBattleUI().GetSelectEnemyBox().SetEnemyTextAtIndex(
+                    i, 
+                    enemyTeam[i].GetName(), 
+                    ButtonGroupUI.TEXT_TYPE.DISABLED);
+                GetBattleUI().GetSelectEnemyBox().SetEnemySelectAtIndexAsEnabled(i);
+            }
+        }
+    }
+
+    // Protected
+
+    // Private
+    private void SetTeamInfo(
+        Array<CharacterData> teamInfo,
+        Array<CharacterData> inTeamInfo) 
+    {
+        // Clear the old teamInfo
+        teamInfo.Clear();
+
+        // Copy over the data
+        for (int i = 0; i < inTeamInfo.Count; i++) {
+            teamInfo.Add(inTeamInfo[i]);
+            teamInfo[i].SetTeamIndex(i);
+        }
+    }
+
+    private void SetBattleOrder() 
+    {
+        // Init the battle order Array
+        battleOrder.Clear();
+
+        AddTeamToBattleOrder(playerTeam);
+        AddTeamToBattleOrder(enemyTeam);
+
+        // Debug
+        GD.Print(\"\\n\");
+        for (int i = 0; i < battleOrder.Count; i++) {
+            GD.Print($\"{i}: {battleOrder[i].GetName()}\");
+        }
+    }
+
+    private void AddTeamToBattleOrder(Array<CharacterData> teamData)
+    {
+        // Loop over the player team
+        for (int i = 0; i < teamData.Count; i++) {
+            // Roll initiative
+            int initiativeVal = GetInitiative(teamData[i].GetStatByKey(\"DEX\"));
+
+            // Set position in the battle order
+            AppendBattleOrder(teamData[i], initiativeVal);
+        }
+    }
+
+    private int GetInitiative(int dexValue) 
+    {
+        // Roll the d20
+        int roll = main.rng.RandiRange(1, 20);
+
+        return roll;
+    }
+
+    private void AppendBattleOrder(CharacterData data, int initiativeVal)
+    {
+        int battleOrderIndex = battleOrder.Count;
+
+        // Go through the current battle order 
+        for (int i = battleOrder.Count - 1; i > -1; i--) {
+            // If the initiative value is less than the current position's value
+            if (initiativeVal > battleOrder[i].GetInitiativeValue()) {
+                battleOrderIndex = i;
+            }
+        }
+        
+        // Check if current battle pos is equal to the new initiative value
+        if (battleOrderIndex != battleOrder.Count) {
+            if (initiativeVal == battleOrder[battleOrderIndex].GetInitiativeValue()) {
+                battleOrderIndex = DetermineWhichCharacterGoesFirst(data, battleOrderIndex);
+            }
+        }
+
+        GD.Print($\"{data.GetName()} roll: {initiativeVal}, index: {battleOrderIndex}\");
+
+        // Insert the position and log it's initiative value
+        data.SetInitiative(initiativeVal);
+        battleOrder.Insert(battleOrderIndex, data);
+    }
+
+    // Used in scenario's where two character's roll equal initiative
+    private int DetermineWhichCharacterGoesFirst(
+        CharacterData data, 
+        int battleOrderIndex)
+    {
+        // Check if the character at the current index has higher dex value
+        if (data.GetStatByKey(\"DEX\") < battleOrder[battleOrderIndex].GetStatByKey(\"DEX\")) {
+            battleOrderIndex -= 1;
+        }
+        // Check both characters have equal data
+        else if (data.GetStatByKey(\"DEX\") == battleOrder[battleOrderIndex].GetStatByKey(\"DEX\")) {
+            // Flip a coin
+            if (main.rng.RandiRange(0, 1) == 0) {
+                battleOrderIndex += 1;
+            }
+        }
+
+        return battleOrderIndex;
+    }
+
+    //-------------------------------------------------------------------------
+    // Debug Methods
+}
+"
+
+[node name="Battle-Scene" type="Node2D" node_paths=PackedStringArray("battleUI", "stateMachine", "playerTeamSceneNodes")]
+script = SubResource("CSharpScript_av7dn")
+battleUI = NodePath("Battle-Scene-UI")
+stateMachine = NodePath("Battle-State-Machine")
+playerTeamSceneNodes = [NodePath("Battle-Scene-UI/Battle-Scene-Player-Team"), null, null, null]
+
+[node name="Battle-Scene-UI" parent="." instance=ExtResource("2_xg13y")]
+layer = -10
+
+[node name="Battle-Scene-Player-Team" parent="Battle-Scene-UI" instance=ExtResource("4_vubb5")]
+offset_left = 294.0
+offset_top = 319.0
+offset_right = 550.0
+offset_bottom = 575.0
+
+[node name="Enemy-Team-Battle-Nodes" parent="Battle-Scene-UI" instance=ExtResource("4_4i0nd")]
+offset_left = 647.0
+offset_top = 45.0
+offset_right = 1176.0
+offset_bottom = 307.0
+
+[node name="Battle-State-Machine" parent="." node_paths=PackedStringArray("startingState") instance=ExtResource("2_sgfx0")]
+startingState = NodePath("Battle-Intro")
+
+[node name="Battle-Intro" parent="Battle-State-Machine" node_paths=PackedStringArray("playerTeamTurn", "enemyTeamTurn") instance=ExtResource("8_hn318")]
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Player-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("fleeBattle", "playerAttackSequence", "playerTeamTurn") instance=ExtResource("3_4otpn")]
+fleeBattle = NodePath("../Flee-Battle")
+playerAttackSequence = NodePath("../Player-Attack-Sequence")
+playerTeamTurn = NodePath(".")
+
+[node name="Enemy-Team-Turn" parent="Battle-State-Machine" node_paths=PackedStringArray("enemyAttackSequence", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("8_abcji")]
+enemyAttackSequence = NodePath("../Enemy-Attack-Sequence")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath(".")
+
+[node name="Player-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("victoryState", "audioPlayer", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("5_febhu")]
+victoryState = NodePath("../Victory-State")
+audioPlayer = NodePath("../../Sound-Effects")
+soundEffect = ExtResource("7_erx1e")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Enemy-Attack-Sequence" parent="Battle-State-Machine" node_paths=PackedStringArray("defeatState", "playerTeamTurn", "enemyTeamTurn") instance=ExtResource("7_k2g15")]
+defeatState = NodePath("../Defeat-State")
+playerTeamTurn = NodePath("../Player-Turn")
+enemyTeamTurn = NodePath("../Enemy-Team-Turn")
+
+[node name="Flee-Battle" parent="Battle-State-Machine" instance=ExtResource("4_up8t5")]
+
+[node name="Victory-State" parent="Battle-State-Machine" instance=ExtResource("6_y2u7w")]
+
+[node name="Defeat-State" parent="Battle-State-Machine" instance=ExtResource("13_3bntu")]
+
+[node name="Sound-Effects" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://h1xx7qe2uq43"]
+
+[ext_resource type="Script" path="res://Scripts/State-Machines/Battle-Scene/DefeatState.cs" id="1_k4agx"]
+
+[node name="Defeat-State" type="Node"]
+script = ExtResource("1_k4agx")

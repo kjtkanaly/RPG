@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://o0w5yevss7s3"]
+
+[ext_resource type="Script" path="res://Scripts/UI/BattleSceneUI.cs" id="1_hin22"]
+[ext_resource type="PackedScene" uid="uid://cg48r2amq7651" path="res://Nodes/UI/Battle-Scene/character_info_container.tscn" id="2_25ps0"]
+
+[node name="Battle-Scene-UI" type="Control" node_paths=PackedStringArray("characterInfoContainer")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_hin22")
+characterInfoContainer = NodePath("Character-Info-Container")
+
+[node name="Character-Info-Container" parent="." instance=ExtResource("2_25ps0")]
+offset_left = 80.0
+offset_top = 1076.0
+offset_right = 1908.0
+offset_bottom = 1268.0

@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://ilepsbsfy5o1"]
+
+[ext_resource type="PackedScene" uid="uid://upq1rk1g5wty" path="res://Nodes/UI/Battle-Scene/character_info.tscn" id="1_0cmc7"]
+
+[node name="Character-Stats-Container" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+offset_right = -872.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="Character-Info" parent="HBoxContainer" instance=ExtResource("1_0cmc7")]
+layout_mode = 2
+
+[node name="Character-Info2" parent="HBoxContainer" instance=ExtResource("1_0cmc7")]
+layout_mode = 2
+
+[node name="Character-Info3" parent="HBoxContainer" node_paths=PackedStringArray("healthValue", "specialValue") instance=ExtResource("1_0cmc7")]
+layout_mode = 2
+healthValue = NodePath("../Character-Info2/MarginContainer/HBoxContainer/ColorRect/VBoxContainer/HP DIV/HBoxContainer/HP-Value")
+specialValue = NodePath("../Character-Info2/MarginContainer/HBoxContainer/ColorRect/VBoxContainer/MANA DIV/HBoxContainer/SP-Value")
+
+[node name="Character-Info4" parent="HBoxContainer" node_paths=PackedStringArray("healthValue", "specialValue") instance=ExtResource("1_0cmc7")]
+layout_mode = 2
+healthValue = NodePath("../Character-Info2/MarginContainer/HBoxContainer/ColorRect/VBoxContainer/HP DIV/HBoxContainer/HP-Value")
+specialValue = NodePath("../Character-Info2/MarginContainer/HBoxContainer/ColorRect/VBoxContainer/MANA DIV/HBoxContainer/SP-Value")

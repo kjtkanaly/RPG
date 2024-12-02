@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="InteractionData" load_steps=3 format=3 uid="uid://d2tlll6i4yt5i"]
-
-[ext_resource type="Script" path="res://Scripts/Resources/InteractionData.cs" id="1_7sdjc"]
-[ext_resource type="Texture2D" uid="uid://62dwrkdmelrh" path="res://Visuals/Sprites/Player/Dialogue_Icon.png" id="1_lakc6"]
-
-[resource]
-script = ExtResource("1_7sdjc")
-dialogueIcon = ExtResource("1_lakc6")
-currentDialogue = PackedStringArray()
