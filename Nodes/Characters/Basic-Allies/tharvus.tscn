@@ -21,3 +21,10 @@ shape = SubResource("RectangleShape2D_d8d60")
 
 [node name="Character-Data" parent="." index="6"]
 dataPath = "res://Resources/Character-Data/Allies/Tharvus.json"
+
+[node name="Agro-Area" parent="." index="7"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Combat-Range" parent="." index="8"]
+collision_mask = 1

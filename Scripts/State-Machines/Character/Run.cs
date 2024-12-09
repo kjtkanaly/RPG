@@ -77,7 +77,7 @@ public partial class Run : CharacterBodyState
                 characterDirector.GetMovementData().acceleration * delta);
 
         // Set the latVelocity to have magntiude of the update speed times speedmodifier
-        velocity = GetDirectionVector() * updateSpeed * speedModifier;
+        velocity = GetDirectionVector() * updateSpeed;
 
         
 

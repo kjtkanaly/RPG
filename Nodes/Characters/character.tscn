@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bb31rdxqrawev" path="res://Nodes/Characters/character_data.tscn" id="4_n5ew5"]
 
 [node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("characterData", "movementSM", "sprite", "interactRay", "interactionDelayTimer", "inventory", "agroArea", "combatArea")]
-collision_mask = 9
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_7vceo")
 characterData = NodePath("Character-Data")
 movementSM = NodePath("State-Machine")
@@ -36,11 +37,14 @@ one_shot = true
 [node name="Character-Data" parent="." instance=ExtResource("4_n5ew5")]
 
 [node name="Agro-Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
 
 [node name="Shape" type="CollisionShape2D" parent="Agro-Area"]
 debug_color = Color(0.913725, 0.25098, 0.396078, 0.419608)
 
 [node name="Combat-Range" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat-Range"]

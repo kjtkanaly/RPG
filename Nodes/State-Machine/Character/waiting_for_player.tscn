@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://81x7w2m0cpih"]
-
-[ext_resource type="Script" path="res://Scripts/State-Machines/Character/WaitingForPlayer.cs" id="1_yl8w8"]
-
-[node name="Waiting-For-Player" type="Node"]
-script = ExtResource("1_yl8w8")

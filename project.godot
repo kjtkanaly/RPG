@@ -106,7 +106,9 @@ Special-UI={
 
 [layer_names]
 
-2d_physics/layer_1="Character"
+2d_physics/layer_1="Player Physics"
+2d_physics/layer_2="Enemy Physics"
+2d_physics/layer_3="Ally Physics"
 2d_physics/layer_4="Items"
 
 [rendering]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvie83osnf10u"]
 
-[ext_resource type="Script" path="res://Scripts/State-Machines/Character/idleNPC.cs" id="1_k2cfr"]
+[ext_resource type="Script" path="res://Scripts/State-Machines/Character/IdleNPC.cs" id="1_pnmjf"]
 
 [node name="Idle-NPC" type="Node"]
-script = ExtResource("1_k2cfr")
+script = ExtResource("1_pnmjf")

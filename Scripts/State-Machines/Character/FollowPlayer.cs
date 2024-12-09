@@ -8,6 +8,7 @@ public partial class FollowPlayer : CharacterBodyState
     // Game Componenets
     // Public
     public float speedModifier = 1.0f;
+    public float followRadius = 40.0f;
 
     // Protected
 
@@ -28,12 +29,17 @@ public partial class FollowPlayer : CharacterBodyState
     // Public
     public override State ProcessPhysics(float delta)
     {
-        if ((player.Position - characterDirector.Position).Length() <= 40f
-            && player.Velocity.Length() <= 0) {
-            return waitingForPlayer;
-        }
+        // Position difference to player
+        Vector2 posDiff = player.Position - characterDirector.Position;
 
-        UpdateVelocity(delta);
+        if (posDiff.Length() < followRadius) {
+            UpdateVelocity(0, (float) delta);
+        }
+        else {
+            UpdateVelocity(
+                characterDirector.GetMovementData().speed * speedModifier, 
+                (float) delta);
+        }
         
         characterDirector.MoveAndSlide();
 
@@ -43,12 +49,10 @@ public partial class FollowPlayer : CharacterBodyState
     // Protected
 
     // Private
-    private void UpdateVelocity(float delta) 
+    private void UpdateVelocity(float goalSpeed, float delta) 
     {
         // Get the current velocity snapshot
         Vector2 velocity = characterDirector.Velocity;
-
-        float goalSpeed = characterDirector.GetMovementData().speed * speedModifier;
 
         // Get the update speed by moving the current speed towards the goal
         float currentSpeed = velocity.Length();
@@ -61,7 +65,7 @@ public partial class FollowPlayer : CharacterBodyState
         Vector2 direction = (player.Position - characterDirector.Position).Normalized();
 
         // Set the latVelocity to have magntiude of the update speed times speedmodifier
-        velocity = direction * updateSpeed * speedModifier;
+        velocity = direction * updateSpeed;
 
         // Update the Character Body's Velocity
         characterDirector.Velocity = velocity;

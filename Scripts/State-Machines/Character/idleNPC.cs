@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public partial class idleNPC : CharacterBodyState
+public partial class IdleNPC : CharacterBodyState
 {
     //-------------------------------------------------------------------------
     // Game Componenets
